@@ -4,6 +4,11 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- bean definitions here -->
-
+    <bean id="testLoader" class="com.testmaster.service.impl.TestLoaderImpl"></bean>
+    <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
+        <constructor-arg ref="testLoader"/>
+    </bean>
+    <bean id="testController" class="com.testmaster.controller.TestController">
+        <constructor-arg ref="testService"/>
+    </bean>
 </beans>

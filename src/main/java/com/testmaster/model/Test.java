@@ -2,13 +2,13 @@ package com.testmaster.model;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
 @AllArgsConstructor
+@Getter
 public class Test {
 
-  private String name;
+  private String testName;
   private List<Question> questions;
 
 }

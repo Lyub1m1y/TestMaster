@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import lombok.Setter;
 
-@Setter
 public class TestServiceImpl implements TestService {
 
   private TestLoader testLoader;
   private static final String RESOURCES_TESTS = "src/main/resources/tests";
+  @Setter
   private String directoryTests;
   private List<Test> availableTests;
   private Test currentTest;

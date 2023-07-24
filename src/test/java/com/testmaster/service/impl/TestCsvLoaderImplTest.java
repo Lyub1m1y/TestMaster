@@ -30,7 +30,7 @@ class TestCsvLoaderImplTest {
 
   @org.junit.jupiter.api.Test
   @DisplayName("Should throw exception when invalid directory")
-  void loadTestsFromResources_Failed() {
+  void loadTestsFromResources_shouldReturnEmptyListOnInvalidDirectory() {
     testCsvLoader.setDirectoryTests("FailDirectory");
 
     List<Test> tests = testCsvLoader.loadTestsFromResources();

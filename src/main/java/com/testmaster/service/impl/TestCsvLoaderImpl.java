@@ -38,7 +38,7 @@ public class TestCsvLoaderImpl implements TestLoader {
         return tests;
       }
 
-      for (File file : testsFolder.listFiles()) {
+      for (File file : files) {
         if (file.isFile() && file.getName().endsWith(".csv")) {
           try {
             Test test = loadTestFromFile(file);

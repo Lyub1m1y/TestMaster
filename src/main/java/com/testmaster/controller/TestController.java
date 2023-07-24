@@ -73,8 +73,23 @@ public class TestController {
       for (int j = 0; j < options.size(); j++) {
         System.out.println("\t" + (j + 1) + ") " + options.get(j));
       }
-      System.out.print("Ваш ответ: ");
-      int answerIndex = Integer.parseInt(scanner.nextLine());
+
+      int answerIndex;
+      while (true) {
+        System.out.print("Ваш ответ: ");
+        String input = scanner.nextLine();
+        try {
+          answerIndex = Integer.parseInt(input);
+          if (answerIndex < 1 || answerIndex > options.size()) {
+            throw new NumberFormatException();
+          }
+          break;
+        } catch (NumberFormatException e) {
+          System.out.println("Неверный ввод. Пожалуйста, введите число от 1 до "
+              + options.size() + ".");
+        }
+      }
+
       testService.submitAnswer(i, answerIndex);
     }
 

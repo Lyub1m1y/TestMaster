@@ -17,39 +17,52 @@ public class TestController {
 
   public void startApp() {
     log.info("App started!");
-
     @Cleanup final Scanner scanner = new Scanner(System.in);
 
-    List<Test> availableTests = testService.getAvailableTests();
-    System.out.println("Доступные тесты:");
-    for (Test test : availableTests) {
-      System.out.println(test.getTestName());
-    }
+    while (true) {
+      System.out.println("Для выхода введите - q");
+      System.out.println("1. Внутренние тесты");
+      System.out.println("2. Тесты из каталога");
 
-    System.out.print("Выберите тест: ");
-    String testName = scanner.nextLine();
-    Test selectedTest = testService.getTestByName(testName);
-
-    if (selectedTest != null) {
-      testService.startTest(selectedTest);
-      List<Question> questions = selectedTest.getQuestions();
-      for (int i = 0; i < questions.size(); i++) {
-        Question question = questions.get(i);
-        System.out.println((i + 1) + ". " + question.getText());
-        List<String> options = question.getOptions();
-        for (int j = 0; j < options.size(); j++) {
-          System.out.println("   " + (j + 1) + ". " + options.get(j));
-        }
-        System.out.print("Ваш ответ: ");
-        int answerIndex = Integer.parseInt(scanner.nextLine());
-        testService.submitAnswer(i, answerIndex);
+      String input = scanner.nextLine();
+      if (!input.equals("q")) {
+        testService.selectDirectoryTests(input); // TODO сделать проверку
+      } else {
+        break;
       }
 
-      int score = testService.getScore();
-      System.out.println("Результат: " + score + " из " + questions.size());
-    } else {
-      System.out.println("Тест не найден.");
+      List<Test> availableTests = testService.getAvailableTests();
+      if (!availableTests.isEmpty()) {
+        System.out.println("Доступные тесты:");
+        for (Test test : availableTests) {
+          System.out.println(test.getTestName());
+        }
+
+        System.out.print("Выберите тест: ");
+        String testName = scanner.nextLine();
+        Test selectedTest = testService.getTestByName(testName);
+
+        if (selectedTest != null) {
+          testService.startTest(selectedTest);
+          List<Question> questions = selectedTest.getQuestions();
+          for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            System.out.println((i + 1) + ". " + question.getText());
+            List<String> options = question.getOptions();
+            for (int j = 0; j < options.size(); j++) {
+              System.out.println("\t" + (j + 1) + ") " + options.get(j));
+            }
+            System.out.print("Ваш ответ: ");
+            int answerIndex = Integer.parseInt(scanner.nextLine());
+            testService.submitAnswer(i, answerIndex);
+          }
+
+          int score = testService.getScore();
+          System.out.println("Результат: " + score + " из " + questions.size());
+        } else {
+          System.out.println("Тест не найден.");
+        }
+      }
     }
   }
-
 }

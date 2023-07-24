@@ -5,5 +5,7 @@ import java.util.List;
 
 public interface TestLoader {
 
+  void setDirectoryTests(String directory);
+
   List<Test> loadTestsFromResources();
 }

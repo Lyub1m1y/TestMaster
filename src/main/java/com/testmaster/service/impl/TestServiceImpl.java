@@ -12,17 +12,30 @@ import lombok.Setter;
 @Setter
 public class TestServiceImpl implements TestService {
 
+  private TestLoader testLoader;
+  private static final String RESOURCES_TESTS = "src/main/resources/tests";
+  private String directoryTests;
   private List<Test> availableTests;
   private Test currentTest;
   private Map<Integer, Integer> answers;
 
   public TestServiceImpl(TestLoader testLoader) {
-    this.availableTests = testLoader.loadTestsFromResources();
+    this.testLoader = testLoader;
     this.answers = new HashMap<>();
   }
 
   @Override
+  public void selectDirectoryTests(String option) {
+    if (option.equals("1")) {
+      testLoader.setDirectoryTests(RESOURCES_TESTS);
+    } else if ((option.equals("2"))) {
+      testLoader.setDirectoryTests(directoryTests);
+    }
+  }
+
+  @Override
   public List<Test> getAvailableTests() {
+    this.availableTests = testLoader.loadTestsFromResources();
     return availableTests;
   }
 

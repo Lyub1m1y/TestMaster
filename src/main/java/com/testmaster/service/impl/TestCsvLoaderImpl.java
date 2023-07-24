@@ -6,38 +6,56 @@ import com.testmaster.model.Test;
 import com.testmaster.service.TestLoader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
 
 @Slf4j
-public class TestLoaderImpl implements TestLoader {
+public class TestCsvLoaderImpl implements TestLoader {
 
-  private static final String DIRECTORY_TESTS = "tests";
+  private static String directory;
+
+  @Override
+  public void setDirectoryTests(String directory) {
+    this.directory = directory;
+  }
 
   @Override
   public List<Test> loadTestsFromResources() {
     List<Test> tests = new ArrayList<>();
-    ClassPathResource resource = new ClassPathResource(DIRECTORY_TESTS);
     try {
-      File testsFolder = resource.getFile();
+      File testsFolder = new File(directory);
+
+      if (!testsFolder.exists() || !testsFolder.isDirectory()) {
+        log.error("The directory doesn't exist or it's not a directory.");
+        return tests;
+      }
+
+      File[] files = testsFolder.listFiles();
+
+      if (files == null) {
+        log.error("Failed to list files in the directory.");
+        return tests;
+      }
 
       for (File file : testsFolder.listFiles()) {
         if (file.isFile() && file.getName().endsWith(".csv")) {
-          Test test = loadTestFromFile(file);
-          tests.add(test);
+          try {
+            Test test = loadTestFromFile(file);
+            tests.add(test);
+          } catch (Exception ex) {
+            log.error("Couldn't read the "  + file.getName() + ". " + ex.getMessage());
+          }
         }
       }
-    } catch (IOException ex) {
-      log.error("The directory doesn't exist", ex);
+    } catch (Exception ex) {
+      log.error("The directory doesn't exist." + ex.getMessage());
     }
 
     return tests;
   }
 
-  private Test loadTestFromFile(File file) {
+  private Test loadTestFromFile(File file) throws Exception {
     List<Question> questions = new ArrayList<>();
     try (CSVReader reader = new CSVReader(new FileReader(file))) {
       String[] line;
@@ -54,8 +72,6 @@ public class TestLoaderImpl implements TestLoader {
           questions.add(question);
         }
       }
-    } catch (Exception ex) {
-      log.error(ex.getMessage());
     }
     String testName = file.getName().substring(0, file.getName().lastIndexOf(".csv"));
 

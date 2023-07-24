@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface TestService {
 
+  void selectDirectoryTests(String option);
+
   List<Test> getAvailableTests();
 
   Test getTestByName(String testName);

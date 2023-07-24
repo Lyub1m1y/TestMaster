@@ -15,7 +15,7 @@ public class TestController {
 
   private TestService testService;
 
-  public void start() {
+  public void startApp() {
     log.info("App started!");
 
     @Cleanup final Scanner scanner = new Scanner(System.in);
@@ -41,9 +41,9 @@ public class TestController {
           System.out.println("   " + (j + 1) + ". " + options.get(j));
         }
         System.out.print("Ваш ответ: ");
-        int answerIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        int answerIndex = Integer.parseInt(scanner.nextLine());
         testService.submitAnswer(i, answerIndex);
-      } // TODO else
+      }
 
       int score = testService.getScore();
       System.out.println("Результат: " + score + " из " + questions.size());

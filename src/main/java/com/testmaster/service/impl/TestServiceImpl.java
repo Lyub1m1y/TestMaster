@@ -1,5 +1,6 @@
 package com.testmaster.service.impl;
 
+import com.testmaster.model.Question;
 import com.testmaster.model.Test;
 import com.testmaster.service.TestLoader;
 import com.testmaster.service.TestService;
@@ -26,22 +27,43 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
+  public Test getTestByName(String testName) {
+    return availableTests.stream()
+        .filter(test -> test.getTestName().equals(testName))
+        .findFirst()
+        .orElse(null);
+  }
+
+  @Override
   public void startTest(Test test) {
-  //TODO
+    currentTest = test;
+    answers.clear();
   }
 
   @Override
   public void submitAnswer(int questionIndex, int answerIndex) {
-
+    if (currentTest != null && questionIndex >= 0
+        && questionIndex < currentTest.getQuestions().size()) {
+      answers.put(questionIndex, answerIndex);
+    } else {
+      throw new IllegalArgumentException("Invalid question index");
+    }
   }
 
   @Override
   public int getScore() {
-    return 0;
+    int score = 0;
+    if (currentTest != null) {
+      List<Question> questions = currentTest.getQuestions();
+      for (int i = 0; i < questions.size(); i++) {
+        Question question = questions.get(i);
+        int correctOptionIndex = question.getCorrectOptionIndex();
+        if (answers.containsKey(i) && answers.get(i) == correctOptionIndex) {
+          score++;
+        }
+      }
+    }
+    return score;
   }
 
-  @Override
-  public Test getTestByName(String testName) {
-    return null; //TODO
-  }
 }

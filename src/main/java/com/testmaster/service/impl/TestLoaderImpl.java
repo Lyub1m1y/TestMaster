@@ -43,13 +43,13 @@ public class TestLoaderImpl implements TestLoader {
       String[] line;
 
       while ((line = reader.readNext()) != null) {
-        if (line.length >= 3) {
+        if (line.length != 0) {
           String questionText = line[0];
+          int correctOptionIndex = Integer.parseInt(line[line.length - 1]);
           List<String> options = new ArrayList<>();
-          for (int i = 1; i <= 3; i++) {
+          for (int i = 1; i < line.length - 1; i++) {
             options.add(line[i]);
           }
-          int correctOptionIndex = Integer.parseInt(line[4]);
           Question question = new Question(questionText, options, correctOptionIndex);
           questions.add(question);
         }

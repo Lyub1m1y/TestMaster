@@ -11,7 +11,7 @@ public interface TestService {
 
   Test getTestByName(String testName);
 
-  void startTest(Test test);
+  void testPreparation(Test test);
 
   void submitAnswer(int questionIndex, int answerIndex);
 

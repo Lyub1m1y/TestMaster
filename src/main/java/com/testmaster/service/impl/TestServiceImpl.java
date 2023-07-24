@@ -48,7 +48,7 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public void startTest(Test test) {
+  public void testPreparation(Test test) {
     currentTest = test;
     answers.clear();
   }

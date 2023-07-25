@@ -21,32 +21,17 @@ public class TestController {
     log.info("App started!");
     scanner = new Scanner(System.in);
 
-    while (true) {
-      System.out.println("Для выхода введите - q");
-      System.out.println("1. Внутренние тесты");
-      System.out.println("2. Тесты из каталога");
+    List<Test> availableTests = testService.getAvailableTests();
 
-      String input = scanner.nextLine();
-      if (input.equals("q")) {
-        break;
-      } else if (input.equals("1") || input.equals("2")) {
-        testService.selectDirectoryTests(input);
-        List<Test> availableTests = testService.getAvailableTests();
-
-        if (!availableTests.isEmpty()) {
-          displayAvailableTests(availableTests);
-          Test selectedTest = selectTest();
-          if (selectedTest != null) {
-            performTest(selectedTest);
-          } else {
-            System.out.println("Тест не найден.");
-          }
-        }
+    if (!availableTests.isEmpty()) {
+      displayAvailableTests(availableTests);
+      Test selectedTest = selectTest();
+      if (selectedTest != null) {
+        performTest(selectedTest);
       } else {
-        System.out.println("Неверный ввод. Попробуйте еще раз.");
+        System.out.println("Тест не найден.");
       }
     }
-
     scanner.close();
   }
 

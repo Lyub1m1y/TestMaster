@@ -6,10 +6,11 @@
 
     <context:property-placeholder location="classpath:application.properties" />
 
-    <bean id="testCsvLoader" class="com.testmaster.service.impl.TestCsvLoaderImpl"></bean>
+    <bean id="testCsvLoader" class="com.testmaster.service.impl.TestCsvLoaderImpl">
+        <constructor-arg value="${directory.url}"/>
+    </bean>
     <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
         <constructor-arg ref="testCsvLoader"/>
-        <property name="directoryTests" value="${directory.url}" />
     </bean>
     <bean id="testController" class="com.testmaster.controller.TestController">
         <constructor-arg ref="testService"/>

@@ -7,14 +7,10 @@ import com.testmaster.service.TestService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.Setter;
 
 public class TestServiceImpl implements TestService {
 
   private TestLoader testLoader;
-  private static final String RESOURCES_TESTS = "src/main/resources/tests";
-  @Setter
-  private String directoryTests;
   private List<Test> availableTests;
   private Test currentTest;
   private Map<Integer, Integer> answers;
@@ -25,17 +21,8 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public void selectDirectoryTests(String option) {
-    if (option.equals("1")) {
-      testLoader.setDirectoryTests(RESOURCES_TESTS);
-    } else if ((option.equals("2"))) {
-      testLoader.setDirectoryTests(directoryTests);
-    }
-  }
-
-  @Override
   public List<Test> getAvailableTests() {
-    this.availableTests = testLoader.loadTestsFromResources();
+    this.availableTests = testLoader.loadTests();
     return availableTests;
   }
 

@@ -1,5 +1,7 @@
 package com.testmaster.service;
 
+import com.testmaster.model.Answer;
+import com.testmaster.model.Score;
 import com.testmaster.model.Test;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface TestService {
 
   void testPreparation(Test test);
 
-  void submitAnswer(int questionIndex, int answerIndex);
+  void submitAnswer(int questionIndex, Answer answer);
 
-  int getScore();
+  Score getScore();
 }

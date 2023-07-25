@@ -48,7 +48,7 @@ class TestServiceImplTest {
     testService.submitAnswer(0, 3);
     int expectedScore = 1;
 
-    int actualScore = testService.getScore();
+    int actualScore = testService.getScore(); // TODO
 
     assertEquals(expectedScore, actualScore);
 

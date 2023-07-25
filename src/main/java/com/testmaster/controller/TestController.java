@@ -1,6 +1,8 @@
 package com.testmaster.controller;
 
+import com.testmaster.model.Answer;
 import com.testmaster.model.Question;
+import com.testmaster.model.Score;
 import com.testmaster.model.Test;
 import com.testmaster.service.TestService;
 import java.util.List;
@@ -59,13 +61,13 @@ public class TestController {
         System.out.println("\t" + (j + 1) + ") " + options.get(j));
       }
 
-      int answerIndex;
+      Answer answer = new Answer();
       while (true) {
         System.out.print("Ваш ответ: ");
         String input = scanner.nextLine();
         try {
-          answerIndex = Integer.parseInt(input);
-          if (answerIndex < 1 || answerIndex > options.size()) {
+          answer.setAnswer(Integer.parseInt(input));
+          if (answer.getAnswer() < 1 || answer.getAnswer() > options.size()) {
             throw new NumberFormatException();
           }
           break;
@@ -75,10 +77,11 @@ public class TestController {
         }
       }
 
-      testService.submitAnswer(i, answerIndex);
+      testService.submitAnswer(i, answer);
     }
 
-    int score = testService.getScore();
-    System.out.println("Результат: " + score + " из " + questions.size());
+    Score score = testService.getScore();
+    System.out.println("Результат: " + score.getNumberOfCorrectAnswer()
+        + " из " + score.getNumberOfQuestions());
   }
 }

@@ -1,9 +1,9 @@
-package com.testmaster.controller;
+package com.testmaster;
 
 import com.testmaster.model.Answer;
+import com.testmaster.model.CustomTest;
 import com.testmaster.model.Question;
 import com.testmaster.model.Score;
-import com.testmaster.model.Test;
 import com.testmaster.service.TestService;
 import com.testmaster.service.UserInOutService;
 import java.util.List;
@@ -23,11 +23,11 @@ public class TestExecutor {
   public void startApp() {
     log.info("App started!");
 
-    List<Test> availableTests = testService.getAvailableTests();
+    List<CustomTest> availableTests = testService.getAvailableTests();
 
     if (!availableTests.isEmpty()) {
       displayAvailableTests(availableTests);
-      Test selectedTest = selectTest();
+      CustomTest selectedTest = selectTest();
       if (selectedTest != null) {
         performTest(selectedTest);
       } else {
@@ -36,20 +36,20 @@ public class TestExecutor {
     }
   }
 
-  private Test selectTest() {
+  private CustomTest selectTest() {
     userInOut.printOutput("Выберите тест: ");
     String testName = userInOut.readInput();
     return testService.getTestByName(testName);
   }
 
-  private void displayAvailableTests(List<Test> availableTests) {
+  private void displayAvailableTests(List<CustomTest> availableTests) {
     userInOut.printOutput("Доступные тесты:");
-    for (Test test : availableTests) {
+    for (CustomTest test : availableTests) {
       userInOut.printOutput(test.getTestName());
     }
   }
 
-  private void performTest(Test selectedTest) {
+  private void performTest(CustomTest selectedTest) {
     testService.testPreparation(selectedTest);
     List<Question> questions = selectedTest.getQuestions();
     for (int i = 0; i < questions.size(); i++) {

@@ -1,8 +1,8 @@
 package com.testmaster.service;
 
-import com.testmaster.model.Test;
+import com.testmaster.model.CustomTest;
 import java.util.List;
 
 public interface TestLoader {
-  List<Test> loadTests();
+  List<CustomTest> loadTests();
 }

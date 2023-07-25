@@ -14,7 +14,7 @@
     </bean>
     <bean id="userInOut" class="com.testmaster.service.impl.UserInOutServiceImpl">
     </bean>
-    <bean id="testExecutor" class="com.testmaster.controller.TestExecutor">
+    <bean id="testExecutor" class="com.testmaster.TestExecutor">
         <constructor-arg ref="testService"/>
         <constructor-arg ref="userInOut"/>
     </bean>

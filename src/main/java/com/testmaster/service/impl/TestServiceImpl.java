@@ -1,20 +1,19 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.Answer;
+import com.testmaster.model.CustomTest;
 import com.testmaster.model.Question;
 import com.testmaster.model.Score;
-import com.testmaster.model.Test;
 import com.testmaster.service.TestLoader;
 import com.testmaster.service.TestService;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestServiceImpl implements TestService {
 
   private TestLoader testLoader;
-  private List<Test> availableTests;
-  private Test currentTest;
+  private List<CustomTest> availableTests;
+  private CustomTest currentTest;
   private Score score;
   private List<Answer> answers;
 
@@ -25,13 +24,13 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public List<Test> getAvailableTests() {
+  public List<CustomTest> getAvailableTests() {
     this.availableTests = testLoader.loadTests();
     return availableTests;
   }
 
   @Override
-  public Test getTestByName(String testName) {
+  public CustomTest getTestByName(String testName) {
     return availableTests.stream()
         .filter(test -> test.getTestName().equals(testName))
         .findFirst()
@@ -39,7 +38,7 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public void testPreparation(Test test) {
+  public void testPreparation(CustomTest test) {
     currentTest = test;
     score.setNumberOfQuestions(currentTest.getQuestions().size());
     answers.clear();

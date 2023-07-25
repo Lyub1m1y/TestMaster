@@ -6,7 +6,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class Test {
+public class CustomTest {
 
   private String testName;
   private List<Question> questions;

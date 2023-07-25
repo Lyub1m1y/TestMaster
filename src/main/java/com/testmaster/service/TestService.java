@@ -1,16 +1,16 @@
 package com.testmaster.service;
 
 import com.testmaster.model.Answer;
+import com.testmaster.model.CustomTest;
 import com.testmaster.model.Score;
-import com.testmaster.model.Test;
 import java.util.List;
 
 public interface TestService {
-  List<Test> getAvailableTests();
+  List<CustomTest> getAvailableTests();
 
-  Test getTestByName(String testName);
+  CustomTest getTestByName(String testName);
 
-  void testPreparation(Test test);
+  void testPreparation(CustomTest test);
 
   void submitAnswer(int questionIndex, Answer answer);
 

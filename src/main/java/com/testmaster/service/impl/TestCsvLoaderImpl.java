@@ -1,8 +1,8 @@
 package com.testmaster.service.impl;
 
 import com.opencsv.CSVReader;
+import com.testmaster.model.CustomTest;
 import com.testmaster.model.Question;
-import com.testmaster.model.Test;
 import com.testmaster.service.TestLoader;
 import java.io.File;
 import java.io.FileReader;
@@ -21,10 +21,10 @@ public class TestCsvLoaderImpl implements TestLoader {
   private static final String RESOURCES_TESTS = "src/main/resources/tests";
 
   @Override
-  public List<Test> loadTests() {
-    List<Test> tests = new ArrayList<>();
+  public List<CustomTest> loadTests() {
+    List<CustomTest> tests = new ArrayList<>();
     try {
-      List<File> testPaths =  List.of(new File(directory), new File(RESOURCES_TESTS));
+      List<File> testPaths =  List.of(new File(RESOURCES_TESTS), new File(directory));
 
       for (File testsFolder : testPaths) {
         if (!testsFolder.exists() || !testsFolder.isDirectory()) {
@@ -42,7 +42,7 @@ public class TestCsvLoaderImpl implements TestLoader {
         for (File file : files) {
           if (file.isFile() && file.getName().endsWith(".csv")) {
             try {
-              Test test = loadTestFromFile(file);
+              CustomTest test = loadTestFromFile(file);
               tests.add(test);
             } catch (Exception ex) {
               log.error("Couldn't read the "  + file.getName() + ". " + ex.getMessage());
@@ -57,7 +57,7 @@ public class TestCsvLoaderImpl implements TestLoader {
     return tests;
   }
 
-  private Test loadTestFromFile(File file) throws Exception {
+  private CustomTest loadTestFromFile(File file) throws Exception {
     List<Question> questions = new ArrayList<>();
     try (CSVReader reader = new CSVReader(new FileReader(file))) {
       String[] line;
@@ -77,6 +77,6 @@ public class TestCsvLoaderImpl implements TestLoader {
     }
     String testName = file.getName().substring(0, file.getName().lastIndexOf(".csv"));
 
-    return new Test(testName, questions);
+    return new CustomTest(testName, questions);
   }
 }

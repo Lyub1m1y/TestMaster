@@ -12,7 +12,10 @@
     <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
         <constructor-arg ref="testCsvLoader"/>
     </bean>
-    <bean id="testController" class="com.testmaster.controller.TestController">
+    <bean id="userInOut" class="com.testmaster.service.impl.UserInOutServiceImpl">
+    </bean>
+    <bean id="testExecutor" class="com.testmaster.controller.TestExecutor">
         <constructor-arg ref="testService"/>
+        <constructor-arg ref="userInOut"/>
     </bean>
 </beans>

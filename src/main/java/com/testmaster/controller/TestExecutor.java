@@ -5,23 +5,23 @@ import com.testmaster.model.Question;
 import com.testmaster.model.Score;
 import com.testmaster.model.Test;
 import com.testmaster.service.TestService;
+import com.testmaster.service.UserInOutService;
 import java.util.List;
-import java.util.Scanner;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class TestExecutor {
 
   @NonNull
-  private TestService testService;
-  private Scanner scanner;
+  private final TestService testService;
+  @NonNull
+  private final UserInOutService userInOut;
 
   public void startApp() {
     log.info("App started!");
-    scanner = new Scanner(System.in);
 
     List<Test> availableTests = testService.getAvailableTests();
 
@@ -31,22 +31,21 @@ public class TestController {
       if (selectedTest != null) {
         performTest(selectedTest);
       } else {
-        System.out.println("Тест не найден.");
+        userInOut.printOutput("Тест не найден.");
       }
     }
-    scanner.close();
   }
 
   private Test selectTest() {
-    System.out.print("Выберите тест: ");
-    String testName = scanner.nextLine();
+    userInOut.printOutput("Выберите тест: ");
+    String testName = userInOut.readInput();
     return testService.getTestByName(testName);
   }
 
   private void displayAvailableTests(List<Test> availableTests) {
-    System.out.println("Доступные тесты:");
+    userInOut.printOutput("Доступные тесты:");
     for (Test test : availableTests) {
-      System.out.println(test.getTestName());
+      userInOut.printOutput(test.getTestName());
     }
   }
 
@@ -55,16 +54,16 @@ public class TestController {
     List<Question> questions = selectedTest.getQuestions();
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
-      System.out.println((i + 1) + ". " + question.getText());
+      userInOut.printOutput((i + 1) + ". " + question.getText());
       List<String> options = question.getOptions();
       for (int j = 0; j < options.size(); j++) {
-        System.out.println("\t" + (j + 1) + ") " + options.get(j));
+        userInOut.printOutput("\t" + (j + 1) + ") " + options.get(j));
       }
 
       Answer answer = new Answer();
       while (true) {
-        System.out.print("Ваш ответ: ");
-        String input = scanner.nextLine();
+        userInOut.printOutput("Ваш ответ: ");
+        String input = userInOut.readInput();
         try {
           answer.setAnswer(Integer.parseInt(input));
           if (answer.getAnswer() < 1 || answer.getAnswer() > options.size()) {
@@ -72,7 +71,7 @@ public class TestController {
           }
           break;
         } catch (NumberFormatException e) {
-          System.out.println("Неверный ввод. Пожалуйста, введите число от 1 до "
+          userInOut.printOutput("Неверный ввод. Пожалуйста, введите число от 1 до "
               + options.size() + ".");
         }
       }
@@ -81,7 +80,7 @@ public class TestController {
     }
 
     Score score = testService.getScore();
-    System.out.println("Результат: " + score.getNumberOfCorrectAnswer()
+    userInOut.printOutput("Результат: " + score.getNumberOfCorrectAnswer()
         + " из " + score.getNumberOfQuestions());
   }
 }

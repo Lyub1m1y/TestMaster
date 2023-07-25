@@ -15,12 +15,12 @@ import static org.mockito.Mockito.*;
 class TestControllerTest {
 
   private TestService testService;
-  private TestController controller;
+  private TestExecutor controller;
 
   @BeforeEach
   void setUp() {
     testService = mock(TestService.class);
-    controller = new TestController(testService);
+    controller = new TestExecutor(testService);
   }
 
   @org.junit.jupiter.api.Test

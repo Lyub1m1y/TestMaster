@@ -11,6 +11,7 @@ import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -18,13 +19,14 @@ public class TestCsvLoaderImpl implements TestLoader {
 
   @NonNull
   private final String directory;
-  private static final String RESOURCES_TESTS = "src/main/resources/tests";
+  private static final String RESOURCES_TESTS = "tests";
 
   @Override
   public List<CustomTest> loadTests() {
     List<CustomTest> tests = new ArrayList<>();
     try {
-      List<File> testPaths =  List.of(new File(RESOURCES_TESTS), new File(directory));
+      ClassPathResource resource = new ClassPathResource(RESOURCES_TESTS);
+      List<File> testPaths =  List.of(resource.getFile(), new File(directory));
 
       for (File testsFolder : testPaths) {
         if (!testsFolder.exists() || !testsFolder.isDirectory()) {

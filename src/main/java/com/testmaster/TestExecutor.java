@@ -31,19 +31,19 @@ public class TestExecutor {
       if (selectedTest != null) {
         performTest(selectedTest);
       } else {
-        userInOut.printOutput("Тест не найден.");
+        userInOut.printOutput("Test not found.");
       }
     }
   }
 
   private CustomTest selectTest() {
-    userInOut.printOutput("Выберите тест: ");
+    userInOut.printOutput("Select a test: ");
     String testName = userInOut.readInput();
     return testService.getTestByName(testName);
   }
 
   private void displayAvailableTests(List<CustomTest> availableTests) {
-    userInOut.printOutput("Доступные тесты:");
+    userInOut.printOutput("Available tests:");
     for (CustomTest test : availableTests) {
       userInOut.printOutput(test.getTestName());
     }
@@ -62,7 +62,7 @@ public class TestExecutor {
 
       Answer answer = new Answer();
       while (true) {
-        userInOut.printOutput("Ваш ответ: ");
+        userInOut.printOutput("Your answer: ");
         String input = userInOut.readInput();
         try {
           answer.setAnswer(Integer.parseInt(input));
@@ -71,7 +71,7 @@ public class TestExecutor {
           }
           break;
         } catch (NumberFormatException e) {
-          userInOut.printOutput("Неверный ввод. Пожалуйста, введите число от 1 до "
+          userInOut.printOutput("Invalid entry. Please enter a number between 1 and "
               + options.size() + ".");
         }
       }
@@ -80,7 +80,7 @@ public class TestExecutor {
     }
 
     Score score = testService.getScore();
-    userInOut.printOutput("Результат: " + score.getNumberOfCorrectAnswer()
-        + " из " + score.getNumberOfQuestions());
+    userInOut.printOutput("Result: " + score.getNumberOfCorrectAnswer()
+        + " from " + score.getNumberOfQuestions());
   }
 }

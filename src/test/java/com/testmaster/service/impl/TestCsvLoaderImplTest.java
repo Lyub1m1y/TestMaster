@@ -1,14 +1,12 @@
 package com.testmaster.service.impl;
 
-import com.testmaster.model.Question;
 import com.testmaster.model.CustomTest;
 import java.util.List;
-
 import com.testmaster.test.util.CustomTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestCsvLoaderImplTest {
 
@@ -26,6 +24,9 @@ class TestCsvLoaderImplTest {
 
     List<CustomTest> tests = testCsvLoader.loadTests();
 
-    assertEquals(expectedTest, tests.get(0));
+    boolean testFound = tests.stream()
+        .anyMatch(test -> test.equals(expectedTest));
+
+    assertTrue(testFound);
   }
 }

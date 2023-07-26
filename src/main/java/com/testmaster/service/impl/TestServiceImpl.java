@@ -11,21 +11,19 @@ import java.util.List;
 
 public class TestServiceImpl implements TestService {
 
-  private TestLoader testLoader;
-  private List<CustomTest> availableTests;
+  private final List<CustomTest> availableTests;
+  private final Score score;
+  private final List<Answer> answers;
   private CustomTest currentTest;
-  private Score score;
-  private List<Answer> answers;
 
   public TestServiceImpl(TestLoader testLoader) {
-    this.testLoader = testLoader;
+    this.availableTests = testLoader.loadTests();
     this.score = new Score();
     this.answers = new ArrayList<>();
   }
 
   @Override
   public List<CustomTest> getAvailableTests() {
-    this.availableTests = testLoader.loadTests();
     return availableTests;
   }
 

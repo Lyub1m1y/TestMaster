@@ -7,5 +7,5 @@ public interface TestRepository {
 
   List<String> getTestsNames();
 
-  UserTest getTestByName();
+  UserTest getTestByName(String testName);
 }

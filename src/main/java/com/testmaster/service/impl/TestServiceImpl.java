@@ -23,7 +23,7 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public UserTest getTestByName(String testName) {
-    return repository.getTestByName();
+    return repository.getTestByName(testName);
   }
 
   @Override

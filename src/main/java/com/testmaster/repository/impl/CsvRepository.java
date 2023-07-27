@@ -1,6 +1,8 @@
 package com.testmaster.repository.impl;
 
 import com.opencsv.CSVReader;
+import com.testmaster.model.Option;
+import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.TestRepository;
 import com.testmaster.repository.csv.CsvLoader;
@@ -40,7 +42,39 @@ public class CsvRepository implements TestRepository {
   }
 
   @Override
-  public UserTest getTestByName() {
-    return null;
+  public UserTest getTestByName(String testName) {
+    UserTest test = null;
+    List<InputStream> filesStreams = new ArrayList<>();
+
+    for (CsvLoader loader : loaders) {
+      filesStreams.addAll(loader.getFilesStreams());
+    }
+
+    for (InputStream fileStream : filesStreams) {
+      try (CSVReader reader = new CSVReader(new InputStreamReader(fileStream))) {
+        String name = reader.readNext()[0];
+        if (name.equals(testName)) {
+          String[] line;
+          List<Question> questions = new ArrayList<>();
+          while ((line = reader.readNext()) != null) {
+            if (line.length != 0) {
+              String questionText = line[0];
+              int correctOptionIndex = (Integer.parseInt(line[line.length - 1])) - 1;
+              List<Option> options = new ArrayList<>();
+              for (int i = 1; i < line.length - 1; i++) {
+                options.add(new Option(line[i]));
+              }
+              options.get(correctOptionIndex).setCorrect(true);
+              Question question = new Question(questionText, options);
+              questions.add(question);
+            }
+          }
+          test = new UserTest(testName, questions);
+        }
+      } catch (Exception ex) {
+        log.error(ex.getMessage());
+      }
+    }
+    return test;
   }
 }

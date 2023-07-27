@@ -1,70 +1,44 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.Answer;
-import com.testmaster.model.CustomTest;
 import com.testmaster.model.Question;
 import com.testmaster.model.Score;
-import com.testmaster.service.TestLoader;
+import com.testmaster.model.UserTest;
+import com.testmaster.repository.TestRepository;
 import com.testmaster.service.TestService;
-import java.util.ArrayList;
 import java.util.List;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
-  private final List<CustomTest> availableTests;
-  private final Score score;
-  private final List<Answer> answers;
-  private CustomTest currentTest;
+  @NonNull
+  private final TestRepository repository;
 
-  public TestServiceImpl(TestLoader testLoader) {
-    this.availableTests = testLoader.loadTests();
-    this.score = new Score();
-    this.answers = new ArrayList<>();
+  @Override
+  public List<String> getAvailableTests() {
+    return repository.getTestsNames();
   }
 
   @Override
-  public List<CustomTest> getAvailableTests() {
-    return availableTests;
+  public UserTest getTestByName(String testName) {
+    return repository.getTestByName();
   }
 
   @Override
-  public CustomTest getTestByName(String testName) {
-    return availableTests.stream()
-        .filter(test -> test.getTestName().equals(testName))
-        .findFirst()
-        .orElse(null);
-  }
-
-  @Override
-  public void testPreparation(CustomTest test) {
-    currentTest = test;
-    score.setNumberOfQuestions(currentTest.getQuestions().size());
-    answers.clear();
+  public void testPreparation(UserTest test) {
+    // TODO
   }
 
   @Override
   public void submitAnswer(int questionIndex, Answer answer) {
-    if (currentTest != null && questionIndex >= 0
-        && questionIndex < currentTest.getQuestions().size()) {
-      answers.add(answer);
-    } else {
-      throw new IllegalArgumentException("Invalid question index");
-    }
+    // TODO
   }
 
   @Override
   public Score getScore() {
-    if (currentTest != null) {
-      List<Question> questions = currentTest.getQuestions();
-      for (int i = 0; i < questions.size(); i++) {
-        Question question = questions.get(i);
-        int correctOptionIndex = question.getCorrectOptionIndex();
-        if (answers.get(i).getAnswer() == correctOptionIndex) {
-          score.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer() + 1);
-        }
-      }
-    }
-    return score;
+    return null;
   }
 
 }

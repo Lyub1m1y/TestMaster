@@ -9,7 +9,6 @@ import lombok.Data;
 public class Question {
 
   private String text;
-  private List<String> options;
-  private int correctOptionIndex;
+  private List<Option> options;
 
 }

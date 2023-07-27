@@ -1,5 +1,6 @@
 package com.testmaster;
 
+import com.testmaster.executor.TestExecutor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

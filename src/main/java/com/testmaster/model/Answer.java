@@ -11,5 +11,5 @@ public class Answer {
 
   @Setter
   @Getter
-  private int answer;
+  private Option answer;
 }

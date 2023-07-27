@@ -26,11 +26,6 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public void testPreparation(UserTest test) {
-    // TODO
-  }
-
-  @Override
   public void submitAnswer(int questionIndex, Answer answer) {
     // TODO
   }

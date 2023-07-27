@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @RequiredArgsConstructor
+@Getter
 public class Option {
 
   @NonNull
   private String option;
-  @Getter
   @Setter
   private boolean correct;
 }

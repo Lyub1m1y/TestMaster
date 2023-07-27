@@ -10,8 +10,6 @@ public interface TestService {
 
   UserTest getTestByName(String testName);
 
-  void testPreparation(UserTest test);
-
   void submitAnswer(int questionIndex, Answer answer);
 
   Score getScore();

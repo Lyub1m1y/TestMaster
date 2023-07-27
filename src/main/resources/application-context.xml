@@ -7,7 +7,7 @@
     <context:property-placeholder location="classpath:application.properties" />
 
     <bean id="csvResourceLoader" class="com.testmaster.repository.csv.impl.CsvResourceLoader">
-        <constructor-arg value="${resources.folder}"/>
+        <constructor-arg value="${resources.zip}"/>
     </bean>
     <bean id="csvDirectoryLoader" class="com.testmaster.repository.csv.impl.CsvDirectoryLoader">
         <constructor-arg value="${directory.url}"/>
@@ -21,13 +21,20 @@
         </constructor-arg>
     </bean>
 
+    <bean id="userInput" class="com.testmaster.service.consoleinout.ConsoleUserInput" />
+    <bean id="userOutput" class="com.testmaster.service.consoleinout.ConsoleUserOutput" />
+
+    <bean id="userInOutService" class="com.testmaster.service.impl.UserInOutServiceImpl">
+        <constructor-arg ref="userInput" />
+        <constructor-arg ref="userOutput" />
+    </bean>
+
     <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
         <constructor-arg ref="csvRepository"/>
     </bean>
-    <bean id="userInOut" class="com.testmaster.service.impl.UserInOutServiceImpl">
-    </bean>
+
     <bean id="testExecutor" class="com.testmaster.executor.TestExecutor">
         <constructor-arg ref="testService"/>
-        <constructor-arg ref="userInOut"/>
+        <constructor-arg ref="userInOutService"/>
     </bean>
 </beans>

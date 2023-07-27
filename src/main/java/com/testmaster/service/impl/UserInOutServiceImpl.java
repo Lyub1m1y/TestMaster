@@ -1,19 +1,23 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.service.UserInOutService;
-import java.util.Scanner;
+import com.testmaster.service.UserInput;
+import com.testmaster.service.UserOutput;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class UserInOutServiceImpl implements UserInOutService {
 
-  private final Scanner scanner = new Scanner(System.in);
+  private final UserInput userInput;
+  private final UserOutput userOutput;
 
   @Override
   public String readInput() {
-    return scanner.nextLine();
+    return userInput.read();
   }
 
   @Override
   public void printOutput(String message) {
-    System.out.println(message);
+    userOutput.print(message);
   }
 }

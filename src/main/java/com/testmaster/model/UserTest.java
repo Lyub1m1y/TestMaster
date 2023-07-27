@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class UserTest {
 
-  private String testName;
+  private String testName; // TODO mb delete
   private List<Question> questions;
 
 }

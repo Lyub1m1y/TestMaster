@@ -1,7 +1,6 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.Answer;
-import com.testmaster.model.Question;
 import com.testmaster.model.Score;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.TestRepository;

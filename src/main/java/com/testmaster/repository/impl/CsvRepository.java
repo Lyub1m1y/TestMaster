@@ -24,13 +24,8 @@ public class CsvRepository implements TestRepository {
   @Override
   public List<String> getTestsNames() {
     List<String> namesTests = new ArrayList<>();
-    List<InputStream> filesStreams = new ArrayList<>();
 
-    for (CsvLoader loader : loaders) {
-      filesStreams.addAll(loader.getFilesStreams());
-    }
-
-    for (InputStream fileStream : filesStreams) {
+    for (InputStream fileStream : getFilesStreams()) {
       try (CSVReader reader = new CSVReader(new InputStreamReader(fileStream))) {
         String[] line = reader.readNext();
         namesTests.add(line[0]);
@@ -38,19 +33,15 @@ public class CsvRepository implements TestRepository {
         log.error(ex.getMessage());
       }
     }
+
     return namesTests;
   }
 
   @Override
   public UserTest getTestByName(String testName) {
     UserTest test = null;
-    List<InputStream> filesStreams = new ArrayList<>();
 
-    for (CsvLoader loader : loaders) {
-      filesStreams.addAll(loader.getFilesStreams());
-    }
-
-    for (InputStream fileStream : filesStreams) {
+    for (InputStream fileStream : getFilesStreams()) {
       try (CSVReader reader = new CSVReader(new InputStreamReader(fileStream))) {
         String name = reader.readNext()[0];
         if (name.equals(testName)) {
@@ -75,6 +66,17 @@ public class CsvRepository implements TestRepository {
         log.error(ex.getMessage());
       }
     }
+
     return test;
+  }
+
+  private List<InputStream> getFilesStreams() {
+    List<InputStream> filesStreams = new ArrayList<>();
+
+    for (CsvLoader loader : loaders) {
+      filesStreams.addAll(loader.getFilesStreams());
+    }
+
+    return filesStreams;
   }
 }

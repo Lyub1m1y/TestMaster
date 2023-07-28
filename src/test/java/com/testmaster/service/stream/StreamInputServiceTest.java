@@ -1,25 +1,26 @@
-package com.testmaster.service.consoleinout;
+package com.testmaster.service.stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import com.testmaster.service.io.stream.StreamInputService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ConsoleUserInputTest {
+class StreamInputServiceTest {
 
   private final InputStream systemIn = System.in;
   private ByteArrayInputStream testIn;
-  private ConsoleUserInput consoleUserInput;
+  private StreamInputService streamInputService;
 
   @BeforeEach
   public void setUp() {
     testIn = new ByteArrayInputStream("Test Input".getBytes());
     System.setIn(testIn);
-    consoleUserInput = new ConsoleUserInput();
+    streamInputService = new StreamInputService();
   }
 
   @AfterEach
@@ -29,7 +30,7 @@ class ConsoleUserInputTest {
 
   @Test
   void read_shouldReturnInput() {
-    String input = consoleUserInput.read();
+    String input = streamInputService.readLine();
 
     assertEquals("Test Input", input);
   }

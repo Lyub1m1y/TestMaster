@@ -1,5 +1,6 @@
-package com.testmaster.service.consoleinout;
+package com.testmaster.service.stream;
 
+import com.testmaster.service.io.stream.StreamOutputService;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -7,7 +8,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ConsoleUserOutputTest {
+class StreamOutputServiceTest {
 
   @Test
   void print_shouldPrint() {
@@ -15,7 +16,7 @@ class ConsoleUserOutputTest {
     PrintStream customPrintStream = new PrintStream(outputStream);
     System.setOut(customPrintStream);
 
-    ConsoleUserOutput consoleUserOutput = new ConsoleUserOutput();
+    StreamOutputService consoleUserOutput = new StreamOutputService();
     String message = "Test Output";
 
     consoleUserOutput.print(message);

@@ -21,11 +21,11 @@
         </constructor-arg>
     </bean>
 
-    <bean id="userInput" class="com.testmaster.service.consoleinout.ConsoleUserInput" />
-    <bean id="userOutput" class="com.testmaster.service.consoleinout.ConsoleUserOutput" />
-    <bean id="userInOutService" class="com.testmaster.service.impl.UserInOutServiceImpl">
-        <constructor-arg ref="userInput" />
-        <constructor-arg ref="userOutput" />
+    <bean id="streamInputService" class="com.testmaster.service.io.stream.StreamInputService"/>
+    <bean id="streamOutputService" class="com.testmaster.service.io.stream.StreamOutputService"/>
+    <bean id="inOutService" class="com.testmaster.service.impl.InOutServiceImpl">
+        <constructor-arg ref="streamInputService" />
+        <constructor-arg ref="streamOutputService" />
     </bean>
 
     <bean id="questionConverter" class="com.testmaster.service.impl.QuestionConverterImpl">
@@ -37,7 +37,7 @@
 
     <bean id="testLauncher" class="com.testmaster.launcher.TestLauncher">
         <constructor-arg ref="testService"/>
-        <constructor-arg ref="userInOutService"/>
+        <constructor-arg ref="inOutService"/>
         <constructor-arg ref="questionConverter"/>
     </bean>
 </beans>

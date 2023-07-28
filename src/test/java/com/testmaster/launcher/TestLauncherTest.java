@@ -3,7 +3,7 @@ package com.testmaster.launcher;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.TestService;
-import com.testmaster.service.UserInOutService;
+import com.testmaster.service.io.InOutService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -24,7 +24,7 @@ class TestLauncherTest {
   private TestService testServiceMock;
 
   @Mock
-  private UserInOutService userInOutMock;
+  private InOutService userInOutMock;
 
   @InjectMocks
   private TestLauncher testLauncher;
@@ -36,7 +36,7 @@ class TestLauncherTest {
     TestResult testResult = new TestResult();
 
     when(testServiceMock.getAvailableTests()).thenReturn(availableTests);
-    when(userInOutMock.readInput()).thenReturn("Test1");
+    when(userInOutMock.readLine()).thenReturn("Test1");
     when(testServiceMock.getTestByName("Test1")).thenReturn(selectedTest);
 
     ArgumentCaptor<Answer> answerCaptor = ArgumentCaptor.forClass(Answer.class);
@@ -44,13 +44,13 @@ class TestLauncherTest {
     testLauncher.startApp();
 
     assertAll(
-        () -> verify(userInOutMock).printOutput("Select a test: "),
-        () -> verify(userInOutMock).readInput(),
+        () -> verify(userInOutMock).printMessage("Select a test: "),
+        () -> verify(userInOutMock).readLine(),
         () -> verify(testServiceMock, times(selectedTest.getQuestions().size()))
             .submitAnswer(any(), answerCaptor.capture(), any()),
-        () -> verify(userInOutMock).printOutput("Result: " + testResult.getNumberOfCorrectAnswer()
+        () -> verify(userInOutMock).printMessage("Result: " + testResult.getNumberOfCorrectAnswer()
             + " from " + testResult.getNumberOfQuestions()),
-        () -> verify(userInOutMock, never()).printOutput("Test not found.")
+        () -> verify(userInOutMock, never()).printMessage("Test not found.")
     );
   }
 
@@ -59,13 +59,13 @@ class TestLauncherTest {
     List<String> availableTests = Collections.emptyList();
 
     when(testServiceMock.getAvailableTests()).thenReturn(availableTests);
-    when(userInOutMock.readInput()).thenReturn("NonExistentTest");
+    when(userInOutMock.readLine()).thenReturn("NonExistentTest");
 
     testLauncher.startApp();
 
     assertAll(
-        () -> verify(userInOutMock).printOutput("Select a test: "),
-        () -> verify(userInOutMock).printOutput("Test not found."),
+        () -> verify(userInOutMock).printMessage("Select a test: "),
+        () -> verify(userInOutMock).printMessage("Test not found."),
         () -> verify(testServiceMock, never()).submitAnswer(any(), any(), any())
     );
   }

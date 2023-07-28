@@ -1,7 +1,7 @@
 package com.testmaster.service.impl;
 
-import com.testmaster.service.UserInput;
-import com.testmaster.service.UserOutput;
+import com.testmaster.service.io.InputService;
+import com.testmaster.service.io.OutputService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,25 +12,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserInOutServiceImplTest {
+class InOutServiceImplTest {
 
   @Mock
-  private UserInput userInputMock;
+  private InputService inputServiceMock;
 
   @Mock
-  private UserOutput userOutputMock;
+  private OutputService outputServiceMock;
 
   @InjectMocks
-  private UserInOutServiceImpl userInOutService;
+  private InOutServiceImpl userInOutService;
 
   @Test
   void readInput_shouldReturnInput() {
     String input = "Test Input";
-    when(userInputMock.read()).thenReturn(input);
+    when(inputServiceMock.readLine()).thenReturn(input);
 
-    String result = userInOutService.readInput();
+    String result = userInOutService.readLine();
 
-    verify(userInputMock).read();
+    verify(inputServiceMock).readLine();
     assertEquals(input, result);
   }
 
@@ -38,8 +38,8 @@ class UserInOutServiceImplTest {
   void printOutput_shouldPrintOutput() {
     String message = "Test Message";
 
-    userInOutService.printOutput(message);
+    userInOutService.printMessage(message);
 
-    verify(userOutputMock).print(message);
+    verify(outputServiceMock).print(message);
   }
 }

@@ -27,13 +27,12 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public void submitAnswer(Question currentQuestion, int answer, TestResult testResult) {
+    answer--;
     if (currentQuestion != null && answer >= 0
         && answer < currentQuestion.getOptions().size()) {
       if (checkAnswer(currentQuestion, answer)) {
         testResult.setNumberOfCorrectAnswer(testResult.getNumberOfCorrectAnswer() + 1);
       }
-    } else {
-      throw new IllegalArgumentException("Invalid option answer");
     }
   }
 

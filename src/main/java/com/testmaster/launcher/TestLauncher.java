@@ -5,7 +5,7 @@ import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestService;
-import com.testmaster.service.UserInOutService;
+import com.testmaster.service.io.InOutService;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class TestLauncher {
   @NonNull
   private final TestService testService;
   @NonNull
-  private final UserInOutService userInOut;
+  private final InOutService inOutService;
   @NonNull
   private final QuestionConverter questionConverter;
 
@@ -29,33 +29,33 @@ public class TestLauncher {
 
       if (!availableTests.isEmpty()) {
         displayAvailableTests(availableTests);
-        userInOut.printOutput("");
+        inOutService.printMessage("");
         UserTest selectedTest = selectTest();
         if (selectedTest != null) {
           TestResult testResult = performTest(selectedTest);
           displayTestResult(testResult);
         } else {
-          userInOut.printOutput("Test not found.");
+          inOutService.printMessage("Test not found.");
         }
       } else {
-        userInOut.printOutput("There are no tests available to take.");
+        inOutService.printMessage("There are no tests available to take.");
       }
     } catch (Exception ex) {
-      userInOut.printOutput(ex.getMessage());
+      inOutService.printMessage(ex.getMessage());
     }
   }
 
 
   private void displayAvailableTests(List<String> availableTests) {
-    userInOut.printOutput("Available tests:");
+    inOutService.printMessage("Available tests:");
     for (String testName : availableTests) {
-      userInOut.printOutput(testName);
+      inOutService.printMessage(testName);
     }
   }
 
   private UserTest selectTest() {
-    userInOut.printOutput("Select a test: ");
-    String testName = userInOut.readInput();
+    inOutService.printMessage("Select a test: ");
+    String testName = inOutService.readLine();
     return testService.getTestByName(testName);
   }
 
@@ -65,25 +65,19 @@ public class TestLauncher {
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
-      userInOut.printOutput((i + 1) + ". " + questionConverter.convertToString(question));
+      inOutService.printMessage((i + 1) + ". " + questionConverter.convertToString(question));
 
-      while (true) {
-        userInOut.printOutput("Your answer: ");
-        String input = userInOut.readInput();
-        try {
-          int answer = Integer.parseInt(input) - 1;
-          testService.submitAnswer(question, answer, testResult);
-          break;
-        } catch (Exception ex) {
-          log.error("Please enter a number between 1 and " + question.getOptions().size() + ".");
-        }
-      }
+      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
+          "Please enter a number between 1 and " + question.getOptions().size() + ".");
+      testService.submitAnswer(question, answer, testResult);
+
     }
+
     return testResult;
   }
 
   private void displayTestResult(TestResult testResult) {
-    userInOut.printOutput("Result: " + testResult.getNumberOfCorrectAnswer()
+    inOutService.printMessage("Result: " + testResult.getNumberOfCorrectAnswer()
         + " from " + testResult.getNumberOfQuestions());
   }
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Score {
+public class TestResult {
 
   private int numberOfQuestions;
   private int numberOfCorrectAnswer;

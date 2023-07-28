@@ -1,7 +1,8 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.Answer;
-import com.testmaster.model.Score;
+import com.testmaster.model.Question;
+import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.TestRepository;
 import com.testmaster.service.TestService;
@@ -26,13 +27,22 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public void submitAnswer(int questionIndex, Answer answer) {
-    // TODO
+  public void submitAnswer(Question currentQuestion, Answer answer, TestResult testResult) {
+    if (currentQuestion != null && answer.getAnswer() >= 0
+        && answer.getAnswer() < currentQuestion.getOptions().size()) {
+      if (checkAnswer(currentQuestion, answer)) {
+        testResult.setNumberOfCorrectAnswer(testResult.getNumberOfCorrectAnswer() + 1);
+      }
+    } else {
+      throw new IllegalArgumentException("Invalid option answer");
+    }
   }
 
-  @Override
-  public Score getScore() {
-    return null;
+  private boolean checkAnswer(Question currentQuestion, Answer answer) {
+    boolean correct = false;
+    if (currentQuestion.getOptions().get(answer.getAnswer()).isCorrect()) {
+      correct =  true;
+    }
+    return correct;
   }
-
 }

@@ -1,8 +1,8 @@
 package com.testmaster.executor;
 
 import com.testmaster.model.Answer;
-import com.testmaster.model.Option;
 import com.testmaster.model.Question;
+import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestService;
@@ -28,7 +28,8 @@ public class TestExecutor {
     displayAvailableTests(testService.getAvailableTests());
     UserTest selectedTest = selectTest();
     if (selectedTest != null) {
-      performTest(selectedTest);
+      TestResult testResult = performTest(selectedTest);
+      displayTestResult(testResult);
     } else {
       userInOut.printOutput("Test not found.");
     }
@@ -50,36 +51,34 @@ public class TestExecutor {
     return testService.getTestByName(testName);
   }
 
-  private void performTest(UserTest selectedTest) {
+  private TestResult performTest(UserTest selectedTest) {
     List<Question> questions = selectedTest.getQuestions();
-    QuestionConverter converter = new QuestionConverterImpl(); // TODO mb spring inject
+    TestResult testResult = new TestResult();
+    testResult.setNumberOfQuestions(questions.size());
+    QuestionConverter converter = new QuestionConverterImpl();
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
       userInOut.printOutput((i + 1) + ". " + converter.convertToString(question));
 
-//      Answer answer = new Answer();
-//      while (true) {
-//        userInOut.printOutput("Your answer: ");
-//        String input = userInOut.readInput();
-//        try {
-//          answer.setAnswer(new Option(Integer.parseInt(input)));
-//          if (answer.getAnswer() < 1 || answer.getAnswer() > options.size()) {
-//            throw new NumberFormatException();
-//          }
-//          break;
-//        } catch (NumberFormatException e) {
-//          userInOut.printOutput("Invalid entry. Please enter a number between 1 and "
-//              + options.size() + ".");
-//        }
-//      }
-//
-//      testService.submitAnswer(i, answer);
-
+      while (true) {
+        Answer answer = new Answer();
+        userInOut.printOutput("Your answer: ");
+        String input = userInOut.readInput();
+        try {
+          answer.setAnswer(Integer.parseInt(input) - 1);
+          testService.submitAnswer(question, answer, testResult);
+          break;
+        } catch (Exception ex) {
+          log.error("Please enter a number between 1 and " + question.getOptions().size() + ".");
+        }
+      }
     }
+    return testResult;
   }
 
-  private void displayResult() {
-
+  private void displayTestResult(TestResult testResult) {
+    userInOut.printOutput("Result: " + testResult.getNumberOfCorrectAnswer()
+        + " from " + testResult.getNumberOfQuestions());
   }
 }

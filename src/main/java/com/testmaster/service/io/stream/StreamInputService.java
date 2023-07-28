@@ -2,10 +2,12 @@ package com.testmaster.service.io.stream;
 
 import com.testmaster.service.io.InputService;
 import java.util.Scanner;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class StreamInputService implements InputService {
 
-  private final Scanner scanner = new Scanner(System.in); // TODO DI
+  private final Scanner scanner;
 
   @Override
   public String readLine() {

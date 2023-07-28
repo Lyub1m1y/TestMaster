@@ -21,7 +21,13 @@
         </constructor-arg>
     </bean>
 
-    <bean id="streamInputService" class="com.testmaster.service.io.stream.StreamInputService"/>
+    <bean id="streamInputService" class="com.testmaster.service.io.stream.StreamInputService">
+        <constructor-arg>
+            <bean class="java.util.Scanner">
+                <constructor-arg value="#{T(java.lang.System).in}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
     <bean id="streamOutputService" class="com.testmaster.service.io.stream.StreamOutputService"/>
     <bean id="inOutService" class="com.testmaster.service.impl.InOutServiceImpl">
         <constructor-arg ref="streamInputService" />

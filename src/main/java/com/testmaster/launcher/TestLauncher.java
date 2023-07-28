@@ -65,12 +65,11 @@ public class TestLauncher {
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
-      inOutService.printMessage((i + 1) + ". " + questionConverter.convertToString(question));
 
+      inOutService.printMessage((i + 1) + ". " + questionConverter.convertToString(question));
       int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
           "Please enter a number between 1 and " + question.getOptions().size() + ".");
       testService.submitAnswer(question, answer, testResult);
-
     }
 
     return testResult;

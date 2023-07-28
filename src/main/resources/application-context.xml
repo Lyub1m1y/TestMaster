@@ -23,10 +23,12 @@
 
     <bean id="userInput" class="com.testmaster.service.consoleinout.ConsoleUserInput" />
     <bean id="userOutput" class="com.testmaster.service.consoleinout.ConsoleUserOutput" />
-
     <bean id="userInOutService" class="com.testmaster.service.impl.UserInOutServiceImpl">
         <constructor-arg ref="userInput" />
         <constructor-arg ref="userOutput" />
+    </bean>
+
+    <bean id="questionConverter" class="com.testmaster.service.impl.QuestionConverterImpl">
     </bean>
 
     <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
@@ -36,5 +38,6 @@
     <bean id="testLauncher" class="com.testmaster.launcher.TestLauncher">
         <constructor-arg ref="testService"/>
         <constructor-arg ref="userInOutService"/>
+        <constructor-arg ref="questionConverter"/>
     </bean>
 </beans>

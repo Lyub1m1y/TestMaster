@@ -1,6 +1,5 @@
 package com.testmaster.launcher;
 
-import com.testmaster.model.Answer;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.TestService;

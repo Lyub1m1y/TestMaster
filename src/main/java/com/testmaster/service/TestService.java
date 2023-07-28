@@ -1,6 +1,5 @@
 package com.testmaster.service;
 
-import com.testmaster.model.Answer;
 import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
@@ -11,5 +10,5 @@ public interface TestService {
 
   UserTest getTestByName(String testName);
 
-  void submitAnswer(Question currentQuestion, Answer answer, TestResult testResult);
+  void submitAnswer(Question currentQuestion, int answer, TestResult testResult);
 }

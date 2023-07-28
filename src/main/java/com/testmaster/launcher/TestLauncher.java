@@ -1,13 +1,11 @@
 package com.testmaster.launcher;
 
-import com.testmaster.model.Answer;
 import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestService;
 import com.testmaster.service.UserInOutService;
-import com.testmaster.service.impl.QuestionConverterImpl;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +19,8 @@ public class TestLauncher {
   private final TestService testService;
   @NonNull
   private final UserInOutService userInOut;
+  @NonNull
+  private final QuestionConverter questionConverter;
 
   public void startApp() {
     log.info("App started!");
@@ -61,20 +61,17 @@ public class TestLauncher {
 
   private TestResult performTest(UserTest selectedTest) {
     List<Question> questions = selectedTest.getQuestions();
-    TestResult testResult = new TestResult();
-    testResult.setNumberOfQuestions(questions.size());
-    QuestionConverter converter = new QuestionConverterImpl();
+    TestResult testResult = new TestResult(questions.size());
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
-      userInOut.printOutput((i + 1) + ". " + converter.convertToString(question));
+      userInOut.printOutput((i + 1) + ". " + questionConverter.convertToString(question));
 
       while (true) {
-        Answer answer = new Answer();
         userInOut.printOutput("Your answer: ");
         String input = userInOut.readInput();
         try {
-          answer.setAnswer(Integer.parseInt(input) - 1);
+          int answer = Integer.parseInt(input) - 1;
           testService.submitAnswer(question, answer, testResult);
           break;
         } catch (Exception ex) {

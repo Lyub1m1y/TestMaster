@@ -33,7 +33,7 @@
         <constructor-arg ref="csvRepository"/>
     </bean>
 
-    <bean id="testExecutor" class="com.testmaster.executor.TestExecutor">
+    <bean id="testLauncher" class="com.testmaster.launcher.TestLauncher">
         <constructor-arg ref="testService"/>
         <constructor-arg ref="userInOutService"/>
     </bean>

@@ -1,4 +1,4 @@
-package com.testmaster.executor;
+package com.testmaster.launcher;
 
 import com.testmaster.model.Answer;
 import com.testmaster.model.Question;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-public class TestExecutor {
+public class TestLauncher {
 
   @NonNull
   private final TestService testService;
@@ -24,25 +24,32 @@ public class TestExecutor {
 
   public void startApp() {
     log.info("App started!");
+    try {
+      List<String> availableTests = testService.getAvailableTests();
 
-    displayAvailableTests(testService.getAvailableTests());
-    UserTest selectedTest = selectTest();
-    if (selectedTest != null) {
-      TestResult testResult = performTest(selectedTest);
-      displayTestResult(testResult);
-    } else {
-      userInOut.printOutput("Test not found.");
+      if (!availableTests.isEmpty()) {
+        displayAvailableTests(availableTests);
+        userInOut.printOutput("");
+        UserTest selectedTest = selectTest();
+        if (selectedTest != null) {
+          TestResult testResult = performTest(selectedTest);
+          displayTestResult(testResult);
+        } else {
+          userInOut.printOutput("Test not found.");
+        }
+      } else {
+        userInOut.printOutput("There are no tests available to take.");
+      }
+    } catch (Exception ex) {
+      userInOut.printOutput(ex.getMessage());
     }
   }
 
 
   private void displayAvailableTests(List<String> availableTests) {
-    if (!availableTests.isEmpty()) {
-      userInOut.printOutput("Available tests:");
-      for (String testName : availableTests) {
-        userInOut.printOutput(testName);
-      }
-      userInOut.printOutput("");
+    userInOut.printOutput("Available tests:");
+    for (String testName : availableTests) {
+      userInOut.printOutput(testName);
     }
   }
 

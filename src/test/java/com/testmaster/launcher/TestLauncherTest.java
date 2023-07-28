@@ -1,4 +1,4 @@
-package com.testmaster.executor;
+package com.testmaster.launcher;
 
 import com.testmaster.model.Answer;
 import com.testmaster.model.TestResult;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class TestExecutorTest {
+class TestLauncherTest {
 
   @Mock
   private TestService testServiceMock;
@@ -28,7 +28,7 @@ class TestExecutorTest {
   private UserInOutService userInOutMock;
 
   @InjectMocks
-  private TestExecutor testExecutor;
+  private TestLauncher testLauncher;
 
   @Test
   void startApp_TestFound() {
@@ -42,7 +42,7 @@ class TestExecutorTest {
 
     ArgumentCaptor<Answer> answerCaptor = ArgumentCaptor.forClass(Answer.class);
 
-    testExecutor.startApp();
+    testLauncher.startApp();
 
     assertAll(
         () -> verify(userInOutMock).printOutput("Select a test: "),
@@ -62,7 +62,7 @@ class TestExecutorTest {
     when(testServiceMock.getAvailableTests()).thenReturn(availableTests);
     when(userInOutMock.readInput()).thenReturn("NonExistentTest");
 
-    testExecutor.startApp();
+    testLauncher.startApp();
 
     assertAll(
         () -> verify(userInOutMock).printOutput("Select a test: "),

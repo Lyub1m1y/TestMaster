@@ -15,15 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvResourceLoader implements CsvLoader {
 
-  private String zip;
+  private final String zip;
 
   @Override
   public List<InputStream> getFilesStreams() {
     List<InputStream> filesStreams = new ArrayList<>();
     ClassLoader classLoader = getClass().getClassLoader();
 
-    InputStream folderStream = classLoader.getResourceAsStream(zip);
-    try (ZipInputStream zipInputStream = new ZipInputStream(folderStream)) {
+
+    try (InputStream folderStream = classLoader.getResourceAsStream(zip);
+        ZipInputStream zipInputStream = new ZipInputStream(folderStream)) {
       ZipEntry entry;
       while ((entry = zipInputStream.getNextEntry()) != null) {
         if (!entry.isDirectory()) {

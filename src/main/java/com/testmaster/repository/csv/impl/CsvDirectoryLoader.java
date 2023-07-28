@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvDirectoryLoader implements CsvLoader {
 
-  private String directory;
+  private final String directory;
 
   @Override
   public List<InputStream> getFilesStreams() {

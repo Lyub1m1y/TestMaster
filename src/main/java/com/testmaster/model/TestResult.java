@@ -10,6 +10,9 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class TestResult {
 
+  private User user;
+  @NonNull
+  private String testName;
   @NonNull
   private int numberOfQuestions;
   private int numberOfCorrectAnswer;

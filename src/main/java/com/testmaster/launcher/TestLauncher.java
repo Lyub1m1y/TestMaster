@@ -2,10 +2,11 @@ package com.testmaster.launcher;
 
 import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
+import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
+import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestService;
-import com.testmaster.service.io.InOutService;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,9 @@ public class TestLauncher {
   public void startApp() {
     log.info("App started!");
     try {
+      User user = initUser();
+      inOutService.printMessage("");
+
       List<String> availableTests = testService.getAvailableTests();
 
       if (!availableTests.isEmpty()) {
@@ -33,6 +37,7 @@ public class TestLauncher {
         UserTest selectedTest = selectTest();
         if (selectedTest != null) {
           TestResult testResult = performTest(selectedTest);
+          testResult.setUser(user);
           displayTestResult(testResult);
         } else {
           inOutService.printMessage("Test not found.");
@@ -43,6 +48,15 @@ public class TestLauncher {
     } catch (Exception ex) {
       inOutService.printMessage(ex.getMessage());
     }
+  }
+
+  private User initUser() {
+    inOutService.printMessage("Your name: ");
+    String name = inOutService.readLine();
+    inOutService.printMessage("Your surname: ");
+    String surname = inOutService.readLine();
+
+    return new User(name, surname);
   }
 
 
@@ -61,7 +75,7 @@ public class TestLauncher {
 
   private TestResult performTest(UserTest selectedTest) {
     List<Question> questions = selectedTest.getQuestions();
-    TestResult testResult = new TestResult(questions.size());
+    TestResult testResult = new TestResult(selectedTest.getTestName(), questions.size());
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
@@ -69,6 +83,7 @@ public class TestLauncher {
       inOutService.printMessage((i + 1) + ". " + questionConverter.convertToString(question));
       int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
           "Please enter a number between 1 and " + question.getOptions().size() + ".");
+      inOutService.printMessage("");
       testService.submitAnswer(question, answer, testResult);
     }
 
@@ -76,7 +91,8 @@ public class TestLauncher {
   }
 
   private void displayTestResult(TestResult testResult) {
-    inOutService.printMessage("Result: " + testResult.getNumberOfCorrectAnswer()
-        + " from " + testResult.getNumberOfQuestions());
+    inOutService.printMessage(testResult.getUser().getName() + ", your test scores: "
+        + testResult.getNumberOfCorrectAnswer() + " from " + testResult.getNumberOfQuestions()
+        + ".");
   }
 }

@@ -1,6 +1,6 @@
 package com.testmaster.service.impl;
 
-import com.testmaster.service.io.InOutService;
+import com.testmaster.service.InOutService;
 import com.testmaster.service.io.InputService;
 import com.testmaster.service.io.OutputService;
 import lombok.AllArgsConstructor;

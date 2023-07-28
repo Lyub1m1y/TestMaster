@@ -1,4 +1,4 @@
-package com.testmaster.service.io;
+package com.testmaster.service;
 
 public interface InOutService {
 

@@ -3,7 +3,7 @@ package com.testmaster.launcher;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.TestService;
-import com.testmaster.service.io.InOutService;
+import com.testmaster.service.InOutService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

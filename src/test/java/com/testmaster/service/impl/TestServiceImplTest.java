@@ -29,7 +29,7 @@ class TestServiceImplTest {
   }
 
   @Test
-  void getAvailableTests() {
+  void getAvailableTests_shouldReturnAvailableTests() {
     List<String> testNames = Arrays.asList("Test1", "Test2");
     when(testRepositoryMock.getTestsNames()).thenReturn(testNames);
 

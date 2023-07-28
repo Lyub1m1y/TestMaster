@@ -36,7 +36,7 @@ class CsvRepositoryTest {
   }
 
   @Test
-  void getTestsNames() {
+  void getTestsNames_shouldReturnNonEmptyListTestsNames() {
     List<InputStream> inputStreams = new ArrayList<>();
     inputStreams.add(new ByteArrayInputStream(testCsv1.getBytes()));
     inputStreams.add(new ByteArrayInputStream(testCsv2.getBytes()));
@@ -52,7 +52,7 @@ class CsvRepositoryTest {
   }
 
   @Test
-  void getTestByName() {
+  void getTestByName_shouldReturnTestByName() {
     List<InputStream> inputStreams = new ArrayList<>();
     inputStreams.add(new ByteArrayInputStream(testCsv1.getBytes()));
     inputStreams.add(new ByteArrayInputStream(testCsv2.getBytes()));

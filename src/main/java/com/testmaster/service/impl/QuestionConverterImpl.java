@@ -12,9 +12,15 @@ public class QuestionConverterImpl implements QuestionConverter {
     StringBuilder sb = new StringBuilder();
     sb.append(question.getText()).append("\n");
     List<Option> options = question.getOptions();
+
     for (int j = 0; j < options.size(); j++) {
-      sb.append("\t").append(j + 1).append(") ").append(options.get(j).getOption()).append("\n");
+      sb.append("\t")
+          .append(j + 1)
+          .append(") ")
+          .append(options.get(j).getOption())
+          .append("\n");
     }
+
     return sb.toString();
   }
 }

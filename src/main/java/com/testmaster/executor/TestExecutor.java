@@ -42,6 +42,7 @@ public class TestExecutor {
       for (String testName : availableTests) {
         userInOut.printOutput(testName);
       }
+      userInOut.printOutput("");
     }
   }
 

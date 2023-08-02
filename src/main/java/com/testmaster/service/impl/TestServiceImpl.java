@@ -3,7 +3,7 @@ package com.testmaster.service.impl;
 import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
-import com.testmaster.repository.TestRepository;
+import com.testmaster.repository.UserTestRepository;
 import com.testmaster.service.TestService;
 import java.util.List;
 import lombok.NonNull;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class TestServiceImpl implements TestService {
 
   @NonNull
-  private final TestRepository repository;
+  private final UserTestRepository repository;
 
   @Override
   public List<String> getAvailableTests() {

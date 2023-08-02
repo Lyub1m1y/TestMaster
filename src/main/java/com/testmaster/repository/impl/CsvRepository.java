@@ -4,7 +4,7 @@ import com.opencsv.CSVReader;
 import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
-import com.testmaster.repository.TestRepository;
+import com.testmaster.repository.UserTestRepository;
 import com.testmaster.repository.csv.CsvLoader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,7 +13,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CsvRepository implements TestRepository {
+public class CsvRepository implements UserTestRepository {
 
   private final List<CsvLoader> loaders;
 

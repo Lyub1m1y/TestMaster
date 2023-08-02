@@ -6,6 +6,7 @@ import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
+import com.testmaster.service.TestResultConverter;
 import com.testmaster.service.TestService;
 import java.util.List;
 import lombok.NonNull;
@@ -22,6 +23,8 @@ public class TestLauncher {
   private final InOutService inOutService;
   @NonNull
   private final QuestionConverter questionConverter;
+  @NonNull
+  private final TestResultConverter testResultConverter;
 
   public void startApp() {
     log.info("App started!");
@@ -38,7 +41,7 @@ public class TestLauncher {
         if (selectedTest != null) {
           TestResult testResult = performTest(selectedTest);
           testResult.setUser(user);
-          displayTestResult(testResult);
+          inOutService.printMessage(testResultConverter.convertTestResultToString(testResult));
         } else {
           inOutService.printMessage("Test not found.");
         }
@@ -75,12 +78,13 @@ public class TestLauncher {
 
   private TestResult performTest(UserTest selectedTest) {
     List<Question> questions = selectedTest.getQuestions();
-    TestResult testResult = new TestResult(selectedTest.getTestName(), questions.size());
+    TestResult testResult = new TestResult(selectedTest);
 
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
+      inOutService.printMessage((i + 1) + ". "
+          + questionConverter.convertQuestionToString(question));
 
-      inOutService.printMessage((i + 1) + ". " + questionConverter.convertToString(question));
       int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
           "Please enter a number between 1 and " + question.getOptions().size() + ".");
       inOutService.printMessage("");
@@ -88,11 +92,5 @@ public class TestLauncher {
     }
 
     return testResult;
-  }
-
-  private void displayTestResult(TestResult testResult) {
-    inOutService.printMessage(testResult.getUser().getName() + ", your test scores: "
-        + testResult.getNumberOfCorrectAnswer() + " from " + testResult.getNumberOfQuestions()
-        + ".");
   }
 }

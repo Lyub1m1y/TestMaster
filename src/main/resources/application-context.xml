@@ -34,8 +34,8 @@
         <constructor-arg ref="streamOutputService" />
     </bean>
 
-    <bean id="questionConverter" class="com.testmaster.service.impl.QuestionConverterImpl">
-    </bean>
+    <bean id="questionConverter" class="com.testmaster.service.impl.QuestionConverterImpl"/>
+    <bean id="testResultConverter" class="com.testmaster.service.impl.TestResultConverterImpl"/>
 
     <bean id="testService" class="com.testmaster.service.impl.TestServiceImpl">
         <constructor-arg ref="csvRepository"/>
@@ -45,5 +45,6 @@
         <constructor-arg ref="testService"/>
         <constructor-arg ref="inOutService"/>
         <constructor-arg ref="questionConverter"/>
+        <constructor-arg ref="testResultConverter"/>
     </bean>
 </beans>

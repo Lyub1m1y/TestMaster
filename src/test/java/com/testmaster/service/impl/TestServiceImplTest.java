@@ -1,7 +1,7 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.*;
-import com.testmaster.repository.TestRepository;
+import com.testmaster.repository.UserTestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class TestServiceImplTest {
 
   @Mock
-  private TestRepository testRepositoryMock;
+  private UserTestRepository userTestRepositoryMock;
 
   @InjectMocks
   private TestServiceImpl testService;
@@ -31,24 +31,24 @@ class TestServiceImplTest {
   @Test
   void getAvailableTests_shouldReturnAvailableTests() {
     List<String> testNames = Arrays.asList("Test1", "Test2");
-    when(testRepositoryMock.getTestsNames()).thenReturn(testNames);
+    when(userTestRepositoryMock.getTestsNames()).thenReturn(testNames);
 
     List<String> availableTests = testService.getAvailableTests();
 
     assertEquals(testNames, availableTests);
-    verify(testRepositoryMock).getTestsNames();
+    verify(userTestRepositoryMock).getTestsNames();
   }
 
   @Test
   void getTestByName_shouldReturnTestByName() {
     String testName = "Test1";
     UserTest userTest = new UserTest(testName, Collections.emptyList());
-    when(testRepositoryMock.getTestByName(testName)).thenReturn(userTest);
+    when(userTestRepositoryMock.getTestByName(testName)).thenReturn(userTest);
 
     UserTest result = testService.getTestByName(testName);
 
     assertEquals(userTest, result);
-    verify(testRepositoryMock).getTestByName(testName);
+    verify(userTestRepositoryMock).getTestByName(testName);
   }
 
   @Test

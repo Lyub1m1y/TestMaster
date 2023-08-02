@@ -1,19 +1,19 @@
 package com.testmaster.model;
 
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class TestResult {
 
   private User user;
-  @NonNull
-  private String testName;
-  @NonNull
+  private UserTest userTest;
   private int numberOfQuestions;
   private int numberOfCorrectAnswer;
+
+  public TestResult(UserTest userTest) {
+    this.userTest = userTest;
+    numberOfQuestions = userTest.getQuestions().size();
+  }
 }

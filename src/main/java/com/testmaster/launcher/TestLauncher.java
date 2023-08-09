@@ -41,7 +41,7 @@ public class TestLauncher {
         if (selectedTest != null) {
           TestResult testResult = performTest(selectedTest);
           testResult.setUser(user);
-          inOutService.printMessage(testResultConverter.convertTestResultToString(testResult));
+          inOutService.printMessage(testResultConverter.convert(testResult));
         } else {
           inOutService.printMessage("Test not found.");
         }
@@ -83,7 +83,7 @@ public class TestLauncher {
     for (int i = 0; i < questions.size(); i++) {
       Question question = questions.get(i);
       inOutService.printMessage((i + 1) + ". "
-          + questionConverter.convertQuestionToString(question));
+          + questionConverter.convert(question));
 
       int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
           "Please enter a number between 1 and " + question.getOptions().size() + ".");

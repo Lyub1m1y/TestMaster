@@ -24,7 +24,7 @@ class QuestionConverterImplTest {
     Question question = new Question("What is the capital of France?", options);
     QuestionConverterImpl questionConverter = new QuestionConverterImpl();
 
-    String result = questionConverter.convertQuestionToString(question);
+    String result = questionConverter.convert(question);
 
     String expectedOutput = "What is the capital of France?\n" +
         "\t1) Paris\n" +

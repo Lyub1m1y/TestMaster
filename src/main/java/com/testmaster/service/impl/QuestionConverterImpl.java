@@ -8,7 +8,7 @@ import java.util.List;
 public class QuestionConverterImpl implements QuestionConverter {
 
   @Override
-  public String convertQuestionToString(Question question) {
+  public String convert(Question question) {
     StringBuilder sb = new StringBuilder();
     sb.append(question.getText()).append("\n");
     List<Option> options = question.getOptions();

@@ -6,7 +6,7 @@ import com.testmaster.service.TestResultConverter;
 public class TestResultConverterImpl implements TestResultConverter {
 
   @Override
-  public String convertTestResultToString(TestResult testResult) {
+  public String convert(TestResult testResult) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(testResult.getUser().getName())

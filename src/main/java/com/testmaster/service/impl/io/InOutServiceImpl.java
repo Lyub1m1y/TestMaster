@@ -1,8 +1,8 @@
-package com.testmaster.service.impl;
+package com.testmaster.service.impl.io;
 
 import com.testmaster.service.InOutService;
-import com.testmaster.service.io.InputService;
-import com.testmaster.service.io.OutputService;
+import com.testmaster.service.impl.io.InputService;
+import com.testmaster.service.impl.io.OutputService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,6 +1,6 @@
-package com.testmaster.service.io.stream;
+package com.testmaster.service.impl.io.stream;
 
-import com.testmaster.service.io.OutputService;
+import com.testmaster.service.impl.io.OutputService;
 
 public class StreamOutputService implements OutputService {
 

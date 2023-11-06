@@ -1,6 +1,6 @@
-package com.testmaster.service.io.stream;
+package com.testmaster.service.impl.io.stream;
 
-import com.testmaster.service.io.InputService;
+import com.testmaster.service.impl.io.InputService;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 

@@ -1,6 +1,6 @@
-package com.testmaster.repository.csv.impl;
+package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.csv.CsvLoader;
+import com.testmaster.repository.impl.csv.CsvLoader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

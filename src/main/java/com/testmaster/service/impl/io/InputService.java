@@ -1,4 +1,4 @@
-package com.testmaster.service.io;
+package com.testmaster.service.impl.io;
 
 public interface InputService {
 

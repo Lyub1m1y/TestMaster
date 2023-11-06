@@ -1,11 +1,11 @@
-package com.testmaster.repository.impl;
+package com.testmaster.repository.impl.csv;
 
 import com.opencsv.CSVReader;
 import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
-import com.testmaster.repository.csv.CsvLoader;
+import com.testmaster.repository.impl.csv.CsvLoader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;

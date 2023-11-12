@@ -2,8 +2,8 @@ package com.testmaster.config;
 
 import com.testmaster.launcher.TestLauncher;
 import com.testmaster.repository.impl.csv.CsvRepository;
-import com.testmaster.repository.impl.csv.impl.CsvDirectoryLoader;
-import com.testmaster.repository.impl.csv.impl.CsvResourceLoader;
+import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;
+import com.testmaster.repository.impl.csv.impl.СsvFileLoaderFromDirectory;
 import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestResultConverter;
@@ -31,18 +31,18 @@ public class AppConfig {
     Environment env;
 
     @Bean
-    public CsvResourceLoader csvResourceLoader() {
-        return new CsvResourceLoader(env.getProperty("resources.zip"));
+    public CsvFileLoaderFromResources csvFileLoaderFromResources() {
+        return new CsvFileLoaderFromResources(env.getProperty("resources.directory.name"));
     }
 
     @Bean
-    public CsvDirectoryLoader csvDirectoryLoader() {
-        return new CsvDirectoryLoader(env.getProperty("directory.url"));
+    public СsvFileLoaderFromDirectory csvFileLoaderFromDirectory() {
+        return new СsvFileLoaderFromDirectory(env.getProperty("directory.url"));
     }
 
     @Bean
     public CsvRepository csvRepository() {
-        return new CsvRepository(List.of(csvResourceLoader(), csvResourceLoader()));
+        return new CsvRepository(List.of(csvFileLoaderFromResources(), csvFileLoaderFromDirectory()));
     }
 
     @Bean

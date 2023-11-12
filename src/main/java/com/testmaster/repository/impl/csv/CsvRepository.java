@@ -5,7 +5,9 @@ import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
-import com.testmaster.repository.impl.csv.CsvLoader;
+
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -25,13 +27,8 @@ public class CsvRepository implements UserTestRepository {
   public List<String> getTestsNames() {
     List<String> namesTests = new ArrayList<>();
 
-    for (InputStream fileStream : getFilesStreams()) {
-      try (CSVReader reader = new CSVReader(new InputStreamReader(fileStream))) {
-        String[] line = reader.readNext();
-        namesTests.add(line[0]);
-      } catch (Exception ex) {
-        log.error(ex.getMessage());
-      }
+    for (File csvFile : getCsvFiles()) {
+      namesTests.add(csvFile.getName().replace(".csv",""));
     }
 
     return namesTests;
@@ -41,10 +38,9 @@ public class CsvRepository implements UserTestRepository {
   public UserTest getTestByName(String testName) {
     UserTest test = null;
 
-    for (InputStream fileStream : getFilesStreams()) {
-      try (CSVReader reader = new CSVReader(new InputStreamReader(fileStream))) {
-        String name = reader.readNext()[0];
-        if (name.equals(testName)) {
+    for (File csvFile : getCsvFiles()) {
+      try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+        if (csvFile.getName().replace(".csv","").equals(testName)) {
           String[] line;
           List<Question> questions = new ArrayList<>();
           while ((line = reader.readNext()) != null) {
@@ -70,13 +66,13 @@ public class CsvRepository implements UserTestRepository {
     return test;
   }
 
-  private List<InputStream> getFilesStreams() {
-    List<InputStream> filesStreams = new ArrayList<>();
+  private List<File> getCsvFiles() {
+    List<File> files = new ArrayList<>();
 
     for (CsvLoader loader : loaders) {
-      filesStreams.addAll(loader.getFilesStreams());
+      files.addAll(loader.getFiles());
     }
 
-    return filesStreams;
+    return files;
   }
 }

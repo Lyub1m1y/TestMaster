@@ -1,14 +1,10 @@
 package com.testmaster.repository.csv.impl;
 
-import java.io.InputStream;
-import java.util.List;
-
-import com.testmaster.repository.impl.csv.impl.CsvResourceLoader;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CsvResourceLoaderTest {
+class CsvFileLoaderFromResourcesTest {
 
   private static final String ZIP = "tests.zip";
 

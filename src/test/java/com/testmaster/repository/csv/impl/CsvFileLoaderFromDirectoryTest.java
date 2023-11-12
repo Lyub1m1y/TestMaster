@@ -1,15 +1,10 @@
 package com.testmaster.repository.csv.impl;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.List;
-
-import com.testmaster.repository.impl.csv.impl.CsvDirectoryLoader;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CsvDirectoryLoaderTest {
+class CsvFileLoaderFromDirectoryTest {
 
   private static final String PATH = "src/test/resources/tests";
 

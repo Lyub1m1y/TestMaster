@@ -15,7 +15,7 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public List<String> getAvailableTests() {
-    return repository.getTestsNames();
+    return repository.getTestNames();
   }
 
   @Override

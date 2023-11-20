@@ -37,13 +37,13 @@ class CsvRepositoryTest {
 
   @DisplayName("Should return non empty list file names")
   @Test
-  void shouldReturnNonEmptyListTestsNames() {
+  void shouldReturnNonEmptyListTestNames() {
     when(csvFileLoaderMock.getFiles()).thenReturn(CsvUtils.getCSVFiles());
 
-    List<String> actualTestsNames = csvRepository.getTestsNames();
+    List<String> actualTestNames = csvRepository.getTestNames();
 
     verify(csvFileLoaderMock).getFiles();
-    assertEquals(CsvUtils.getCSVFilesNames(CsvUtils.getCSVFiles()), actualTestsNames);
+    assertEquals(CsvUtils.getCSVFilesNames(CsvUtils.getCSVFiles()), actualTestNames);
   }
 
   @DisplayName("Should return test by name")

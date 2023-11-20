@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface UserTestRepository {
 
-  List<String> getTestsNames();
+  List<String> getTestNames();
 
   UserTest getTestByName(String testName);
 }

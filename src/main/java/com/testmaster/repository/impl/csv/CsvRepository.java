@@ -24,7 +24,7 @@ public class CsvRepository implements UserTestRepository {
   }
 
   @Override
-  public List<String> getTestsNames() {
+  public List<String> getTestNames() {
     List<String> namesTests = new ArrayList<>();
 
     for (File csvFile : getCsvFiles()) {

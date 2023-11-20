@@ -28,12 +28,12 @@ class TestServiceImplTest {
   @Test
   void getAvailableTests_shouldReturnAvailableTests() {
     List<String> testNames = Arrays.asList("Test1", "Test2");
-    when(userTestRepositoryMock.getTestsNames()).thenReturn(testNames);
+    when(userTestRepositoryMock.getTestNames()).thenReturn(testNames);
 
     List<String> availableTests = testService.getAvailableTests();
 
     assertEquals(testNames, availableTests);
-    verify(userTestRepositoryMock).getTestsNames();
+    verify(userTestRepositoryMock).getTestNames();
   }
 
   @DisplayName("getTestByName should return test by valid name")

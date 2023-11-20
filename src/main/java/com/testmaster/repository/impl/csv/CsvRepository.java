@@ -8,8 +8,6 @@ import com.testmaster.repository.UserTestRepository;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CsvRepository implements UserTestRepository {
 
-  private final List<CsvLoader> loaders;
+  private final List<CsvFileLoader> loaders;
 
-  public CsvRepository(List<CsvLoader> loaders) {
+  public CsvRepository(List<CsvFileLoader> loaders) {
     this.loaders = loaders;
   }
 
@@ -69,7 +67,7 @@ public class CsvRepository implements UserTestRepository {
   private List<File> getCsvFiles() {
     List<File> files = new ArrayList<>();
 
-    for (CsvLoader loader : loaders) {
+    for (CsvFileLoader loader : loaders) {
       files.addAll(loader.getFiles());
     }
 

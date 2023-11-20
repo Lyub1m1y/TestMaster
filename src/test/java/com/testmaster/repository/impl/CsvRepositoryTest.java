@@ -1,26 +1,18 @@
 package com.testmaster.repository.impl;
 
-import com.testmaster.model.UserTest;
-import com.testmaster.repository.impl.csv.CsvLoader;
+import com.testmaster.repository.impl.csv.CsvFileLoader;
 import com.testmaster.repository.impl.csv.CsvRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 class CsvRepositoryTest {
 
   @Mock
-  private CsvLoader csvLoaderMock;
+  private CsvFileLoader csvFileLoaderMock;
 
   @InjectMocks
   private CsvRepository csvRepository;

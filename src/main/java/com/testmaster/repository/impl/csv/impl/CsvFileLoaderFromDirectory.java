@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvLoader;
+import com.testmaster.repository.impl.csv.CsvFileLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,9 +10,11 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import static java.util.Objects.isNull;
+
 @AllArgsConstructor
 @Slf4j
-public class СsvFileLoaderFromDirectory implements CsvLoader {
+public class CsvFileLoaderFromDirectory implements CsvFileLoader {
 
   private final String directoryUrl;
 
@@ -22,9 +24,11 @@ public class СsvFileLoaderFromDirectory implements CsvLoader {
     File folder = new File(directoryUrl);
 
     File[] files = folder.listFiles();
-    for (File file : files) {
-      if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {
-        csvFiles.add(file);
+    if (!isNull(files)) {
+      for (File file : files) {
+        if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {
+          csvFiles.add(file);
+        }
       }
     }
 

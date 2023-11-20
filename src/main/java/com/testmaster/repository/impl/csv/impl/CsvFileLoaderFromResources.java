@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvLoader;
+import com.testmaster.repository.impl.csv.CsvFileLoader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @AllArgsConstructor
 @Slf4j
-public class CsvFileLoaderFromResources implements CsvLoader {
+public class CsvFileLoaderFromResources implements CsvFileLoader {
 
   private final String directoryName;
 

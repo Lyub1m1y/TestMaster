@@ -3,7 +3,7 @@ package com.testmaster.config;
 import com.testmaster.launcher.TestLauncher;
 import com.testmaster.repository.impl.csv.CsvRepository;
 import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;
-import com.testmaster.repository.impl.csv.impl.СsvFileLoaderFromDirectory;
+import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromDirectory;
 import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestResultConverter;
@@ -36,8 +36,8 @@ public class AppConfig {
     }
 
     @Bean
-    public СsvFileLoaderFromDirectory csvFileLoaderFromDirectory() {
-        return new СsvFileLoaderFromDirectory(env.getProperty("directory.url"));
+    public CsvFileLoaderFromDirectory csvFileLoaderFromDirectory() {
+        return new CsvFileLoaderFromDirectory(env.getProperty("directory.url"));
     }
 
     @Bean

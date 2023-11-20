@@ -1,37 +1,57 @@
 package com.testmaster.service.stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.util.Scanner;
 
+import com.testmaster.service.impl.io.InputService;
 import com.testmaster.service.impl.io.stream.StreamInputService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class StreamInputServiceTest {
 
-  private final InputStream systemIn = System.in;
-  private ByteArrayInputStream testIn;
-  private StreamInputService streamInputService;
-
-  @BeforeEach
-  public void setUp() {
-//    testIn = new ByteArrayInputStream("Test Input".getBytes());
-//    System.setIn(testIn);
-//    streamInputService = new StreamInputService();
-  }
-
-  @AfterEach
-  public void tearDown() {
-    System.setIn(systemIn);
-  }
-
+  @DisplayName("Should return input string")
   @Test
-  void read_shouldReturnInput() {
-//    String input = streamInputService.readLine();
-//
-//    assertEquals("Test Input", input);
+  void readLine_ShouldReturnInputString() {
+    String inputString = "Hello, World!";
+    Scanner scannerMock = new Scanner(inputString);
+    InputService inputService = new StreamInputService(scannerMock);
+
+    String result = inputService.readLine();
+
+    assertEquals(inputString, result);
+  }
+
+  @DisplayName("Should return input value within the interval")
+  @Test
+  void readIntByInterval_WithValidInput_ShouldReturnInputValue() {
+    int min = 1;
+    int max = 10;
+    int inputValue = 5;
+    String inputString = String.valueOf(inputValue);
+    Scanner scannerMock = new Scanner(inputString);
+    InputService inputService = new StreamInputService(scannerMock);
+
+    int result = inputService.readIntByInterval(min, max);
+
+    assertEquals(inputValue, result);
+  }
+
+  @DisplayName("Should throw RuntimeException for invalid input value")
+  @Test
+  void readIntByInterval_WithInvalidInput_ShouldThrowRuntimeException() {
+    int min = 1;
+    int max = 10;
+    int inputValue = 15;
+    String inputString = String.valueOf(inputValue);
+    Scanner scannerMock = new Scanner(inputString);
+    InputService inputService = new StreamInputService(scannerMock);
+
+    assertThrows(
+            RuntimeException.class,
+            () -> inputService.readIntByInterval(min, max)
+    );
   }
 }

@@ -28,7 +28,7 @@ class CsvRepositoryTest {
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     List<CsvFileLoader> loaders = new ArrayList<>();
     loaders.add(csvFileLoaderMock);
     csvRepository = new CsvRepository(loaders);

@@ -1,4 +1,4 @@
-package com.testmaster.repository.csv.impl;
+package com.testmaster.repository.impl.csv.impl;
 
 import com.testmaster.repository.impl.csv.CsvFileLoader;
 import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;

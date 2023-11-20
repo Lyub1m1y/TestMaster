@@ -2,12 +2,12 @@ package com.testmaster.service.impl;
 
 import com.testmaster.model.*;
 import com.testmaster.repository.UserTestRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class TestServiceImplTest {
 
   @Mock
@@ -22,11 +23,6 @@ class TestServiceImplTest {
 
   @InjectMocks
   private TestServiceImpl testService;
-
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.openMocks(this);
-  }
 
   @DisplayName("getAvailableTests should return available tests")
   @Test

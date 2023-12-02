@@ -3,8 +3,11 @@ package com.testmaster.service.impl;
 import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.service.QuestionConverter;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class QuestionConverterImpl implements QuestionConverter {
 
   @Override

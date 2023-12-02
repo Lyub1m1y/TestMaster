@@ -7,16 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 
-@AllArgsConstructor
+@Component
 @Slf4j
 public class CsvFileLoaderFromDirectory implements CsvFileLoader {
 
-  private final String directoryUrl;
+  @Value("${directory.url}")
+  private String directoryUrl;
 
   @Override
   public List<File> getFiles() {

@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 @Slf4j
 public class CsvFileLoaderFromResources implements CsvFileLoader {
 
-  private final String directoryName;
+  @Value("${resources.directory.name}")
+  private String directoryName;
 
   @Override
   public List<File> getFiles() {

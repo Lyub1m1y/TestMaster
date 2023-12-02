@@ -2,7 +2,9 @@ package com.testmaster.service.impl;
 
 import com.testmaster.model.TestResult;
 import com.testmaster.service.TestResultConverter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TestResultConverterImpl implements TestResultConverter {
 
   @Override

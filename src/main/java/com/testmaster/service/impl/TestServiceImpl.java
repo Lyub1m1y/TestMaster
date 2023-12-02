@@ -6,8 +6,11 @@ import com.testmaster.service.TestService;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class TestServiceImpl implements TestService {
 
   @NonNull

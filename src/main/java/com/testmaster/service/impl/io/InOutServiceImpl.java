@@ -5,9 +5,12 @@ import com.testmaster.service.impl.io.InputService;
 import com.testmaster.service.impl.io.OutputService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 @Slf4j
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor_ = {@Autowired})
 public class InOutServiceImpl implements InOutService {
 
   private final InputService inputService;

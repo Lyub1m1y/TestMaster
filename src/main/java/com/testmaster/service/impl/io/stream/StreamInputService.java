@@ -1,13 +1,14 @@
 package com.testmaster.service.impl.io.stream;
 
 import com.testmaster.service.impl.io.InputService;
-import java.util.Scanner;
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+import java.util.Scanner;
+
+@Service
 public class StreamInputService implements InputService {
 
-  private final Scanner scanner;
+  private final Scanner scanner = new Scanner(System.in);
 
   @Override
   public String readLine() {

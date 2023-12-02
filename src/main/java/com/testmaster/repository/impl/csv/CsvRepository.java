@@ -12,15 +12,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
+import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromDirectory;
+import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 @Slf4j
 public class CsvRepository implements UserTestRepository {
 
   private final List<CsvFileLoader> loaders;
 
-  public CsvRepository(List<CsvFileLoader> loaders) {
-    this.loaders = loaders;
+  public CsvRepository(@Autowired CsvFileLoaderFromDirectory csvFileLoaderFromDirectory,
+                       @Autowired CsvFileLoaderFromResources csvFileLoaderFromResources) {
+      this.loaders = List.of(csvFileLoaderFromDirectory, csvFileLoaderFromResources);
   }
 
   @Override

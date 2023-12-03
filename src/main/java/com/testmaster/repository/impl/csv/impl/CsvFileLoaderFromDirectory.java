@@ -4,6 +4,7 @@ import com.testmaster.repository.impl.csv.CsvFileLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,13 +25,14 @@ public class CsvFileLoaderFromDirectory implements CsvFileLoader {
   public List<File> getFiles() {
     List<File> csvFiles = new ArrayList<>();
     File folder = new File(directoryUrl);
-
     File[] files = folder.listFiles();
-    if (!isNull(files)) {
-      for (File file : files) {
-        if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {
-          csvFiles.add(file);
-        }
+
+    if (isNull(files)) {
+      return Collections.emptyList();
+    }
+    for (File file : files) {
+      if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {
+        csvFiles.add(file);
       }
     }
 

@@ -1,5 +1,6 @@
 package com.testmaster.service.impl.io.stream;
 
+import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.impl.io.InputService;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,12 @@ public class StreamInputService implements InputService {
   }
 
   @Override
-  public int readIntByInterval(int min, int max) throws RuntimeException {
+  public int readIntByInterval(int min, int max) {
     int input = Integer.parseInt(scanner.nextLine());
     if (input >= min && input <= max) {
       return input;
     } else {
-      throw new RuntimeException();
+      throw new InvalidNumberByIntervalException("Please enter a number between " + min + " and " + max + ".");
     }
   }
 }

@@ -1,8 +1,7 @@
 package com.testmaster.service.impl.io;
 
+import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.InOutService;
-import com.testmaster.service.impl.io.InputService;
-import com.testmaster.service.impl.io.OutputService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +21,14 @@ public class InOutServiceImpl implements InOutService {
   }
 
   @Override
-  public int readIntByInterval(int min, int max, String message, String errorMessage) {
+  public int readIntByInterval(int min, int max, String message) {
     while (true) {
       try {
         printMessage(message);
         return inputService.readIntByInterval(min, max);
-      } catch (RuntimeException ex) {
-        log.error(errorMessage, ex);
-        printMessage(errorMessage);
+      } catch (InvalidNumberByIntervalException ex) {
+        log.error(ex.getMessage());
+        printMessage(ex.getMessage());
       }
     }
   }

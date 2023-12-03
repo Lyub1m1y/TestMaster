@@ -88,8 +88,7 @@ public class TestLauncher {
       inOutService.printMessage((i + 1) + ". "
           + questionConverter.convert(question));
 
-      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ",
-          "Please enter a number between 1 and " + question.getOptions().size() + ".");
+      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ");
       inOutService.printMessage("");
       testResult.submitAnswer(question, answer, testResult);
     }

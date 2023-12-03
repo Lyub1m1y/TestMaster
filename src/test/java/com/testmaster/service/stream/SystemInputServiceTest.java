@@ -6,18 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Scanner;
 
 import com.testmaster.service.impl.io.InputStreamProvider;
-import com.testmaster.service.impl.io.stream.StreamInputService;
+import com.testmaster.service.impl.io.system.SystemInputService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StreamInputServiceTest {
+class SystemInputServiceTest {
 
   @DisplayName("Should return input string")
   @Test
   void readLine_ShouldReturnInputString() {
     String inputString = "Hello, World!";
     Scanner scannerMock = new Scanner(inputString);
-    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new SystemInputService(scannerMock);
 
     String result = inputStreamProvider.readLine();
 
@@ -32,7 +32,7 @@ class StreamInputServiceTest {
     int inputValue = 5;
     String inputString = String.valueOf(inputValue);
     Scanner scannerMock = new Scanner(inputString);
-    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new SystemInputService(scannerMock);
 
     int result = inputStreamProvider.readIntByInterval(min, max);
 
@@ -47,7 +47,7 @@ class StreamInputServiceTest {
     int inputValue = 15;
     String inputString = String.valueOf(inputValue);
     Scanner scannerMock = new Scanner(inputString);
-    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new SystemInputService(scannerMock);
 
     assertThrows(
             RuntimeException.class,

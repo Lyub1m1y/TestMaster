@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromDirectory;
-import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;
+import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromDirectory;
+import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromResources;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,11 +23,11 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class CsvRepository implements UserTestRepository {
 
-  private final List<CsvFileLoader> loaders;
+  private final List<CsvFileProvider> loaders;
 
-  public CsvRepository(@Autowired CsvFileLoaderFromDirectory csvFileLoaderFromDirectory,
-                       @Autowired CsvFileLoaderFromResources csvFileLoaderFromResources) {
-      this.loaders = List.of(csvFileLoaderFromDirectory, csvFileLoaderFromResources);
+  public CsvRepository(@Autowired CsvFileProviderFromDirectory csvFileProviderFromDirectory,
+                       @Autowired CsvFileProviderFromResources csvFileProviderFromResources) {
+      this.loaders = List.of(csvFileProviderFromDirectory, csvFileProviderFromResources);
   }
 
   @Override
@@ -96,7 +96,7 @@ public class CsvRepository implements UserTestRepository {
   private List<File> getCsvFiles() {
     List<File> files = new ArrayList<>();
 
-    for (CsvFileLoader loader : loaders) {
+    for (CsvFileProvider loader : loaders) {
       List<File> loaderFiles =  loader.getFiles();
       if (loaderFiles != null) {
         files.addAll(loaderFiles);

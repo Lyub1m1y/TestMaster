@@ -23,26 +23,26 @@ import static org.mockito.Mockito.when;
 class CsvRepositoryTest {
 
   @Mock
-  private CsvFileLoader csvFileLoaderMock;
+  private CsvFileProvider csvFileProviderMock;
 
   @InjectMocks
   private CsvRepository csvRepository;
 
   @BeforeEach
   void setUp() {
-    List<CsvFileLoader> loaders = new ArrayList<>();
-    loaders.add(csvFileLoaderMock);
+    List<CsvFileProvider> loaders = new ArrayList<>();
+    loaders.add(csvFileProviderMock);
     csvRepository = new CsvRepository(loaders);
   }
 
   @DisplayName("Should return non empty list file names")
   @Test
   void shouldReturnNonEmptyListTestNames() {
-    when(csvFileLoaderMock.getFiles()).thenReturn(CsvUtils.getCSVFiles());
+    when(csvFileProviderMock.getFiles()).thenReturn(CsvUtils.getCSVFiles());
 
     List<String> actualTestNames = csvRepository.getTestNames();
 
-    verify(csvFileLoaderMock).getFiles();
+    verify(csvFileProviderMock).getFiles();
     assertEquals(CsvUtils.getCSVFilesNames(CsvUtils.getCSVFiles()), actualTestNames);
   }
 
@@ -52,7 +52,7 @@ class CsvRepositoryTest {
     List<UserTest> expectedUserTests = CsvUtils.getUserTests();
     List<UserTest> actualUserTests = new ArrayList<>();
     List<File> files = CsvUtils.getCSVFiles();
-    when(csvFileLoaderMock.getFiles()).thenReturn(files);
+    when(csvFileProviderMock.getFiles()).thenReturn(files);
 
     for (String testName : CsvUtils.getCSVFilesNames(files)) {
       actualUserTests.add(csvRepository.getTestByName(testName));
@@ -65,7 +65,7 @@ class CsvRepositoryTest {
   @Test
   void shouldReturnNullWhenTestNameNotExist() {
     List<File> files = CsvUtils.getCSVFiles();
-    when(csvFileLoaderMock.getFiles()).thenReturn(files);
+    when(csvFileProviderMock.getFiles()).thenReturn(files);
 
     UserTest actualUserTest = csvRepository.getTestByName("testNameNotExist");
 

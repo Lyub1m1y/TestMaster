@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvFileLoader;
+import com.testmaster.repository.impl.csv.CsvFileProvider;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import static java.util.Objects.isNull;
 
 @Component
 @Slf4j
-public class CsvFileLoaderFromDirectory implements CsvFileLoader {
+public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
   @Value("${directory.url}")
   private String directoryUrl;

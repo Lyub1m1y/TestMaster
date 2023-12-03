@@ -3,7 +3,7 @@ package com.testmaster.repository.impl.csv;
 import java.io.File;
 import java.util.List;
 
-public interface CsvFileLoader {
+public interface CsvFileProvider {
 
   List<File> getFiles();
 }

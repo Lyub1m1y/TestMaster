@@ -1,7 +1,7 @@
 package com.testmaster.service.stream;
 
 import com.testmaster.service.impl.io.OutputStreamProvider;
-import com.testmaster.service.impl.io.stream.StreamOutputService;
+import com.testmaster.service.impl.io.system.SystemOutputService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class StreamOutputServiceTest {
+class SystemOutputServiceTest {
 
   private static final String TEST_MESSAGE = "Hello, World!";
 
@@ -24,7 +24,7 @@ class StreamOutputServiceTest {
   @BeforeEach
   void setUp() {
     System.setOut(new PrintStream(outputStream));
-    outputStreamProvider = new StreamOutputService();
+    outputStreamProvider = new SystemOutputService();
   }
 
   @AfterEach

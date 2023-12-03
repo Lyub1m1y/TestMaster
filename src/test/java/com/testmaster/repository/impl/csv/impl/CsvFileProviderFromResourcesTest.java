@@ -1,7 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvFileLoader;
-import com.testmaster.repository.impl.csv.impl.CsvFileLoaderFromResources;
+import com.testmaster.repository.impl.csv.CsvFileProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,16 +10,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CsvFileLoaderFromResourcesTest {
+class CsvFileProviderFromResourcesTest {
 
   private static final String directoryName = "tests";
 
   @DisplayName("Should return non empty list files from resources")
   @Test
   void shouldReturnNonEmptyListFiles() {
-    CsvFileLoader csvFileLoader = new CsvFileLoaderFromResources(directoryName);
+    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources(directoryName);
 
-    List<File> csvFiles = csvFileLoader.getFiles();
+    List<File> csvFiles = csvFileProvider.getFiles();
 
     assertFalse(csvFiles.isEmpty());
   }
@@ -28,9 +27,9 @@ class CsvFileLoaderFromResourcesTest {
   @DisplayName("Should return non empty list csv files from resources")
   @Test
   void shouldReturnNonEmptyListCSVFiles() {
-    CsvFileLoader csvFileLoader = new CsvFileLoaderFromResources(directoryName);
+    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources(directoryName);
 
-    List<File> csvFiles = csvFileLoader.getFiles();
+    List<File> csvFiles = csvFileProvider.getFiles();
 
     for (File file : csvFiles) {
       assertTrue(file.getName().endsWith(".csv"));
@@ -40,9 +39,9 @@ class CsvFileLoaderFromResourcesTest {
   @DisplayName("If the directory not exist, an empty list of files should be returned")
   @Test
   void shouldReturnEmptyListCSVFilesWhenDirectoryPathNotExist() {
-    CsvFileLoader csvFileLoader = new CsvFileLoaderFromResources("notExistDirectory");
+    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources("notExistDirectory");
 
-    List<File> csvFiles = csvFileLoader.getFiles();
+    List<File> csvFiles = csvFileProvider.getFiles();
 
     assertTrue(csvFiles.isEmpty());
   }

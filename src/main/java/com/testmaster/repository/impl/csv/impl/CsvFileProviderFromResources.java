@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvFileLoader;
+import com.testmaster.repository.impl.csv.CsvFileProvider;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class CsvFileLoaderFromResources implements CsvFileLoader {
+public class CsvFileProviderFromResources implements CsvFileProvider {
 
   @Value("${resources.directory.name}")
   private String directoryName;
@@ -32,8 +31,9 @@ public class CsvFileLoaderFromResources implements CsvFileLoader {
     try {
       Resource[] resources = resolver.getResources(directoryPath);
       for (Resource resource : resources) {
-        if (Objects.requireNonNull(resource.getFilename()).endsWith(".csv")) {
-          File file = readResourceToFile(resource);
+        String fileName = resource.getFilename();
+        if (fileName != null && fileName.endsWith(".csv")) {
+          File file = readResourceToFile(resource.getInputStream(), fileName);
           csvFiles.add(file);
         }
       }
@@ -44,10 +44,10 @@ public class CsvFileLoaderFromResources implements CsvFileLoader {
     return csvFiles;
   }
 
-  private File readResourceToFile(Resource resource) throws IOException {
-    try (InputStream inputStream = resource.getInputStream()) {
+  private File readResourceToFile(InputStream fileInputStream, String fileName) throws IOException {
+    try (InputStream inputStream = fileInputStream) {
       File tempDir = new File(System.getProperty("java.io.tmpdir"));
-      File tempFile = new File(tempDir, resource.getFilename());
+      File tempFile = new File(tempDir, fileName);
       try (OutputStream outputStream = new FileOutputStream(tempFile)) {
 
         byte[] buffer = new byte[1024];

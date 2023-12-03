@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Scanner;
 
-import com.testmaster.service.impl.io.InputService;
+import com.testmaster.service.impl.io.InputStreamProvider;
 import com.testmaster.service.impl.io.stream.StreamInputService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ class StreamInputServiceTest {
   void readLine_ShouldReturnInputString() {
     String inputString = "Hello, World!";
     Scanner scannerMock = new Scanner(inputString);
-    InputService inputService = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
 
-    String result = inputService.readLine();
+    String result = inputStreamProvider.readLine();
 
     assertEquals(inputString, result);
   }
@@ -32,9 +32,9 @@ class StreamInputServiceTest {
     int inputValue = 5;
     String inputString = String.valueOf(inputValue);
     Scanner scannerMock = new Scanner(inputString);
-    InputService inputService = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
 
-    int result = inputService.readIntByInterval(min, max);
+    int result = inputStreamProvider.readIntByInterval(min, max);
 
     assertEquals(inputValue, result);
   }
@@ -47,11 +47,11 @@ class StreamInputServiceTest {
     int inputValue = 15;
     String inputString = String.valueOf(inputValue);
     Scanner scannerMock = new Scanner(inputString);
-    InputService inputService = new StreamInputService(scannerMock);
+    InputStreamProvider inputStreamProvider = new StreamInputService(scannerMock);
 
     assertThrows(
             RuntimeException.class,
-            () -> inputService.readIntByInterval(min, max)
+            () -> inputStreamProvider.readIntByInterval(min, max)
     );
   }
 }

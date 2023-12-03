@@ -1,6 +1,6 @@
 package com.testmaster.service.stream;
 
-import com.testmaster.service.impl.io.OutputService;
+import com.testmaster.service.impl.io.OutputStreamProvider;
 import com.testmaster.service.impl.io.stream.StreamOutputService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +19,12 @@ class StreamOutputServiceTest {
   private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
   private final PrintStream originalSystemOut = System.out;
 
-  private OutputService outputService;
+  private OutputStreamProvider outputStreamProvider;
 
   @BeforeEach
   void setUp() {
     System.setOut(new PrintStream(outputStream));
-    outputService = new StreamOutputService();
+    outputStreamProvider = new StreamOutputService();
   }
 
   @AfterEach
@@ -36,7 +36,7 @@ class StreamOutputServiceTest {
   @DisplayName("print should print message to console")
   @Test
   void print_ShouldPrintMessageToConsole() {
-    outputService.print(TEST_MESSAGE);
+    outputStreamProvider.print(TEST_MESSAGE);
 
     String printedMessage = outputStream.toString().trim();
 
@@ -46,7 +46,7 @@ class StreamOutputServiceTest {
   @DisplayName("print should print empty string when message is null")
   @Test
   void print_ShouldPrintEmptyStringWhenMessageIsNull() {
-    outputService.print(null);
+    outputStreamProvider.print(null);
 
     String printedMessage = outputStream.toString().trim();
 
@@ -56,7 +56,7 @@ class StreamOutputServiceTest {
   @DisplayName("print should print empty string when message is empty")
   @Test
   void print_ShouldPrintEmptyStringWhenMessageIsEmpty() {
-    outputService.print("");
+    outputStreamProvider.print("");
 
     String printedMessage = outputStream.toString().trim();
 

@@ -1,6 +1,6 @@
 package com.testmaster.service.impl.io;
 
-public interface InputService {
+public interface InputStreamProvider {
 
   String readLine();
 

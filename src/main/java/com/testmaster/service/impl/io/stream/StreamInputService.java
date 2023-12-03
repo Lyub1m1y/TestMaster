@@ -1,13 +1,13 @@
 package com.testmaster.service.impl.io.stream;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
-import com.testmaster.service.impl.io.InputService;
+import com.testmaster.service.impl.io.InputStreamProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 @Service
-public class StreamInputService implements InputService {
+public class StreamInputService implements InputStreamProvider {
 
   private final Scanner scanner = new Scanner(System.in);
 

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class InOutServiceImpl implements InOutService {
 
-  private final InputService inputService;
-  private final OutputService outputService;
+  private final InputStreamProvider inputStreamProvider;
+  private final OutputStreamProvider outputStreamProvider;
 
   @Override
   public String readLine() {
-    return inputService.readLine();
+    return inputStreamProvider.readLine();
   }
 
   @Override
@@ -25,7 +25,7 @@ public class InOutServiceImpl implements InOutService {
     while (true) {
       try {
         printMessage(message);
-        return inputService.readIntByInterval(min, max);
+        return inputStreamProvider.readIntByInterval(min, max);
       } catch (InvalidNumberByIntervalException ex) {
         log.error(ex.getMessage());
         printMessage(ex.getMessage());
@@ -35,6 +35,6 @@ public class InOutServiceImpl implements InOutService {
 
   @Override
   public void printMessage(String message) {
-    outputService.print(message);
+    outputStreamProvider.print(message);
   }
 }

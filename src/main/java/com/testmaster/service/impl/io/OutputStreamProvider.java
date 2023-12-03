@@ -1,6 +1,6 @@
 package com.testmaster.service.impl.io;
 
-public interface OutputService {
+public interface OutputStreamProvider {
 
   void print(String message);
 }

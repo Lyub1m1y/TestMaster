@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@Setter
 public class CsvFileProviderFromResources implements CsvFileProvider {
 
   @Value("${resources.directory.name}")

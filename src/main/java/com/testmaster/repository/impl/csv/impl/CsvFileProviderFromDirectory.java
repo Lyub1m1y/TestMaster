@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import static java.util.Objects.isNull;
 
 @Component
 @Slf4j
+@Setter
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
   @Value("${directory.url}")

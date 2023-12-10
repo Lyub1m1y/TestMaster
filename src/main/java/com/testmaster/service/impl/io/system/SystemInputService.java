@@ -2,14 +2,18 @@ package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.impl.io.InputStreamProvider;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 @Service
+@Setter
 public class SystemInputService implements InputStreamProvider {
 
-  private final Scanner scanner = new Scanner(System.in);
+  @Autowired
+  private Scanner scanner;
 
   @Override
   public String readLine() {

@@ -15,19 +15,21 @@ import java.util.List;
 
 import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromDirectory;
 import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromResources;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Slf4j
+@Setter
 public class CsvRepository implements UserTestRepository {
 
-  private final List<CsvFileProvider> loaders;
+  private List<CsvFileProvider> providers;
 
   public CsvRepository(@Autowired CsvFileProviderFromDirectory csvFileProviderFromDirectory,
                        @Autowired CsvFileProviderFromResources csvFileProviderFromResources) {
-      this.loaders = List.of(csvFileProviderFromDirectory, csvFileProviderFromResources);
+      this.providers = List.of(csvFileProviderFromDirectory, csvFileProviderFromResources);
   }
 
   @Override
@@ -96,7 +98,7 @@ public class CsvRepository implements UserTestRepository {
   private List<File> getCsvFiles() {
     List<File> files = new ArrayList<>();
 
-    for (CsvFileProvider loader : loaders) {
+    for (CsvFileProvider loader : providers) {
       List<File> loaderFiles =  loader.getFiles();
       if (loaderFiles != null) {
         files.addAll(loaderFiles);

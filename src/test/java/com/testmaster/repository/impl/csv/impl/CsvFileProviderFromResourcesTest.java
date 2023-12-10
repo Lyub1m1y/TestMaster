@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.repository.impl.csv.CsvFileProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CsvFileProviderFromResourcesTest {
 
-  private static final String directoryName = "tests";
+  private CsvFileProviderFromResources csvFileProvider;
+
+  private static final String DIRECTORY_NAME = "tests";
+  private static final String NOT_EXIST_DIRECTORY = "notExistDirectory";
+
+  @BeforeEach
+  void setUp() {
+    csvFileProvider = new CsvFileProviderFromResources();
+    csvFileProvider.setDirectoryName(DIRECTORY_NAME);
+  }
+
 
   @DisplayName("Should return non empty list files from resources")
   @Test
   void shouldReturnNonEmptyListFiles() {
-    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources(directoryName);
-
     List<File> csvFiles = csvFileProvider.getFiles();
 
     assertFalse(csvFiles.isEmpty());
@@ -27,8 +35,6 @@ class CsvFileProviderFromResourcesTest {
   @DisplayName("Should return non empty list csv files from resources")
   @Test
   void shouldReturnNonEmptyListCSVFiles() {
-    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources(directoryName);
-
     List<File> csvFiles = csvFileProvider.getFiles();
 
     for (File file : csvFiles) {
@@ -39,7 +45,7 @@ class CsvFileProviderFromResourcesTest {
   @DisplayName("If the directory not exist, an empty list of files should be returned")
   @Test
   void shouldReturnEmptyListCSVFilesWhenDirectoryPathNotExist() {
-    CsvFileProvider csvFileProvider = new CsvFileProviderFromResources("notExistDirectory");
+    csvFileProvider.setDirectoryName(NOT_EXIST_DIRECTORY);
 
     List<File> csvFiles = csvFileProvider.getFiles();
 

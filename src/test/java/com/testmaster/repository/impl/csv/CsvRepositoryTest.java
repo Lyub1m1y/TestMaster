@@ -2,6 +2,8 @@ package com.testmaster.repository.impl.csv;
 
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.CsvUtils;
+import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromDirectory;
+import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromResources;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,15 +26,20 @@ class CsvRepositoryTest {
 
   @Mock
   private CsvFileProvider csvFileProviderMock;
+  @Mock
+  private CsvFileProviderFromDirectory csvFileProviderFromDirectoryMock;
+  @Mock
+  private CsvFileProviderFromResources csvFileProviderFromResourcesMock;
 
   @InjectMocks
   private CsvRepository csvRepository;
 
   @BeforeEach
   void setUp() {
-    List<CsvFileProvider> loaders = new ArrayList<>();
-    loaders.add(csvFileProviderMock);
-    csvRepository = new CsvRepository(loaders);
+    List<CsvFileProvider> providers = new ArrayList<>();
+    providers.add(csvFileProviderMock);
+    csvRepository = new CsvRepository(csvFileProviderFromDirectoryMock, csvFileProviderFromResourcesMock);
+    csvRepository.setProviders(providers);
   }
 
   @DisplayName("Should return non empty list file names")

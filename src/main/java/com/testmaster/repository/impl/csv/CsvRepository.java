@@ -98,10 +98,10 @@ public class CsvRepository implements UserTestRepository {
   private List<File> getCsvFiles() {
     List<File> files = new ArrayList<>();
 
-    for (CsvFileProvider loader : providers) {
-      List<File> loaderFiles =  loader.getFiles();
-      if (loaderFiles != null) {
-        files.addAll(loaderFiles);
+    for (CsvFileProvider provider : providers) {
+      List<File> providerFiles =  provider.getFiles();
+      if (providerFiles != null) {
+        files.addAll(providerFiles);
       }
     }
 

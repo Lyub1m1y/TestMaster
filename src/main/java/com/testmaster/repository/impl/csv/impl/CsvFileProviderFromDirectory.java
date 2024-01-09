@@ -20,8 +20,11 @@ import static java.util.Objects.isNull;
 @Setter
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
-  @Value("${directory.url}")
-  private String directoryUrl;
+  private final String directoryUrl;
+
+  public CsvFileProviderFromDirectory(@Value("${directory.url}") String directoryUrl) {
+    this.directoryUrl = directoryUrl;
+  }
 
   @Override
   public List<File> getFiles() {

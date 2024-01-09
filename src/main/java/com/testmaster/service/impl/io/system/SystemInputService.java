@@ -20,12 +20,12 @@ public class SystemInputService {
     return scanner.nextLine();
   }
 
-  public int readIntByInterval(int min, int max) {
+  public int readIntByInterval(int min, int max, String errorMessage) {
     int input = Integer.parseInt(scanner.nextLine());
     if (input >= min && input <= max) {
       return input;
     } else {
-      throw new InvalidNumberByIntervalException("Please enter a number between " + min + " and " + max + ".");
+      throw new InvalidNumberByIntervalException(errorMessage);
     }
   }
 }

@@ -1,6 +1,6 @@
 package com.testmaster.service.impl;
 
-import com.testmaster.service.impl.io.SystemInOutService;
+import com.testmaster.service.impl.io.system.SystemInOutService;
 import com.testmaster.service.impl.io.InputStreamProvider;
 import com.testmaster.service.impl.io.OutputStreamProvider;
 import org.junit.jupiter.api.DisplayName;

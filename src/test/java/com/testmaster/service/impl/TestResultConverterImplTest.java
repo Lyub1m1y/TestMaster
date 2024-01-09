@@ -2,6 +2,7 @@ package com.testmaster.service.impl;
 
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
+import com.testmaster.service.impl.converter.TestResultConverterImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

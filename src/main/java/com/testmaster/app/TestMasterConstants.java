@@ -11,5 +11,6 @@ public interface TestMasterConstants {
 
   String TEST_NOT_FOUND_ERROR_MESSAGE = "Test not found.";
   String NO_AVAILABLE_TESTS_ERROR_MESSAGE = "There are no tests available to take.";
+  String ANSWER_ERROR_MESSAGE = "Please enter a number between 1 and %d.";
 
 }

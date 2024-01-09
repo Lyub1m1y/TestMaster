@@ -3,15 +3,11 @@ package com.testmaster.launcher;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
-import com.testmaster.service.InOutService;
-import com.testmaster.service.TestResultConverter;
-import com.testmaster.service.TestService;
+import com.testmaster.service.*;
+
 import java.util.List;
 
-import com.testmaster.service.UserService;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
@@ -19,18 +15,16 @@ import static com.testmaster.app.TestMasterConstants.TEST_NOT_FOUND_ERROR_MESSAG
 import static com.testmaster.app.TestMasterConstants.NO_AVAILABLE_TESTS_ERROR_MESSAGE;
 import static com.testmaster.app.TestMasterConstants.AVAILABLE_TESTS_MESSAGE;
 import static com.testmaster.app.TestMasterConstants.SELECT_TEST_MESSAGE;
+import static java.util.Objects.isNull;
 
 @Component
-@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@AllArgsConstructor
 public class TestLauncher {
 
-  @NonNull
   private final UserService userService;
-  @NonNull
   private final TestService testService;
-  @NonNull
+  private final TestExecutionService testExecutionService;
   private final InOutService inOutService;
-  @NonNull
   private final TestResultConverter testResultConverter;
 
   public void run() {
@@ -39,20 +33,22 @@ public class TestLauncher {
       inOutService.printMessage(EMPTY_MESSAGE);
 
       List<String> availableTests = testService.getAvailableTests();
-      if (!availableTests.isEmpty()) {
-        displayAvailableTests(availableTests);
-        inOutService.printMessage(EMPTY_MESSAGE);
-        UserTest selectedTest = selectTest();
-        if (selectedTest != null) {
-          TestResult testResult = testService.performTest(selectedTest);
-          testResult.setUser(user);
-          inOutService.printMessage(testResultConverter.convert(testResult));
-        } else {
-          inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
-        }
-      } else {
+      if (availableTests.isEmpty()) {
         inOutService.printMessage(NO_AVAILABLE_TESTS_ERROR_MESSAGE);
+        return;
       }
+
+      displayAvailableTests(availableTests);
+      inOutService.printMessage(EMPTY_MESSAGE);
+      UserTest selectedTest = selectTest();
+      if (isNull(selectedTest)) {
+        inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
+        return;
+      }
+
+      TestResult testResult = testExecutionService.executionTest(selectedTest);
+      testResult.setUser(user);
+      inOutService.printMessage(testResultConverter.convert(testResult));
     } catch (Exception ex) {
       inOutService.printMessage(ex.getMessage());
     }

@@ -21,8 +21,11 @@ import org.springframework.stereotype.Component;
 @Setter
 public class CsvFileProviderFromResources implements CsvFileProvider {
 
-  @Value("${resources.directory.name}")
-  private String directoryName;
+  private final String directoryName;
+
+  public CsvFileProviderFromResources(@Value("tests") String directoryName) {
+    this.directoryName = directoryName;
+  }
 
   @Override
   public List<File> getFiles() {

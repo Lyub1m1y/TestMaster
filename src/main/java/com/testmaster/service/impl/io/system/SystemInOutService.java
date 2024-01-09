@@ -1,4 +1,4 @@
-package com.testmaster.service.impl.io;
+package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.InOutService;
@@ -27,10 +27,10 @@ public class SystemInOutService implements InOutService {
   }
 
   @Override
-  public int readIntByInterval(int min, int max) {
+  public int readIntByInterval(int min, int max, String errorMessage) {
     while (true) {
       try {
-        return systemInputService.readIntByInterval(min, max);
+        return systemInputService.readIntByInterval(min, max, errorMessage);
       } catch (InvalidNumberByIntervalException ex) {
         log.error(ex.getMessage());
         printMessage(ex.getMessage());

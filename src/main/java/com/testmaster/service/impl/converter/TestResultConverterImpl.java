@@ -1,4 +1,4 @@
-package com.testmaster.service.impl;
+package com.testmaster.service.impl.converter;
 
 import com.testmaster.model.TestResult;
 import com.testmaster.service.TestResultConverter;

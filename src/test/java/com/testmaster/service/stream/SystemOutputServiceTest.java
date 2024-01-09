@@ -24,7 +24,7 @@ class SystemOutputServiceTest {
   @BeforeEach
   void setUp() {
     System.setOut(new PrintStream(outputStream));
-    outputStreamProvider = new SystemOutputService();
+    outputStreamProvider = new SystemOutputService(outputStream);
   }
 
   @AfterEach

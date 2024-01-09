@@ -8,20 +8,20 @@ import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestService;
 import java.util.List;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.testmaster.app.TestMasterConstants.ASK_USER_ANSWER_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
+
 @Service
-@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@AllArgsConstructor(onConstructor_ = {@Autowired})
 public class TestServiceImpl implements TestService {
 
-  @NonNull
   private final UserTestRepository repository;
-  @NonNull
   private final InOutService inOutService;
-  @NonNull
   private final QuestionConverter questionConverter;
 
   @Override
@@ -44,8 +44,9 @@ public class TestServiceImpl implements TestService {
       inOutService.printMessage((i + 1) + ". "
               + questionConverter.convert(question));
 
-      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), "Your answer: ");
-      inOutService.printMessage("");
+      inOutService.printMessage(ASK_USER_ANSWER_MESSAGE);
+      int answer = inOutService.readIntByInterval(1, question.getOptions().size());
+      inOutService.printMessage(EMPTY_MESSAGE);
       testResult.submitAnswer(question, answer, testResult);
     }
 

@@ -2,25 +2,24 @@ package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.impl.io.InputStreamProvider;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 @Service
-@Setter
-public class SystemInputService implements InputStreamProvider {
+public class SystemInputService {
 
-  @Autowired
-  private Scanner scanner;
+  private final Scanner scanner;
 
-  @Override
+  public SystemInputService(@Autowired InputStreamProvider inputStreamProvider) {
+    this.scanner = new Scanner(inputStreamProvider.getInputStream());
+  }
+
   public String readLine() {
     return scanner.nextLine();
   }
 
-  @Override
   public int readIntByInterval(int min, int max) {
     int input = Integer.parseInt(scanner.nextLine());
     if (input >= min && input <= max) {

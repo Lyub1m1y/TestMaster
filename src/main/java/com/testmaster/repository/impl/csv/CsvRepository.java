@@ -13,23 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromDirectory;
-import com.testmaster.repository.impl.csv.impl.CsvFileProviderFromResources;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Slf4j
-@Setter
 public class CsvRepository implements UserTestRepository {
 
-  private List<CsvFileProvider> providers;
+  private final List<CsvFileProvider> providers;
 
-  public CsvRepository(@Autowired CsvFileProviderFromDirectory csvFileProviderFromDirectory,
-                       @Autowired CsvFileProviderFromResources csvFileProviderFromResources) {
-      this.providers = List.of(csvFileProviderFromDirectory, csvFileProviderFromResources);
+  public CsvRepository(List<CsvFileProvider> providers) {
+      this.providers = providers;
   }
 
   @Override

@@ -14,6 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.TEST_NOT_FOUND_ERROR_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.NO_AVAILABLE_TESTS_ERROR_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.AVAILABLE_TESTS_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.SELECT_TEST_MESSAGE;
+
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class TestLauncher {
@@ -26,12 +32,6 @@ public class TestLauncher {
   private final InOutService inOutService;
   @NonNull
   private final TestResultConverter testResultConverter;
-
-  private static final String EMPTY_MESSAGE = "";
-  private static final String TEST_NOT_FOUND_MESSAGE = "Test not found.";
-  private static final String NO_AVAILABLE_TESTS_MESSAGE = "There are no tests available to take.";
-  private static final String AVAILABLE_TESTS_MESSAGE = "Available tests:";
-  private static final String SELECT_TEST_MESSAGE = "Select a test: ";
 
   public void run() {
     try {
@@ -48,10 +48,10 @@ public class TestLauncher {
           testResult.setUser(user);
           inOutService.printMessage(testResultConverter.convert(testResult));
         } else {
-          inOutService.printMessage(TEST_NOT_FOUND_MESSAGE);
+          inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
         }
       } else {
-        inOutService.printMessage(NO_AVAILABLE_TESTS_MESSAGE);
+        inOutService.printMessage(NO_AVAILABLE_TESTS_ERROR_MESSAGE);
       }
     } catch (Exception ex) {
       inOutService.printMessage(ex.getMessage());
@@ -60,9 +60,7 @@ public class TestLauncher {
 
   private void displayAvailableTests(List<String> availableTests) {
     inOutService.printMessage(AVAILABLE_TESTS_MESSAGE);
-    for (String testName : availableTests) {
-      inOutService.printMessage(testName);
-    }
+    availableTests.forEach(inOutService::printMessage);
   }
 
   private UserTest selectTest() {

@@ -3,6 +3,8 @@ package com.testmaster.service.stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
 import com.testmaster.service.impl.io.system.SystemInputService;
@@ -15,9 +17,8 @@ class SystemInputServiceTest {
   @Test
   void readLine_ShouldReturnInputString() {
     String inputString = "Hello, World!";
-    Scanner scannerMock = new Scanner(inputString);
-    SystemInputService systemInputService = new SystemInputService();
-    systemInputService.setScanner(scannerMock);
+    InputStream inMock = new ByteArrayInputStream(inputString.getBytes());
+    SystemInputService systemInputService = new SystemInputService(inMock);
 
     String result = systemInputService.readLine();
 
@@ -31,9 +32,8 @@ class SystemInputServiceTest {
     int max = 10;
     int inputValue = 5;
     String inputString = String.valueOf(inputValue);
-    Scanner scannerMock = new Scanner(inputString);
-    SystemInputService systemInputService = new SystemInputService();
-    systemInputService.setScanner(scannerMock);
+    InputStream inMock = new ByteArrayInputStream(inputString.getBytes());
+    SystemInputService systemInputService = new SystemInputService(inMock);
 
     int result = systemInputService.readIntByInterval(min, max);
 
@@ -47,9 +47,8 @@ class SystemInputServiceTest {
     int max = 10;
     int inputValue = 15;
     String inputString = String.valueOf(inputValue);
-    Scanner scannerMock = new Scanner(inputString);
-    SystemInputService systemInputService = new SystemInputService();
-    systemInputService.setScanner(scannerMock);
+    InputStream inMock = new ByteArrayInputStream(inputString.getBytes());
+    SystemInputService systemInputService = new SystemInputService(inMock);
 
     assertThrows(
             RuntimeException.class,

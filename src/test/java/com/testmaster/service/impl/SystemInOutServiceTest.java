@@ -1,6 +1,6 @@
 package com.testmaster.service.impl;
 
-import com.testmaster.service.impl.io.InOutServiceImpl;
+import com.testmaster.service.impl.io.SystemInOutService;
 import com.testmaster.service.impl.io.InputStreamProvider;
 import com.testmaster.service.impl.io.OutputStreamProvider;
 import org.junit.jupiter.api.DisplayName;
@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class InOutServiceImplTest {
+class SystemInOutServiceTest {
 
   @Mock
   private InputStreamProvider inputStreamProviderMock;
   @Mock
   private OutputStreamProvider outputStreamProviderMock;
   @InjectMocks
-  private InOutServiceImpl userInOutService;
+  private SystemInOutService userInOutService;
 
   @DisplayName("readInput should return input")
   @Test

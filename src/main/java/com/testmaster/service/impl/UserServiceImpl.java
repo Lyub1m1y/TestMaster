@@ -8,16 +8,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.testmaster.app.TestMasterConstants.ASK_NAME_MESSAGE;
+import static com.testmaster.app.TestMasterConstants.ASK_SURNAME_MESSAGE;
+
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserServiceImpl implements UserService {
 
     @NonNull
     private final InOutService inOutService;
-
-    private static final String ASK_NAME_MESSAGE = "Your name: ";
-    private static final String ASK_SURNAME_MESSAGE = "Your surname: ";
-
 
     @Override
     public User initUser() {

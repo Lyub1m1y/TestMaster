@@ -12,17 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CsvFileProviderFromDirectoryTest {
 
-  private CsvFileProviderFromDirectory csvFileProvider;
-
   private static final String PATH = "src/test/resources/tests";
   private static final String NOT_EXIST_PATH = "notExistPath";
+
+  private CsvFileProviderFromDirectory csvFileProvider;
 
   @BeforeEach
   void setUp() {
     File directory = new File(PATH);
     String absolutePath = directory.getAbsolutePath();
-    csvFileProvider = new CsvFileProviderFromDirectory();
-    csvFileProvider.setDirectoryUrl(absolutePath);
+    csvFileProvider = new CsvFileProviderFromDirectory(absolutePath);
   }
 
   @DisplayName("Should return non empty list files from directory")
@@ -46,7 +45,7 @@ class CsvFileProviderFromDirectoryTest {
   @DisplayName("If the directory not exist, an empty list of files should be returned")
   @Test
   void shouldReturnEmptyListCSVFilesWhenDirectoryPathNotExist() {
-    csvFileProvider.setDirectoryUrl(NOT_EXIST_PATH);
+    CsvFileProviderFromDirectory csvFileProvider = new CsvFileProviderFromDirectory(NOT_EXIST_PATH);
 
     List<File> csvFiles = csvFileProvider.getFiles();
 

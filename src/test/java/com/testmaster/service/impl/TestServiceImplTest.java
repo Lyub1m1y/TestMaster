@@ -2,8 +2,6 @@ package com.testmaster.service.impl;
 
 import com.testmaster.model.*;
 import com.testmaster.repository.UserTestRepository;
-import com.testmaster.service.InOutService;
-import com.testmaster.service.QuestionConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +20,6 @@ class TestServiceImplTest {
 
   @Mock
   private UserTestRepository userTestRepositoryMock;
-  @Mock
-  private InOutService inOutServiceMock;
-  @Mock
-  private QuestionConverter questionConverterMock;
   @InjectMocks
   private TestServiceImpl testService;
 

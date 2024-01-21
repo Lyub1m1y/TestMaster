@@ -1,5 +1,6 @@
-package com.testmaster.launcher;
+package com.testmaster.app.impl;
 
+import com.testmaster.app.App;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
@@ -11,15 +12,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.TEST_NOT_FOUND_ERROR_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.NO_AVAILABLE_TESTS_ERROR_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.AVAILABLE_TESTS_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.SELECT_TEST_MESSAGE;
 import static java.util.Objects.isNull;
 
 @Component
 @AllArgsConstructor
-public class TestLauncher {
+public class ConsoleApp implements App {
+
+  private static final String SELECT_TEST_MESSAGE = "Select a test: ";
+  private static final String AVAILABLE_TESTS_MESSAGE = "Available tests:";
+  private static final String TEST_NOT_FOUND_ERROR_MESSAGE = "Test not found.";
+  private static final String NO_AVAILABLE_TESTS_ERROR_MESSAGE = "There are no tests available to take.";
 
   private final UserService userService;
   private final TestService testService;
@@ -27,6 +29,7 @@ public class TestLauncher {
   private final InOutService inOutService;
   private final TestResultConverter testResultConverter;
 
+  @Override
   public void run() {
     try {
       User user = userService.initUser();

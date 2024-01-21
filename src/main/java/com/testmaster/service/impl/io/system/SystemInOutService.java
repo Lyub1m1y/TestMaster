@@ -2,8 +2,6 @@ package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.InOutService;
-import com.testmaster.service.impl.io.system.SystemInputService;
-import com.testmaster.service.impl.io.system.SystemOutputService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

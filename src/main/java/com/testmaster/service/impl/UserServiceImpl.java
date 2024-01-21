@@ -6,12 +6,13 @@ import com.testmaster.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.testmaster.app.TestMasterConstants.ASK_NAME_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.ASK_SURNAME_MESSAGE;
 
 @Component
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private static final String ASK_NAME_MESSAGE = "Your name: ";
+    private static final String ASK_SURNAME_MESSAGE = "Your surname: ";
 
     private final InOutService inOutService;
 

@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 class TestResultConverterImplTest {
 
     @Mock
-    TestResult testResultMock;
+    private TestResult testResultMock;
     @Mock
-    User userMock;
+    private User userMock;
 
     private final TestResultConverterImpl converter = new TestResultConverterImpl();
 

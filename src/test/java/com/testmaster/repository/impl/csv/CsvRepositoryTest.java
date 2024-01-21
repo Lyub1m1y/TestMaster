@@ -24,7 +24,6 @@ class CsvRepositoryTest {
 
   @Mock
   private CsvFileProvider csvFileProviderMock;
-
   @InjectMocks
   private CsvRepository csvRepository;
 

@@ -1,8 +1,5 @@
-package com.testmaster.service.impl;
+package com.testmaster.service.impl.io.system;
 
-import com.testmaster.service.impl.io.system.SystemInOutService;
-import com.testmaster.service.impl.io.InputStreamProvider;
-import com.testmaster.service.impl.io.OutputStreamProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,21 +14,21 @@ import static org.mockito.Mockito.*;
 class SystemInOutServiceTest {
 
   @Mock
-  private InputStreamProvider inputStreamProviderMock;
+  private SystemInputService systemInputServiceMock;
   @Mock
-  private OutputStreamProvider outputStreamProviderMock;
+  private SystemOutputService systemOutputServiceMock;
   @InjectMocks
-  private SystemInOutService userInOutService;
+  private SystemInOutService systemInOutServiceMock;
 
   @DisplayName("readInput should return input")
   @Test
   void readInput_shouldReturnInput() {
     String input = "Test Input";
-    when(inputStreamProviderMock.readLine()).thenReturn(input);
+    when(systemInputServiceMock.readLine()).thenReturn(input);
 
-    String result = userInOutService.readLine();
+    String result = systemInOutServiceMock.readLine();
 
-    verify(inputStreamProviderMock).readLine();
+    verify(systemInputServiceMock).readLine();
     assertEquals(input, result);
   }
 
@@ -40,8 +37,8 @@ class SystemInOutServiceTest {
   void printOutput_shouldPrintOutput() {
     String message = "Test Message";
 
-    userInOutService.printMessage(message);
+    systemInOutServiceMock.printMessage(message);
 
-    verify(outputStreamProviderMock).print(message);
+    verify(systemOutputServiceMock).printMessage(message);
   }
 }

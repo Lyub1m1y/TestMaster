@@ -1,6 +1,5 @@
 package com.testmaster;
 
-import com.testmaster.app.App;
 import com.testmaster.config.AppConfig;
 import com.testmaster.app.impl.ConsoleApp;
 import lombok.extern.slf4j.Slf4j;

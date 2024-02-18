@@ -23,7 +23,7 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
 
   private final String directoryName;
 
-  public CsvFileProviderFromResources(@Value("${resources.directory.name}") String directoryName) {
+  public CsvFileProviderFromResources(@Value("tests") String directoryName) {
     this.directoryName = directoryName;
   }
 

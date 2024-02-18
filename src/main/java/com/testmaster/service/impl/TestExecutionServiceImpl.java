@@ -24,7 +24,7 @@ public class TestExecutionServiceImpl implements TestExecutionService {
   private final QuestionConverter questionConverter;
 
   @Override
-  public TestResult executionTest(UserTest selectedTest) {
+  public TestResult executeTest(UserTest selectedTest) {
     List<Question> questions = selectedTest.getQuestions();
     TestResult testResult = new TestResult(selectedTest);
 

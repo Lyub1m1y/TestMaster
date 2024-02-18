@@ -1,4 +1,4 @@
-package com.testmaster;
+package com.testmaster.app;
 
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
@@ -47,7 +47,7 @@ public class TestLauncher {
         return;
       }
 
-      TestResult testResult = testExecutionService.executionTest(selectedTest);
+      TestResult testResult = testExecutionService.executeTest(selectedTest);
       testResult.setUser(user);
       inOutService.printMessage(testResultConverter.convert(testResult));
     } catch (Exception ex) {

@@ -2,7 +2,7 @@ package com.testmaster.service.impl.io;
 
 import java.io.InputStream;
 
-public interface InputStreamProvider {
+public interface SystemInputStreamProvider {
 
   InputStream getInputStream();
 

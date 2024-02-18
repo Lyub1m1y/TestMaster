@@ -2,22 +2,17 @@ package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.InOutService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class SystemInOutService implements InOutService {
 
   private final SystemInputService systemInputService;
   private final SystemOutputService systemOutputService;
-
-  @Autowired
-  public SystemInOutService(SystemInputService systemInputService, SystemOutputService systemOutputService) {
-    this.systemInputService = systemInputService;
-    this.systemOutputService = systemOutputService;
-  }
 
   @Override
   public String readLine() {

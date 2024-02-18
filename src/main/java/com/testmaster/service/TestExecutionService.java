@@ -5,6 +5,6 @@ import com.testmaster.model.UserTest;
 
 public interface TestExecutionService {
 
-  TestResult executionTest(UserTest selectedTest);
+  TestResult executeTest(UserTest selectedTest);
 
 }

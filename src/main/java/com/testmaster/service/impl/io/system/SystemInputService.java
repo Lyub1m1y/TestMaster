@@ -1,8 +1,7 @@
 package com.testmaster.service.impl.io.system;
 
 import com.testmaster.exception.InvalidNumberByIntervalException;
-import com.testmaster.service.impl.io.InputStreamProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.testmaster.service.impl.io.SystemInputStreamProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
@@ -12,8 +11,8 @@ public class SystemInputService {
 
   private final Scanner scanner;
 
-  public SystemInputService(@Autowired InputStreamProvider inputStreamProvider) {
-    this.scanner = new Scanner(inputStreamProvider.getInputStream());
+  public SystemInputService(SystemInputStreamProvider systemInputStreamProvider) {
+    this.scanner = new Scanner(systemInputStreamProvider.getInputStream());
   }
 
   public String readLine() {
@@ -24,8 +23,7 @@ public class SystemInputService {
     int input = Integer.parseInt(scanner.nextLine());
     if (input >= min && input <= max) {
       return input;
-    } else {
-      throw new InvalidNumberByIntervalException(errorMessage);
     }
+      throw new InvalidNumberByIntervalException(errorMessage);
   }
 }

@@ -4,10 +4,10 @@ import com.testmaster.model.User;
 import com.testmaster.service.InOutService;
 import com.testmaster.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 

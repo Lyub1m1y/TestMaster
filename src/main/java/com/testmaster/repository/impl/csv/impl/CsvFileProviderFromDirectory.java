@@ -1,10 +1,10 @@
 package com.testmaster.repository.impl.csv.impl;
 
+import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
+import static com.testmaster.app.TestMasterConstants.TEST_RETRIEVE_ERROR_MESSAGE;
 
 @Component
 @Slf4j
@@ -33,7 +34,7 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
     File[] files = folder.listFiles();
 
     if (isNull(files)) {
-      return Collections.emptyList();
+      throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryUrl));
     }
     for (File file : files) {
       if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {

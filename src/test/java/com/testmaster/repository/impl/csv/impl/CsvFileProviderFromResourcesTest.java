@@ -1,5 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
+import com.testmaster.exception.TestRetrieveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CsvFileProviderFromResourcesTest {
@@ -46,8 +48,6 @@ class CsvFileProviderFromResourcesTest {
   void shouldReturnEmptyListCSVFilesWhenDirectoryPathNotExist() {
     CsvFileProviderFromResources csvFileProvider = new CsvFileProviderFromResources(NOT_EXIST_DIRECTORY);
 
-    List<File> csvFiles = csvFileProvider.getFiles();
-
-    assertTrue(csvFiles.isEmpty());
+    assertThrows(TestRetrieveException.class, csvFileProvider::getFiles);
   }
 }

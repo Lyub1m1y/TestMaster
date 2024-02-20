@@ -2,6 +2,7 @@ package com.testmaster.repository.impl.csv;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
@@ -13,7 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.testmaster.service.InOutService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,9 +24,11 @@ import org.springframework.stereotype.Repository;
 public class CsvRepository implements UserTestRepository {
 
   private final List<CsvFileProvider> providers;
+  private final InOutService inOutService;
 
-  public CsvRepository(List<CsvFileProvider> providers) {
+  public CsvRepository(List<CsvFileProvider> providers, InOutService inOutService) {
       this.providers = providers;
+      this.inOutService = inOutService;
   }
 
   @Override
@@ -93,9 +98,15 @@ public class CsvRepository implements UserTestRepository {
     List<File> files = new ArrayList<>();
 
     for (CsvFileProvider provider : providers) {
-      List<File> providerFiles =  provider.getFiles();
-      if (providerFiles != null) {
-        files.addAll(providerFiles);
+      try {
+        List<File> providerFiles =  provider.getFiles();
+        if (providerFiles != null) {
+          files.addAll(providerFiles);
+        }
+      } catch (TestRetrieveException ex) {
+        log.error(ExceptionUtils.getStackTrace(ex));
+        inOutService.printMessage(ex.getMessage());
+        inOutService.printMessageInterval();
       }
     }
 

@@ -4,6 +4,7 @@ import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.InOutService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,13 +21,14 @@ public class SystemInOutService implements InOutService {
   }
 
   @Override
-  public int readIntByInterval(int min, int max, String errorMessage) {
+  public int readIntByInterval(int min, int max, String userInputPrompt, String errorMessage) {
     while (true) {
       try {
+        printMessage(userInputPrompt);
         return systemInputService.readIntByInterval(min, max, errorMessage);
       } catch (InvalidNumberByIntervalException ex) {
-        log.error(ex.getMessage());
-        printMessage(ex.getMessage());
+        log.error(ExceptionUtils.getStackTrace(ex));
+        printMessage(errorMessage);
       }
     }
   }
@@ -34,5 +36,10 @@ public class SystemInOutService implements InOutService {
   @Override
   public void printMessage(String message) {
     systemOutputService.printMessage(message);
+  }
+
+  @Override
+  public void printMessageInterval() {
+    systemOutputService.printMessageInterval();
   }
 }

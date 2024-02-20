@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.testmaster.app.TestMasterConstants.ASK_USER_ANSWER_MESSAGE;
 import static com.testmaster.app.TestMasterConstants.ANSWER_ERROR_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
 
 @Service
 @AllArgsConstructor
 public class TestExecutionServiceImpl implements TestExecutionService {
-
-  private static final String ASK_USER_ANSWER_MESSAGE = "Your answer: ";
 
   private final InOutService inOutService;
   private final QuestionConverter questionConverter;
@@ -33,10 +31,9 @@ public class TestExecutionServiceImpl implements TestExecutionService {
       inOutService.printMessage((i + 1) + ". "
           + questionConverter.convert(question));
 
-      inOutService.printMessage(ASK_USER_ANSWER_MESSAGE);
-      int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
+      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), ASK_USER_ANSWER_MESSAGE,
           String.format(ANSWER_ERROR_MESSAGE, question.getOptions().size()));
-      inOutService.printMessage(EMPTY_MESSAGE);
+      inOutService.printMessageInterval();
       testResult.submitAnswer(question, answer, testResult);
     }
 

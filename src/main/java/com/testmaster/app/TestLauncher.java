@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.testmaster.app.TestMasterConstants.EMPTY_MESSAGE;
 import static java.util.Objects.isNull;
 
 @Component
@@ -29,30 +28,26 @@ public class TestLauncher {
   private final TestResultConverter testResultConverter;
 
   public void run() {
-    try {
-      User user = userService.initUser();
-      inOutService.printMessage(EMPTY_MESSAGE);
+    User user = userService.initUser();
+    inOutService.printMessageInterval();
 
-      List<String> availableTests = testService.getAvailableTests();
-      if (availableTests.isEmpty()) {
-        inOutService.printMessage(NO_AVAILABLE_TESTS_ERROR_MESSAGE);
-        return;
-      }
-
-      displayAvailableTests(availableTests);
-      inOutService.printMessage(EMPTY_MESSAGE);
-      UserTest selectedTest = selectTest();
-      if (isNull(selectedTest)) {
-        inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
-        return;
-      }
-
-      TestResult testResult = testExecutionService.executeTest(selectedTest);
-      testResult.setUser(user);
-      inOutService.printMessage(testResultConverter.convert(testResult));
-    } catch (Exception ex) {
-      inOutService.printMessage(ex.getMessage());
+    List<String> availableTests = testService.getAvailableTests();
+    if (availableTests.isEmpty()) {
+      inOutService.printMessage(NO_AVAILABLE_TESTS_ERROR_MESSAGE);
+      return;
     }
+
+    displayAvailableTests(availableTests);
+    inOutService.printMessageInterval();
+    UserTest selectedTest = selectTest();
+    if (isNull(selectedTest)) {
+      inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
+      return;
+    }
+
+    TestResult testResult = testExecutionService.executeTest(selectedTest);
+    testResult.setUser(user);
+    inOutService.printMessage(testResultConverter.convert(testResult));
   }
 
   private void displayAvailableTests(List<String> availableTests) {

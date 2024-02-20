@@ -18,4 +18,8 @@ public class SystemOutputService {
   public void printMessage(String message) {
     ((PrintStream) outputStream).println(message);
   }
+
+  public void printMessageInterval() {
+    ((PrintStream) outputStream).println();
+  }
 }

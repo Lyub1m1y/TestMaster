@@ -1,5 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
+import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,10 +12,13 @@ import java.util.List;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
+
+import static com.testmaster.app.TestMasterConstants.TEST_RETRIEVE_ERROR_MESSAGE;
 
 @Component
 @Slf4j
@@ -43,7 +47,8 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
         }
       }
     } catch (Exception ex) {
-      log.error(ex.getMessage());
+      log.error(ExceptionUtils.getStackTrace(ex));
+      throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "resources", directoryName));
     }
 
     return csvFiles;

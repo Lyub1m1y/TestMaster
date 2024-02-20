@@ -31,7 +31,7 @@ class CsvRepositoryTest {
   void setUp() {
     List<CsvFileProvider> providers = new ArrayList<>();
     providers.add(csvFileProviderMock);
-    csvRepository = new CsvRepository(providers);
+    csvRepository = new CsvRepository(providers, null);
   }
 
   @DisplayName("Should return non empty list file names")

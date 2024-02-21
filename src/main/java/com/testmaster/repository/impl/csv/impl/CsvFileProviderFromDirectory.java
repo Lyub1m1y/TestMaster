@@ -4,12 +4,13 @@ import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,19 +30,20 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
   @Override
   public List<File> getFiles() {
-    List<File> csvFiles = new ArrayList<>();
-    File folder = new File(directoryUrl);
-    File[] files = folder.listFiles();
+    try {
+      File folder = new File(directoryUrl);
+      File[] files = folder.listFiles();
 
-    if (isNull(files)) {
-      throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryUrl));
-    }
-    for (File file : files) {
-      if (Objects.requireNonNull(file.getName()).endsWith(".csv")) {
-        csvFiles.add(file);
+      if (isNull(files)) {
+        throw new NullPointerException("Files is null");
       }
-    }
 
-    return csvFiles;
+      return Arrays.stream(files)
+          .filter(file -> file.getName().endsWith(".csv"))
+          .collect(Collectors.toList());
+    } catch (Exception ex) {
+        log.error(ExceptionUtils.getStackTrace(ex));
+        throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryUrl));
+    }
   }
 }

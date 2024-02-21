@@ -2,13 +2,12 @@ package com.testmaster.repository.impl.csv.impl;
 
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,42 +31,24 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
   }
 
   @Override
-  public List<File> getFiles() {
-    List<File> csvFiles = new ArrayList<>();
-    String directoryPath = "classpath:" + directoryName + "/**";
+  public Map<String, InputStream> getFiles() {
+    Map<String, InputStream> testsFromResources = new HashMap<>();
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
     try {
-      Resource[] resources = resolver.getResources(directoryPath);
-      for (Resource resource : resources) {
-        String fileName = resource.getFilename();
-        if (fileName != null && fileName.endsWith(".csv")) {
-          File file = readResourceToFile(resource.getInputStream(), fileName);
-          csvFiles.add(file);
+      Resource[] resources = resolver.getResources(directoryName + "/*.csv");
+      Arrays.stream(resources).forEach(resource -> {
+        try {
+          testsFromResources.put(Objects.requireNonNull(resource.getFilename()).replace(".csv", ""), resource.getInputStream());
+        } catch (IOException e) {
+          throw new RuntimeException(e);
         }
-      }
+      });
     } catch (Exception ex) {
       log.error(ExceptionUtils.getStackTrace(ex));
       throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "resources", directoryName));
     }
 
-    return csvFiles;
-  }
-
-  private File readResourceToFile(InputStream fileInputStream, String fileName) throws IOException {
-    try (InputStream inputStream = fileInputStream) {
-      File tempDir = new File(System.getProperty("java.io.tmpdir"));
-      File tempFile = new File(tempDir, fileName);
-      try (OutputStream outputStream = new FileOutputStream(tempFile)) {
-
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-          outputStream.write(buffer, 0, bytesRead);
-        }
-      }
-
-      return tempFile;
-    }
+    return testsFromResources;
   }
 }

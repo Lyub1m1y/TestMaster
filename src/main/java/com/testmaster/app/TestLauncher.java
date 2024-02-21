@@ -8,10 +8,12 @@ import com.testmaster.service.*;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class TestLauncher {

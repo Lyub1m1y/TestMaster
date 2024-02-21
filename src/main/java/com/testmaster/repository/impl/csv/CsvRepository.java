@@ -8,11 +8,13 @@ import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.testmaster.service.InOutService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,37 +35,24 @@ public class CsvRepository implements UserTestRepository {
 
   @Override
   public List<String> getTestNames() {
-    List<String> namesTests = new ArrayList<>();
-
-    for (File csvFile : getCsvFiles()) {
-      namesTests.add(csvFile.getName().replace(".csv",""));
-    }
-
-    return namesTests;
+    return new ArrayList<>(getCsvFiles().keySet());
   }
 
   @Override
   public UserTest getTestByName(String testName) {
-    UserTest test = null;
-
-    for (File csvFile : getCsvFiles()) {
-      try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
-        if (isMatchingTestName(csvFile, testName)) {
+    Map<String, InputStream> tests = getCsvFiles();
+    for (Map.Entry<String, InputStream> test : tests.entrySet()) {
+      try (CSVReader reader = new CSVReader(new InputStreamReader(test.getValue()))) {
+        if (testName.equals(test.getKey())) {
           List<Question> questions = parseQuestionsFromCSV(reader);
-          test = new UserTest(testName, questions);
+          return new UserTest(testName, questions);
         }
       } catch (Exception ex) {
         log.error(ex.getMessage());
       }
     }
 
-    return test;
-  }
-
-  private boolean isMatchingTestName(File csvFile, String testName) {
-    String fileName = csvFile.getName();
-    String fileNameWithoutExtension = fileName.replace(".csv", "");
-    return fileNameWithoutExtension.equals(testName);
+    return null;
   }
 
   private List<Question> parseQuestionsFromCSV(CSVReader reader) throws CsvValidationException, IOException {
@@ -94,14 +83,14 @@ public class CsvRepository implements UserTestRepository {
     return options;
   }
 
-  private List<File> getCsvFiles() {
-    List<File> files = new ArrayList<>();
+  private Map<String, InputStream> getCsvFiles() {
+    Map<String, InputStream> tests = new HashMap<>();
 
     for (CsvFileProvider provider : providers) {
       try {
-        List<File> providerFiles =  provider.getFiles();
-        if (providerFiles != null) {
-          files.addAll(providerFiles);
+        Map<String, InputStream> providerTests = provider.getFiles();
+        if (providerTests != null) {
+          tests.putAll(providerTests);
         }
       } catch (TestRetrieveException ex) {
         log.error(ExceptionUtils.getStackTrace(ex));
@@ -110,6 +99,6 @@ public class CsvRepository implements UserTestRepository {
       }
     }
 
-    return files;
+    return tests;
   }
 }

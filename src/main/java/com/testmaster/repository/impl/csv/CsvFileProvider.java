@@ -1,9 +1,9 @@
 package com.testmaster.repository.impl.csv;
 
-import java.io.File;
-import java.util.List;
+import java.io.InputStream;
+import java.util.Map;
 
 public interface CsvFileProvider {
 
-  List<File> getFiles();
+  Map<String, InputStream> getFiles();
 }

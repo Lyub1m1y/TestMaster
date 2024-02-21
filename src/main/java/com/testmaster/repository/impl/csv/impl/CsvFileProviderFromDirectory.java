@@ -4,8 +4,12 @@ import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import lombok.Setter;
@@ -30,7 +34,7 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
   }
 
   @Override
-  public List<File> getFiles() {
+  public Map<String, InputStream> getFiles() {
     try {
       File folder = new File(directoryUrl);
       File[] files = folder.listFiles();
@@ -41,7 +45,15 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
       return Arrays.stream(files)
           .filter(file -> file.getName().endsWith(".csv"))
-          .collect(Collectors.toList());
+          .collect(Collectors.toMap(
+              file -> Objects.requireNonNull(file.getName()).replace(".csv", ""),
+              file -> {
+                try {
+                  return new FileInputStream(file);
+                } catch (FileNotFoundException e) {
+                  throw new RuntimeException("Error when getting inputStream from a file: " + file.getName(), e);
+                }
+              }));
     } catch (Exception ex) {
         log.error(ExceptionUtils.getStackTrace(ex));
         throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryUrl));

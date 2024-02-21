@@ -14,16 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CsvFileProviderFromDirectoryTest {
 
-  private static final String PATH = "src/test/resources/tests";
+  private static final String DIRECTORY_PATH = "src/test/resources/tests";
   private static final String NOT_EXIST_PATH = "notExistPath";
 
   private CsvFileProviderFromDirectory csvFileProvider;
 
   @BeforeEach
   void setUp() {
-    File directory = new File(PATH);
-    String absolutePath = directory.getAbsolutePath();
-    csvFileProvider = new CsvFileProviderFromDirectory(absolutePath);
+    csvFileProvider = new CsvFileProviderFromDirectory(DIRECTORY_PATH);
   }
 
   @DisplayName("Should return non empty list files from directory")

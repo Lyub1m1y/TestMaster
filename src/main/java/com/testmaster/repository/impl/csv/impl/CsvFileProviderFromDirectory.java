@@ -22,10 +22,11 @@ import static com.testmaster.app.TestMasterConstants.TEST_RETRIEVE_ERROR_MESSAGE
 @Setter
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
+  private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
   private final String directoryUrl;
 
-  public CsvFileProviderFromDirectory(@Value("${directory.url}") String directoryUrl) {
-    this.directoryUrl = directoryUrl;
+  public CsvFileProviderFromDirectory(@Value("${directory.relative.path}") String directoryUrl) {
+    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + directoryUrl;
   }
 
   @Override

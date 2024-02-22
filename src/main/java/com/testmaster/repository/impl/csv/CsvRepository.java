@@ -7,6 +7,10 @@ import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
+import com.testmaster.service.InOutService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,11 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.testmaster.service.InOutService;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @Slf4j
@@ -35,12 +34,12 @@ public class CsvRepository implements UserTestRepository {
 
   @Override
   public List<String> getTestNames() {
-    return new ArrayList<>(getCsvFiles().keySet());
+    return new ArrayList<>(getFiles().keySet());
   }
 
   @Override
   public UserTest getTestByName(String testName) {
-    Map<String, InputStream> tests = getCsvFiles();
+    Map<String, InputStream> tests = getFiles();
     for (Map.Entry<String, InputStream> test : tests.entrySet()) {
       try (CSVReader reader = new CSVReader(new InputStreamReader(test.getValue()))) {
         if (testName.equals(test.getKey())) {
@@ -83,7 +82,7 @@ public class CsvRepository implements UserTestRepository {
     return options;
   }
 
-  private Map<String, InputStream> getCsvFiles() {
+  private Map<String, InputStream> getFiles() {
     Map<String, InputStream> tests = new HashMap<>();
 
     for (CsvFileProvider provider : providers) {

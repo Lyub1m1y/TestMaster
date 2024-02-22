@@ -3,7 +3,6 @@ package com.testmaster.service.impl.io.system;
 import com.testmaster.exception.InvalidNumberByIntervalException;
 import com.testmaster.service.impl.io.SystemInputStreamProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
@@ -29,7 +28,7 @@ public class SystemInputService {
         return input;
       }
     } catch (NumberFormatException ex) {
-      log.error(ExceptionUtils.getStackTrace(ex));
+      log.error(ex.getMessage(), ex);
     }
     throw new InvalidNumberByIntervalException(errorMessage);
   }

@@ -3,17 +3,18 @@ package com.testmaster.app;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
-import com.testmaster.service.*;
+import com.testmaster.service.InOutService;
+import com.testmaster.service.TestExecutionService;
+import com.testmaster.service.TestResultConverter;
+import com.testmaster.service.TestService;
+import com.testmaster.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
 import static java.util.Objects.isNull;
 
-@Slf4j
 @Component
 @AllArgsConstructor
 public class TestLauncher {

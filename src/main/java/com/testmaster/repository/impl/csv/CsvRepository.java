@@ -9,7 +9,6 @@ import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
 import com.testmaster.service.InOutService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class CsvRepository implements UserTestRepository {
           tests.putAll(providerTests);
         }
       } catch (TestRetrieveException ex) {
-        log.error(ExceptionUtils.getStackTrace(ex));
+        log.error(ex.getMessage(), ex);
         inOutService.printMessage(ex.getMessage());
         inOutService.printMessageInterval();
       }

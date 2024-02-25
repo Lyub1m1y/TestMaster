@@ -1,5 +1,6 @@
 package com.testmaster.app.impl;
 
+import com.testmaster.app.App;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
 import com.testmaster.model.UserTest;

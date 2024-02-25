@@ -1,0 +1,11 @@
+resources:
+  directory:
+    name: tests
+directory:
+  relative:
+    path: tests
+
+#spring:
+#  messages:
+#    basename: messages
+#    encoding: UTF-8

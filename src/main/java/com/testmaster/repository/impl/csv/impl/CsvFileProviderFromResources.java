@@ -1,10 +1,10 @@
 package com.testmaster.repository.impl.csv.impl;
 
+import com.testmaster.Settings;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -25,8 +25,8 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
 
   private final String directoryName;
 
-  public CsvFileProviderFromResources(@Value("${resources.directory.name}") String directoryName) {
-    this.directoryName = directoryName;
+  public CsvFileProviderFromResources(Settings settings) {
+    this.directoryName = settings.resourcesDirectoryName();
   }
 
   @Override

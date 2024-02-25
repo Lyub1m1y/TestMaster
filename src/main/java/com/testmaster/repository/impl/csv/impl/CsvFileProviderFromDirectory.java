@@ -1,10 +1,10 @@
 package com.testmaster.repository.impl.csv.impl;
 
+import com.testmaster.Settings;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -27,8 +27,8 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
   private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
   private final String directoryUrl;
 
-  public CsvFileProviderFromDirectory(@Value("${directory.relative.path}") String directoryUrl) {
-    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + directoryUrl;
+  public CsvFileProviderFromDirectory(Settings settings) {
+    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + settings.directoryRelativePath();
   }
 
   @Override

@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.Settings;
+import com.testmaster.config.DirectoryRelativePathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
@@ -27,8 +27,8 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
   private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
   private final String directoryUrl;
 
-  public CsvFileProviderFromDirectory(Settings settings) {
-    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + settings.directoryRelativePath();
+  public CsvFileProviderFromDirectory(DirectoryRelativePathProvider directoryRelativePathProvider) {
+    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + directoryRelativePathProvider.getDirectoryRelativePath();
   }
 
   @Override

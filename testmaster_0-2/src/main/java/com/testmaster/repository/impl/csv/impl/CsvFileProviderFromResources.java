@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.Settings;
+import com.testmaster.config.ResourcesDirectoryNameProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
@@ -25,8 +25,8 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
 
   private final String directoryName;
 
-  public CsvFileProviderFromResources(Settings settings) {
-    this.directoryName = settings.resourcesDirectoryName();
+  public CsvFileProviderFromResources(ResourcesDirectoryNameProvider resourcesDirectoryNameProvider) {
+    this.directoryName = resourcesDirectoryNameProvider.getResourcesDirectoryName();
   }
 
   @Override

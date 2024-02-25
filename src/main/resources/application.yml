@@ -1,0 +1,6 @@
+resources:
+  directory:
+    name: tests
+directory:
+  relative:
+    path: tests

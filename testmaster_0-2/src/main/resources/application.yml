@@ -1,9 +1,10 @@
 app:
-  resourcesPath: "tests"
-  directoryPath: "tests"
+  resourcesPath: tests
+  directoryPath: tests
+  locale: ru
 
 
-#spring:
-#  messages:
-#    basename: messages
-#    encoding: UTF-8
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8

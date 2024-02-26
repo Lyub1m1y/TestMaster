@@ -8,6 +8,7 @@ import com.testmaster.service.TestExecutionService;
 import com.testmaster.service.TestResultConverter;
 import com.testmaster.service.TestService;
 import com.testmaster.service.UserService;
+import com.testmaster.utils.MessageUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,16 +20,12 @@ import static java.util.Objects.isNull;
 @AllArgsConstructor
 public class TestLauncher {
 
-  private static final String SELECT_TEST_MESSAGE = "Select a test: ";
-  private static final String AVAILABLE_TESTS_MESSAGE = "Available tests:";
-  private static final String TEST_NOT_FOUND_ERROR_MESSAGE = "Test not found.";
-  private static final String NO_AVAILABLE_TESTS_ERROR_MESSAGE = "There are no tests available to take.";
-
   private final UserService userService;
   private final TestService testService;
   private final TestExecutionService testExecutionService;
   private final InOutService inOutService;
   private final TestResultConverter testResultConverter;
+  private final MessageUtils messageUtils;
 
   public void run() {
     User user = userService.initUser();
@@ -36,7 +33,7 @@ public class TestLauncher {
 
     List<String> availableTests = testService.getAvailableTests();
     if (availableTests.isEmpty()) {
-      inOutService.printMessage(NO_AVAILABLE_TESTS_ERROR_MESSAGE);
+      inOutService.printMessage(messageUtils.getMessage("NO_AVAILABLE_TESTS_ERROR_MESSAGE"));
       return;
     }
 
@@ -44,7 +41,7 @@ public class TestLauncher {
     inOutService.printMessageInterval();
     UserTest selectedTest = selectTest();
     if (isNull(selectedTest)) {
-      inOutService.printMessage(TEST_NOT_FOUND_ERROR_MESSAGE);
+      inOutService.printMessage(messageUtils.getMessage("TEST_NOT_FOUND_ERROR_MESSAGE"));
       return;
     }
 
@@ -54,12 +51,12 @@ public class TestLauncher {
   }
 
   private void displayAvailableTests(List<String> availableTests) {
-    inOutService.printMessage(AVAILABLE_TESTS_MESSAGE);
+    inOutService.printMessage(messageUtils.getMessage("AVAILABLE_TESTS_MESSAGE"));
     availableTests.forEach(inOutService::printMessage);
   }
 
   private UserTest selectTest() {
-    inOutService.printMessage(SELECT_TEST_MESSAGE);
+    inOutService.printMessage(messageUtils.getMessage("SELECT_TEST_MESSAGE"));
     String testName = inOutService.readLine();
     return testService.getTestByName(testName);
   }

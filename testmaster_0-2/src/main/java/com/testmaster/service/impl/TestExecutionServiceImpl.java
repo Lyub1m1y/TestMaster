@@ -6,13 +6,11 @@ import com.testmaster.model.UserTest;
 import com.testmaster.service.InOutService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestExecutionService;
+import com.testmaster.utils.MessageUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.testmaster.app.TestMasterConstants.ASK_USER_ANSWER_MESSAGE;
-import static com.testmaster.app.TestMasterConstants.ANSWER_ERROR_MESSAGE;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +18,7 @@ public class TestExecutionServiceImpl implements TestExecutionService {
 
   private final InOutService inOutService;
   private final QuestionConverter questionConverter;
+  private final MessageUtils messageUtils;
 
   @Override
   public TestResult executeTest(UserTest selectedTest) {
@@ -31,8 +30,9 @@ public class TestExecutionServiceImpl implements TestExecutionService {
       inOutService.printMessage((i + 1) + ". "
           + questionConverter.convert(question));
 
-      int answer = inOutService.readIntByInterval(1, question.getOptions().size(), ASK_USER_ANSWER_MESSAGE,
-          String.format(ANSWER_ERROR_MESSAGE, question.getOptions().size()));
+      int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
+          messageUtils.getMessage("ASK_USER_ANSWER_MESSAGE"),
+          String.format(messageUtils.getMessage("ANSWER_ERROR_MESSAGE"), question.getOptions().size()));
       inOutService.printMessageInterval();
       testResult.submitAnswer(question, answer, testResult);
     }

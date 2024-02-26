@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.config.DirectoryRelativePathProvider;
+import com.testmaster.config.DirectoryPathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
@@ -19,22 +19,22 @@ import java.util.stream.Collectors;
 import static com.testmaster.app.TestMasterConstants.TEST_RETRIEVE_ERROR_MESSAGE;
 import static java.util.Objects.isNull;
 
-@Component
 @Slf4j
 @Setter
+@Component
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
   private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
-  private final String directoryUrl;
+  private final String directoryPath;
 
-  public CsvFileProviderFromDirectory(DirectoryRelativePathProvider directoryRelativePathProvider) {
-    this.directoryUrl = PROJECT_ABSOLUTE_PATH + "/" + directoryRelativePathProvider.getDirectoryRelativePath();
+  public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider) {
+    this.directoryPath = PROJECT_ABSOLUTE_PATH + "/" + directoryPathProvider.getDirectoryPath();
   }
 
   @Override
   public Map<String, InputStream> getFiles() {
     try {
-      File folder = new File(directoryUrl);
+      File folder = new File(directoryPath);
       File[] files = folder.listFiles();
 
       if (isNull(files)) {
@@ -54,7 +54,7 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
               }));
     } catch (Exception ex) {
         log.error(ex.getMessage(), ex);
-        throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryUrl));
+        throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "directory", directoryPath));
     }
   }
 }

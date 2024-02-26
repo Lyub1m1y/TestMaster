@@ -1,16 +1,14 @@
 package com.testmaster.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Component
 @Getter
-public class Settings implements ResourcesDirectoryNameProvider, DirectoryRelativePathProvider {
+@Setter
+@ConfigurationProperties(prefix = "app")
+public class Settings implements ResourcesPathProvider, DirectoryPathProvider {
 
-  @Value("${resources.directory.name}")
-  private String resourcesDirectoryName;
-
-  @Value("${directory.relative.path}")
-  private String directoryRelativePath;
+  private String resourcesPath;
+  private String directoryPath;
 }

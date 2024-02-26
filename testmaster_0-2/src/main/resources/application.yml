@@ -1,9 +1,7 @@
-resources:
-  directory:
-    name: tests
-directory:
-  relative:
-    path: tests
+app:
+  resourcesPath: "tests"
+  directoryPath: "tests"
+
 
 #spring:
 #  messages:

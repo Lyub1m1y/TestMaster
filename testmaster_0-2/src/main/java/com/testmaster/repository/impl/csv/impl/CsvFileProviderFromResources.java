@@ -1,6 +1,6 @@
 package com.testmaster.repository.impl.csv.impl;
 
-import com.testmaster.config.ResourcesDirectoryNameProvider;
+import com.testmaster.config.ResourcesPathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
 import lombok.Setter;
@@ -18,15 +18,15 @@ import java.util.Objects;
 
 import static com.testmaster.app.TestMasterConstants.TEST_RETRIEVE_ERROR_MESSAGE;
 
-@Component
 @Slf4j
 @Setter
+@Component
 public class CsvFileProviderFromResources implements CsvFileProvider {
 
-  private final String directoryName;
+  private final String resourcesPath;
 
-  public CsvFileProviderFromResources(ResourcesDirectoryNameProvider resourcesDirectoryNameProvider) {
-    this.directoryName = resourcesDirectoryNameProvider.getResourcesDirectoryName();
+  public CsvFileProviderFromResources(ResourcesPathProvider resourcesPathProvider) {
+    this.resourcesPath = resourcesPathProvider.getResourcesPath();
   }
 
   @Override
@@ -35,7 +35,7 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
     try {
-      Resource[] resources = resolver.getResources(directoryName + "/*.csv");
+      Resource[] resources = resolver.getResources(resourcesPath + "/*.csv");
       Arrays.stream(resources).forEach(resource -> {
         try {
           testsFromResources.put(Objects.requireNonNull(resource.getFilename()).replace(".csv", ""), resource.getInputStream());
@@ -45,7 +45,7 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
       });
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
-      throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "resources", directoryName));
+      throw new TestRetrieveException(String.format(TEST_RETRIEVE_ERROR_MESSAGE, "resources", resourcesPath));
     }
 
     return testsFromResources;

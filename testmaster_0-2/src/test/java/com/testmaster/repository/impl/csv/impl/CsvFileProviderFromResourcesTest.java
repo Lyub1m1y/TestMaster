@@ -4,11 +4,13 @@ import com.testmaster.config.Settings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@SpringBootTest(classes = {Settings.class, CsvFileProviderFromResources.class})
+@EnableConfigurationProperties(Settings.class)
+@SpringBootTest(classes = {CsvFileProviderFromResources.class})
 class CsvFileProviderFromResourcesTest {
 
   @Autowired

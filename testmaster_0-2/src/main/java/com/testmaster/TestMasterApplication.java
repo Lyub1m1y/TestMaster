@@ -1,16 +1,17 @@
 package com.testmaster;
 
 import com.testmaster.app.TestLauncher;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.testmaster.config.Settings;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 @SpringBootApplication
+@EnableConfigurationProperties(Settings.class)
 public class TestMasterApplication implements ApplicationRunner {
 
   private final TestLauncher testLauncher;
@@ -21,7 +22,6 @@ public class TestMasterApplication implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) {
-    log.info("App started!");
     testLauncher.run();
   }
 }

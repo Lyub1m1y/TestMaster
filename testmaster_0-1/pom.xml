@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.testmaster</groupId>
-    <artifactId>TestMaster</artifactId>
+    <artifactId>TestMaster_0-1</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

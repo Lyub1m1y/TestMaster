@@ -20,7 +20,7 @@ public class QuestionConverterImpl implements QuestionConverter {
       sb.append("\t")
           .append(j + 1)
           .append(") ")
-          .append(options.get(j).getOption())
+          .append(options.get(j).getName())
           .append("\n");
     }
 

@@ -14,7 +14,7 @@
     <groupId>com.testmaster</groupId>
     <artifactId>TestMaster</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>TestMaster</name>
+    <name>TestMaster_0-2</name>
     <description>TestMaster console app</description>
 
     <properties>

@@ -1,13 +1,13 @@
-package com.testmaster.utils;
+package com.testmaster.service.impl;
 
 import com.testmaster.config.LocaleProvider;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
-@Component
-public class MessageUtils {
+@RequiredArgsConstructor
+@Service
+public class LocalizationServiceImpl implements com.testmaster.service.LocalizationService {
 
   private final MessageSource messageSource;
   private final LocaleProvider locale;

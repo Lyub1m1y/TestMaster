@@ -1,7 +1,6 @@
 package com.testmaster.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -9,8 +8,7 @@ import lombok.Setter;
 @Getter
 public class Option {
 
-  @NonNull
-  private String option;
+  private final String option;
   @Setter
   private boolean correct;
 }

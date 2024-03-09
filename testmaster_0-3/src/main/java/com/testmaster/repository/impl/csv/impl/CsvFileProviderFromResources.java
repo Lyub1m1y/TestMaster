@@ -3,7 +3,7 @@ package com.testmaster.repository.impl.csv.impl;
 import com.testmaster.config.ResourcesPathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
-import com.testmaster.utils.MessageUtils;
+import com.testmaster.service.LocalizationService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -23,11 +23,11 @@ import java.util.Objects;
 public class CsvFileProviderFromResources implements CsvFileProvider {
 
   private final String resourcesPath;
-  private final MessageUtils messageUtils;
+  private final LocalizationService localizationService;
 
-  public CsvFileProviderFromResources(ResourcesPathProvider resourcesPathProvider, MessageUtils messageUtils) {
+  public CsvFileProviderFromResources(ResourcesPathProvider resourcesPathProvider, LocalizationService localizationService) {
     this.resourcesPath = resourcesPathProvider.getResourcesPath();
-    this.messageUtils = messageUtils;
+    this.localizationService = localizationService;
   }
 
   @Override
@@ -47,7 +47,7 @@ public class CsvFileProviderFromResources implements CsvFileProvider {
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
       throw new TestRetrieveException(
-          String.format(messageUtils.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "resources", resourcesPath));
+          String.format(localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "resources", resourcesPath));
     }
 
     return testsFromResources;

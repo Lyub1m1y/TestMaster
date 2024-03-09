@@ -2,14 +2,14 @@ package com.testmaster;
 
 import com.testmaster.app.TestLauncher;
 import com.testmaster.config.Settings;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @SpringBootApplication
 @EnableConfigurationProperties(Settings.class)
 public class TestMasterApplication implements ApplicationRunner {

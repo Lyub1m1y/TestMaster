@@ -4,9 +4,9 @@ import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
 import com.testmaster.service.InOutService;
+import com.testmaster.service.LocalizationService;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestExecutionService;
-import com.testmaster.utils.MessageUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class TestExecutionServiceImpl implements TestExecutionService {
 
   private final InOutService inOutService;
   private final QuestionConverter questionConverter;
-  private final MessageUtils messageUtils;
+  private final LocalizationService localizationService;
 
   @Override
   public TestResult executeTest(UserTest selectedTest) {
@@ -31,8 +31,8 @@ public class TestExecutionServiceImpl implements TestExecutionService {
           + questionConverter.convert(question));
 
       int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
-          messageUtils.getMessage("ASK_USER_ANSWER_MESSAGE"),
-          String.format(messageUtils.getMessage("ANSWER_ERROR_MESSAGE"), question.getOptions().size()));
+          localizationService.getMessage("ASK_USER_ANSWER_MESSAGE"),
+          String.format(localizationService.getMessage("ANSWER_ERROR_MESSAGE"), question.getOptions().size()));
       inOutService.printMessageInterval();
       testResult.submitAnswer(question, answer, testResult);
     }

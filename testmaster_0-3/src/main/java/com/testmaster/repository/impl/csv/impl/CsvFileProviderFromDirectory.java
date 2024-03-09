@@ -3,7 +3,7 @@ package com.testmaster.repository.impl.csv.impl;
 import com.testmaster.config.DirectoryPathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
-import com.testmaster.utils.MessageUtils;
+import com.testmaster.service.LocalizationService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,11 +26,11 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
   private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
   private final String directoryPath;
-  private final MessageUtils messageUtils;
+  private final LocalizationService localizationService;
 
-  public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider, MessageUtils messageUtils) {
+  public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider, LocalizationService localizationService) {
     this.directoryPath = PROJECT_ABSOLUTE_PATH + "/" + directoryPathProvider.getDirectoryPath();
-    this.messageUtils = messageUtils;
+    this.localizationService = localizationService;
   }
 
   @Override
@@ -57,7 +57,7 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
     } catch (Exception ex) {
         log.error(ex.getMessage(), ex);
         throw new TestRetrieveException(
-            String.format(messageUtils.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "directory", directoryPath));
+            String.format(localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "directory", directoryPath));
     }
   }
 }

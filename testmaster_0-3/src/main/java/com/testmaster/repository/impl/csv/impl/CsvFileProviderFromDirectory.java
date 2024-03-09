@@ -6,6 +6,7 @@ import com.testmaster.repository.impl.csv.CsvFileProvider;
 import com.testmaster.service.LocalizationService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -24,15 +25,14 @@ import static java.util.Objects.isNull;
 @Component
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
-    private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
-
     private final String directoryPath;
 
     private final LocalizationService localizationService;
 
-    public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider,
+    public CsvFileProviderFromDirectory(@Value("${user.dir}") String userDir,
+                                        DirectoryPathProvider directoryPathProvider,
                                         LocalizationService localizationService) {
-        this.directoryPath = PROJECT_ABSOLUTE_PATH + "/" + directoryPathProvider.getDirectoryPath();
+        this.directoryPath = userDir + "/" + directoryPathProvider.getDirectoryPath();
         this.localizationService = localizationService;
     }
 

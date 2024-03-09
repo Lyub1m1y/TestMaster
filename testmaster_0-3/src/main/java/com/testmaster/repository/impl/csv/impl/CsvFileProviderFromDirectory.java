@@ -24,40 +24,41 @@ import static java.util.Objects.isNull;
 @Component
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
-  private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
-  private final String directoryPath;
-  private final LocalizationService localizationService;
+    private static final String PROJECT_ABSOLUTE_PATH = System.getProperty("user.dir");
 
-  public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider, LocalizationService localizationService) {
-    this.directoryPath = PROJECT_ABSOLUTE_PATH + "/" + directoryPathProvider.getDirectoryPath();
-    this.localizationService = localizationService;
-  }
+    private final String directoryPath;
 
-  @Override
-  public Map<String, InputStream> getFiles() {
-    try {
-      File folder = new File(directoryPath);
-      File[] files = folder.listFiles();
+    private final LocalizationService localizationService;
 
-      if (isNull(files)) {
-        throw new NullPointerException("Files is null");
-      }
-
-      return Arrays.stream(files)
-          .filter(file -> file.getName().endsWith(".csv"))
-          .collect(Collectors.toMap(
-              file -> Objects.requireNonNull(file.getName()).replace(".csv", ""),
-              file -> {
-                try {
-                  return new FileInputStream(file);
-                } catch (FileNotFoundException e) {
-                  throw new RuntimeException("Error when getting inputStream from a file: " + file.getName(), e);
-                }
-              }));
-    } catch (Exception ex) {
-        log.error(ex.getMessage(), ex);
-        throw new TestRetrieveException(
-            String.format(localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "directory", directoryPath));
+    public CsvFileProviderFromDirectory(DirectoryPathProvider directoryPathProvider,
+                                        LocalizationService localizationService) {
+        this.directoryPath = PROJECT_ABSOLUTE_PATH + "/" + directoryPathProvider.getDirectoryPath();
+        this.localizationService = localizationService;
     }
-  }
+
+    @Override
+    public Map<String, InputStream> getFiles() {
+        try {
+            File folder = new File(directoryPath);
+            File[] files = folder.listFiles();
+
+            if (isNull(files)) {
+                throw new NullPointerException("Files is null");
+            }
+
+            return Arrays.stream(files).filter(file -> file.getName().endsWith(".csv")).collect(Collectors.toMap(
+                    file -> Objects.requireNonNull(file.getName()).replace(".csv", ""), file -> {
+                        try {
+                            return new FileInputStream(file);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(
+                                    "Error when getting inputStream from a file: " + file.getName(), e);
+                        }
+                    }));
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            throw new TestRetrieveException(String.format(
+                    localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "directory", directoryPath));
+        }
+    }
 }

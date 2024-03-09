@@ -22,34 +22,38 @@ import java.util.Objects;
 @Component
 public class CsvFileProviderFromResources implements CsvFileProvider {
 
-  private final String resourcesPath;
-  private final LocalizationService localizationService;
+    private final String resourcesPath;
 
-  public CsvFileProviderFromResources(ResourcesPathProvider resourcesPathProvider, LocalizationService localizationService) {
-    this.resourcesPath = resourcesPathProvider.getResourcesPath();
-    this.localizationService = localizationService;
-  }
+    private final LocalizationService localizationService;
 
-  @Override
-  public Map<String, InputStream> getFiles() {
-    Map<String, InputStream> testsFromResources = new HashMap<>();
-    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-    try {
-      Resource[] resources = resolver.getResources(resourcesPath + "/*.csv");
-      Arrays.stream(resources).forEach(resource -> {
-        try {
-          testsFromResources.put(Objects.requireNonNull(resource.getFilename()).replace(".csv", ""), resource.getInputStream());
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-      });
-    } catch (Exception ex) {
-      log.error(ex.getMessage(), ex);
-      throw new TestRetrieveException(
-          String.format(localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "resources", resourcesPath));
+    public CsvFileProviderFromResources(ResourcesPathProvider resourcesPathProvider,
+                                        LocalizationService localizationService) {
+        this.resourcesPath = resourcesPathProvider.getResourcesPath();
+        this.localizationService = localizationService;
     }
 
-    return testsFromResources;
-  }
+    @Override
+    public Map<String, InputStream> getFiles() {
+        Map<String, InputStream> testsFromResources = new HashMap<>();
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+        try {
+            Resource[] resources = resolver.getResources(resourcesPath + "/*.csv");
+            Arrays.stream(resources).forEach(resource -> {
+                try {
+                    testsFromResources.put(Objects.requireNonNull(resource.getFilename())
+                            .replace(".csv", ""), resource.getInputStream());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            throw new TestRetrieveException(String.format(localizationService.getMessage(
+                    "TEST_RETRIEVE_ERROR_MESSAGE"), "resources", resourcesPath)
+            );
+        }
+
+        return testsFromResources;
+    }
 }

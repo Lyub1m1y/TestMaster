@@ -11,7 +11,9 @@ import java.util.Locale;
 @ConfigurationProperties(prefix = "app")
 public class Settings implements ResourcesPathProvider, DirectoryPathProvider, LocaleProvider {
 
-  private String resourcesPath;
-  private String directoryPath;
-  private Locale locale;
+    private String resourcesPath;
+
+    private String directoryPath;
+
+    private Locale locale;
 }

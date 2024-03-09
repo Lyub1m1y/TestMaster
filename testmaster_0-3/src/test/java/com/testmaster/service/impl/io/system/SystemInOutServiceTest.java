@@ -8,37 +8,40 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SystemInOutServiceTest {
 
-  @Mock
-  private SystemInputService systemInputServiceMock;
-  @Mock
-  private SystemOutputService systemOutputServiceMock;
-  @InjectMocks
-  private SystemInOutService systemInOutServiceMock;
+    @Mock
+    private SystemInputService systemInputServiceMock;
 
-  @DisplayName("readInput should return input")
-  @Test
-  void readInput_shouldReturnInput() {
-    String input = "Test Input";
-    when(systemInputServiceMock.readLine()).thenReturn(input);
+    @Mock
+    private SystemOutputService systemOutputServiceMock;
 
-    String result = systemInOutServiceMock.readLine();
+    @InjectMocks
+    private SystemInOutService systemInOutServiceMock;
 
-    verify(systemInputServiceMock).readLine();
-    assertEquals(input, result);
-  }
+    @DisplayName("readInput should return input")
+    @Test
+    void readInputShouldReturnInput() {
+        String input = "Test Input";
+        when(systemInputServiceMock.readLine()).thenReturn(input);
 
-  @DisplayName("printOutput should print output")
-  @Test
-  void printOutput_shouldPrintOutput() {
-    String message = "Test Message";
+        String result = systemInOutServiceMock.readLine();
 
-    systemInOutServiceMock.printMessage(message);
+        verify(systemInputServiceMock).readLine();
+        assertEquals(input, result);
+    }
 
-    verify(systemOutputServiceMock).printMessage(message);
-  }
+    @DisplayName("printOutput should print output")
+    @Test
+    void printOutputShouldPrintOutput() {
+        String message = "Test Message";
+
+        systemInOutServiceMock.printMessage(message);
+
+        verify(systemOutputServiceMock).printMessage(message);
+    }
 }

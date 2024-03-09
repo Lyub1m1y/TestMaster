@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalizationServiceImpl implements com.testmaster.service.LocalizationService {
 
-  private final MessageSource messageSource;
-  private final LocaleProvider locale;
+    private final MessageSource messageSource;
 
-  public String getMessage(String code) {
-    return messageSource.getMessage(code, null, locale.getLocale());
-  }
+    private final LocaleProvider locale;
+
+    public String getMessage(String code) {
+        return messageSource.getMessage(code, null, locale.getLocale());
+    }
 }

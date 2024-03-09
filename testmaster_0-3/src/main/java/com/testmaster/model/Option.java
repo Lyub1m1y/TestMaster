@@ -8,7 +8,8 @@ import lombok.Setter;
 @Getter
 public class Option {
 
-  private final String name;
-  @Setter
-  private boolean correct;
+    private final String name;
+
+    @Setter
+    private boolean correct;
 }

@@ -11,16 +11,18 @@ import java.util.List;
 @UtilityClass
 public class CsvUtils {
 
-    private static final String fileName1 = "file1.csv";
-    private static final String fileName2 = "file2.csv";
-    private static final String fileName3 = "file3.csv";
+    private static final String FILE_NAME_1 = "file1.csv";
+
+    private static final String FILE_NAME_2 = "file2.csv";
+
+    private static final String FILE_NAME_3 = "file3.csv";
 
     public static List<File> getCSVFiles() {
         File tempDir = new File(System.getProperty("java.io.tmpdir"));
 
-        File file1 = new File(tempDir, fileName1);
-        File file2 = new File(tempDir, fileName2);
-        File file3 = new File(tempDir, fileName3);
+        File file1 = new File(tempDir, FILE_NAME_1);
+        File file2 = new File(tempDir, FILE_NAME_2);
+        File file3 = new File(tempDir, FILE_NAME_3);
 
         try {
             file1.createNewFile();

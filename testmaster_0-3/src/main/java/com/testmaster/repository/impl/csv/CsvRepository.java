@@ -23,80 +23,81 @@ import java.util.Map;
 @Slf4j
 public class CsvRepository implements UserTestRepository {
 
-  private final List<CsvFileProvider> providers;
-  private final InOutService inOutService;
+    private final List<CsvFileProvider> providers;
 
-  public CsvRepository(List<CsvFileProvider> providers, InOutService inOutService) {
-      this.providers = providers;
-      this.inOutService = inOutService;
-  }
+    private final InOutService inOutService;
 
-  @Override
-  public List<String> getTestNames() {
-    return new ArrayList<>(getFiles().keySet());
-  }
+    public CsvRepository(List<CsvFileProvider> providers, InOutService inOutService) {
+        this.providers = providers;
+        this.inOutService = inOutService;
+    }
 
-  @Override
-  public UserTest getTestByName(String testName) {
-    Map<String, InputStream> tests = getFiles();
-    for (Map.Entry<String, InputStream> test : tests.entrySet()) {
-      try (CSVReader reader = new CSVReader(new InputStreamReader(test.getValue()))) {
-        if (testName.equals(test.getKey())) {
-          List<Question> questions = parseQuestionsFromCSV(reader);
-          return new UserTest(testName, questions);
+    @Override
+    public List<String> getTestNames() {
+        return new ArrayList<>(getFiles().keySet());
+    }
+
+    @Override
+    public UserTest getTestByName(String testName) {
+        Map<String, InputStream> tests = getFiles();
+        for (Map.Entry<String, InputStream> test : tests.entrySet()) {
+            try (CSVReader reader = new CSVReader(new InputStreamReader(test.getValue()))) {
+                if (testName.equals(test.getKey())) {
+                    List<Question> questions = parseQuestionsFromCSV(reader);
+                    return new UserTest(testName, questions);
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
         }
-      } catch (Exception ex) {
-        log.error(ex.getMessage());
-      }
+
+        return null;
     }
 
-    return null;
-  }
+    private List<Question> parseQuestionsFromCSV(CSVReader reader) throws CsvValidationException, IOException {
+        List<Question> questions = new ArrayList<>();
 
-  private List<Question> parseQuestionsFromCSV(CSVReader reader) throws CsvValidationException, IOException {
-    List<Question> questions = new ArrayList<>();
-
-    String[] line;
-    while ((line = reader.readNext()) != null) {
-      if (line.length != 0) {
-        String questionText = line[0];
-        int correctOptionIndex = Integer.parseInt(line[line.length - 1]) - 1;
-        List<Option> options = parseOptions(line);
-        options.get(correctOptionIndex).setCorrect(true);
-        Question question = new Question(questionText, options);
-        questions.add(question);
-      }
-    }
-
-    return questions;
-  }
-
-  private List<Option> parseOptions(String[] line) {
-    List<Option> options = new ArrayList<>();
-
-    for (int i = 1; i < line.length - 1; i++) {
-      options.add(new Option(line[i]));
-    }
-
-    return options;
-  }
-
-  private Map<String, InputStream> getFiles() {
-    Map<String, InputStream> tests = new HashMap<>();
-
-    for (CsvFileProvider provider : providers) {
-      try {
-        Map<String, InputStream> providerTests = provider.getFiles();
-        if (providerTests != null) {
-          tests.putAll(providerTests);
+        String[] line;
+        while ((line = reader.readNext()) != null) {
+            if (line.length != 0) {
+                String questionText = line[0];
+                int correctOptionIndex = Integer.parseInt(line[line.length - 1]) - 1;
+                List<Option> options = parseOptions(line);
+                options.get(correctOptionIndex).setCorrect(true);
+                Question question = new Question(questionText, options);
+                questions.add(question);
+            }
         }
-      } catch (TestRetrieveException ex) {
-        log.error(ex.getMessage(), ex);
-        inOutService.printMessage(ex.getMessage());
-        inOutService.printMessageInterval();
-      }
+
+        return questions;
     }
 
-    return tests;
-  }
+    private List<Option> parseOptions(String[] line) {
+        List<Option> options = new ArrayList<>();
+
+        for (int i = 1; i < line.length - 1; i++) {
+            options.add(new Option(line[i]));
+        }
+
+        return options;
+    }
+
+    private Map<String, InputStream> getFiles() {
+        Map<String, InputStream> tests = new HashMap<>();
+
+        for (CsvFileProvider provider : providers) {
+            try {
+                Map<String, InputStream> providerTests = provider.getFiles();
+                if (providerTests != null) {
+                    tests.putAll(providerTests);
+                }
+            } catch (TestRetrieveException ex) {
+                log.error(ex.getMessage(), ex);
+                inOutService.printMessage(ex.getMessage());
+                inOutService.printMessageInterval();
+            }
+        }
+
+        return tests;
+    }
 }

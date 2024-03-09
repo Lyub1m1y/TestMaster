@@ -11,34 +11,35 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SystemInOutService implements InOutService {
 
-  private final SystemInputService systemInputService;
-  private final SystemOutputService systemOutputService;
+    private final SystemInputService systemInputService;
 
-  @Override
-  public String readLine() {
-    return systemInputService.readLine();
-  }
+    private final SystemOutputService systemOutputService;
 
-  @Override
-  public int readIntByInterval(int min, int max, String userInputPrompt, String errorMessage) {
-    while (true) {
-      try {
-        printMessage(userInputPrompt);
-        return systemInputService.readIntByInterval(min, max, errorMessage);
-      } catch (InvalidNumberByIntervalException ex) {
-        log.error(ex.getMessage(), ex);
-        printMessage(errorMessage);
-      }
+    @Override
+    public String readLine() {
+        return systemInputService.readLine();
     }
-  }
 
-  @Override
-  public void printMessage(String message) {
-    systemOutputService.printMessage(message);
-  }
+    @Override
+    public int readIntByInterval(int min, int max, String userInputPrompt, String errorMessage) {
+        while (true) {
+            try {
+                printMessage(userInputPrompt);
+                return systemInputService.readIntByInterval(min, max, errorMessage);
+            } catch (InvalidNumberByIntervalException ex) {
+                log.error(ex.getMessage(), ex);
+                printMessage(errorMessage);
+            }
+        }
+    }
 
-  @Override
-  public void printMessageInterval() {
-    systemOutputService.printMessageInterval();
-  }
+    @Override
+    public void printMessage(String message) {
+        systemOutputService.printMessage(message);
+    }
+
+    @Override
+    public void printMessageInterval() {
+        systemOutputService.printMessageInterval();
+    }
 }

@@ -7,31 +7,34 @@ import lombok.Setter;
 @Setter
 public class TestResult {
 
-  private User user;
-  private UserTest userTest;
-  private int numberOfQuestions;
-  private int numberOfCorrectAnswer;
+    private User user;
 
-  public TestResult(UserTest userTest) {
-    this.userTest = userTest;
-    numberOfQuestions = userTest.getQuestions().size();
-  }
+    private UserTest userTest;
 
-  public void submitAnswer(Question currentQuestion, int answer, TestResult testResult) {
-    answer--;
-    if (currentQuestion != null && answer >= 0
-        && answer < currentQuestion.getOptions().size()) {
-      if (checkAnswer(currentQuestion, answer)) {
-        testResult.setNumberOfCorrectAnswer(testResult.getNumberOfCorrectAnswer() + 1);
-      }
+    private int numberOfQuestions;
+
+    private int numberOfCorrectAnswer;
+
+    public TestResult(UserTest userTest) {
+        this.userTest = userTest;
+        numberOfQuestions = userTest.getQuestions().size();
     }
-  }
 
-  private boolean checkAnswer(Question currentQuestion, int answer) {
-    boolean correct = false;
-    if (currentQuestion.getOptions().get(answer).isCorrect()) {
-      correct =  true;
+    public void submitAnswer(Question currentQuestion, int answer, TestResult testResult) {
+        answer--;
+        if (currentQuestion != null && answer >= 0
+                && answer < currentQuestion.getOptions().size()) {
+            if (checkAnswer(currentQuestion, answer)) {
+                testResult.setNumberOfCorrectAnswer(testResult.getNumberOfCorrectAnswer() + 1);
+            }
+        }
     }
-    return correct;
-  }
+
+    private boolean checkAnswer(Question currentQuestion, int answer) {
+        boolean correct = false;
+        if (currentQuestion.getOptions().get(answer).isCorrect()) {
+            correct = true;
+        }
+        return correct;
+    }
 }

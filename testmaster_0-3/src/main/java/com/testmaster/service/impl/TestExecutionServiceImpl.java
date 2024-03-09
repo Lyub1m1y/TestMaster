@@ -16,27 +16,29 @@ import java.util.List;
 @AllArgsConstructor
 public class TestExecutionServiceImpl implements TestExecutionService {
 
-  private final InOutService inOutService;
-  private final QuestionConverter questionConverter;
-  private final LocalizationService localizationService;
+    private final InOutService inOutService;
 
-  @Override
-  public TestResult executeTest(UserTest selectedTest) {
-    List<Question> questions = selectedTest.getQuestions();
-    TestResult testResult = new TestResult(selectedTest);
+    private final QuestionConverter questionConverter;
 
-    for (int i = 0; i < questions.size(); i++) {
-      Question question = questions.get(i);
-      inOutService.printMessage((i + 1) + ". "
-          + questionConverter.convert(question));
+    private final LocalizationService localizationService;
 
-      int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
-          localizationService.getMessage("ASK_USER_ANSWER_MESSAGE"),
-          String.format(localizationService.getMessage("ANSWER_ERROR_MESSAGE"), question.getOptions().size()));
-      inOutService.printMessageInterval();
-      testResult.submitAnswer(question, answer, testResult);
+    @Override
+    public TestResult executeTest(UserTest selectedTest) {
+        List<Question> questions = selectedTest.getQuestions();
+        TestResult testResult = new TestResult(selectedTest);
+
+        for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            inOutService.printMessage((i + 1) + ". "
+                    + questionConverter.convert(question));
+
+            int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
+                    localizationService.getMessage("ASK_USER_ANSWER_MESSAGE"),
+                    String.format(localizationService.getMessage("ANSWER_ERROR_MESSAGE"), question.getOptions().size()));
+            inOutService.printMessageInterval();
+            testResult.submitAnswer(question, answer, testResult);
+        }
+
+        return testResult;
     }
-
-    return testResult;
-  }
 }

@@ -16,48 +16,53 @@ import java.util.List;
 
 import static java.util.Objects.isNull;
 
-@Component
 @RequiredArgsConstructor
+@Component
 public class TestLauncher {
 
-  private final UserService userService;
-  private final TestService testService;
-  private final TestExecutionService testExecutionService;
-  private final InOutService inOutService;
-  private final TestResultConverter testResultConverter;
-  private final LocalizationService localizationService;
+    private final UserService userService;
 
-  public void run() {
-    User user = userService.initUser();
-    inOutService.printMessageInterval();
+    private final TestService testService;
 
-    List<String> availableTests = testService.getAvailableTests();
-    if (availableTests.isEmpty()) {
-      inOutService.printMessage(localizationService.getMessage("NO_AVAILABLE_TESTS_ERROR_MESSAGE"));
-      return;
+    private final TestExecutionService testExecutionService;
+
+    private final InOutService inOutService;
+
+    private final TestResultConverter testResultConverter;
+
+    private final LocalizationService localizationService;
+
+    public void run() {
+        User user = userService.initUser();
+        inOutService.printMessageInterval();
+
+        List<String> availableTests = testService.getAvailableTests();
+        if (availableTests.isEmpty()) {
+            inOutService.printMessage(localizationService.getMessage("NO_AVAILABLE_TESTS_ERROR_MESSAGE"));
+            return;
+        }
+
+        displayAvailableTests(availableTests);
+        inOutService.printMessageInterval();
+        UserTest selectedTest = selectTest();
+        if (isNull(selectedTest)) {
+            inOutService.printMessage(localizationService.getMessage("TEST_NOT_FOUND_ERROR_MESSAGE"));
+            return;
+        }
+
+        TestResult testResult = testExecutionService.executeTest(selectedTest);
+        testResult.setUser(user);
+        inOutService.printMessage(testResultConverter.convert(testResult));
     }
 
-    displayAvailableTests(availableTests);
-    inOutService.printMessageInterval();
-    UserTest selectedTest = selectTest();
-    if (isNull(selectedTest)) {
-      inOutService.printMessage(localizationService.getMessage("TEST_NOT_FOUND_ERROR_MESSAGE"));
-      return;
+    private void displayAvailableTests(List<String> availableTests) {
+        inOutService.printMessage(localizationService.getMessage("AVAILABLE_TESTS_MESSAGE"));
+        availableTests.forEach(inOutService::printMessage);
     }
 
-    TestResult testResult = testExecutionService.executeTest(selectedTest);
-    testResult.setUser(user);
-    inOutService.printMessage(testResultConverter.convert(testResult));
-  }
-
-  private void displayAvailableTests(List<String> availableTests) {
-    inOutService.printMessage(localizationService.getMessage("AVAILABLE_TESTS_MESSAGE"));
-    availableTests.forEach(inOutService::printMessage);
-  }
-
-  private UserTest selectTest() {
-    inOutService.printMessage(localizationService.getMessage("SELECT_TEST_MESSAGE"));
-    String testName = inOutService.readLine();
-    return testService.getTestByName(testName);
-  }
+    private UserTest selectTest() {
+        inOutService.printMessage(localizationService.getMessage("SELECT_TEST_MESSAGE"));
+        String testName = inOutService.readLine();
+        return testService.getTestByName(testName);
+    }
 }

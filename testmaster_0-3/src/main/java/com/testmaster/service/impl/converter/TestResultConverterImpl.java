@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestResultConverterImpl implements TestResultConverter {
 
-  private final LocalizationService localizationService;
-  @Override
-  public String convert(TestResult testResult) {
-    return String.format(localizationService.getMessage("TEST_RESULT_MESSAGE"),
-        testResult.getUser().getName(), testResult.getNumberOfCorrectAnswer(), testResult.getNumberOfQuestions());
-  }
+    private final LocalizationService localizationService;
+
+    @Override
+    public String convert(TestResult testResult) {
+        return String.format(localizationService.getMessage("TEST_RESULT_MESSAGE"),
+                testResult.getUser().getName(), testResult.getNumberOfCorrectAnswer(),
+                testResult.getNumberOfQuestions());
+    }
 }

@@ -7,7 +7,6 @@ import com.testmaster.model.Option;
 import com.testmaster.model.Question;
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
-import com.testmaster.service.InOutService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -25,11 +24,8 @@ public class CsvRepository implements UserTestRepository {
 
     private final List<CsvFileProvider> providers;
 
-    private final InOutService inOutService;
-
-    public CsvRepository(List<CsvFileProvider> providers, InOutService inOutService) {
+    public CsvRepository(List<CsvFileProvider> providers) {
         this.providers = providers;
-        this.inOutService = inOutService;
     }
 
     @Override
@@ -93,8 +89,6 @@ public class CsvRepository implements UserTestRepository {
                 }
             } catch (TestRetrieveException ex) {
                 log.error(ex.getMessage(), ex);
-                inOutService.printMessage(ex.getMessage());
-                inOutService.printMessageInterval();
             }
         }
 

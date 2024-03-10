@@ -3,8 +3,7 @@ package com.testmaster.app;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.User;
 import com.testmaster.model.UserTest;
-import com.testmaster.service.InOutService;
-import com.testmaster.service.LocalizationService;
+import com.testmaster.service.InOut;
 import com.testmaster.service.TestExecutionService;
 import com.testmaster.service.TestResultConverter;
 import com.testmaster.service.TestService;
@@ -26,43 +25,41 @@ public class TestLauncher {
 
     private final TestExecutionService testExecutionService;
 
-    private final InOutService inOutService;
-
     private final TestResultConverter testResultConverter;
 
-    private final LocalizationService localizationService;
+    private final InOut inOut;
 
     public void run() {
         User user = userService.initUser();
-        inOutService.printMessageInterval();
+        inOut.printMessageInterval();
 
         List<String> availableTests = testService.getAvailableTests();
         if (availableTests.isEmpty()) {
-            inOutService.printMessage(localizationService.getMessage("no.available.tests.error.message"));
+            inOut.printMessageByCodeMessage("no.available.tests.error.message");
             return;
         }
 
         displayAvailableTests(availableTests);
-        inOutService.printMessageInterval();
+        inOut.printMessageInterval();
         UserTest selectedTest = selectTest();
         if (isNull(selectedTest)) {
-            inOutService.printMessage(localizationService.getMessage("test.not.found.error.message"));
+            inOut.printMessageByCodeMessage("test.not.found.error.message");
             return;
         }
 
         TestResult testResult = testExecutionService.executeTest(selectedTest);
         testResult.setUser(user);
-        inOutService.printMessage(testResultConverter.convert(testResult));
+        inOut.printMessage(testResultConverter.convert(testResult));
     }
 
     private void displayAvailableTests(List<String> availableTests) {
-        inOutService.printMessage(localizationService.getMessage("available.tests.message"));
-        availableTests.forEach(inOutService::printMessage);
+        inOut.printMessageByCodeMessage("available.tests.message");
+        availableTests.forEach(inOut::printMessage);
     }
 
     private UserTest selectTest() {
-        inOutService.printMessage(localizationService.getMessage("select.test.message"));
-        String testName = inOutService.readLine();
+        inOut.printMessageByCodeMessage("select.test.message");
+        String testName = inOut.readLine();
         return testService.getTestByName(testName);
     }
 }

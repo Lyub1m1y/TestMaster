@@ -1,5 +1,5 @@
 package com.testmaster.service;
 
 public interface LocalizationService {
-    String getMessage(String code, Object... args);
+    String getMessage(String codeMessage, Object... args);
 }

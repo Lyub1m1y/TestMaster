@@ -1,8 +1,7 @@
 package com.testmaster.service.impl;
 
 import com.testmaster.model.User;
-import com.testmaster.service.InOutService;
-import com.testmaster.service.LocalizationService;
+import com.testmaster.service.InOut;
 import com.testmaster.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,16 +11,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final InOutService inOutService;
-
-    private final LocalizationService localizationService;
+    private final InOut inOut;
 
     @Override
     public User initUser() {
-        inOutService.printMessage(localizationService.getMessage("ask.name.message"));
-        String name = inOutService.readLine();
-        inOutService.printMessage(localizationService.getMessage("ask.surname.message"));
-        String surname = inOutService.readLine();
+        inOut.printMessageByCodeMessage("ask.name.message");
+        String name = inOut.readLine();
+        inOut.printMessageByCodeMessage("ask.surname.message");
+        String surname = inOut.readLine();
 
         return new User(name, surname);
     }

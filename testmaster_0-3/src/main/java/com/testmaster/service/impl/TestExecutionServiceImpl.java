@@ -3,8 +3,7 @@ package com.testmaster.service.impl;
 import com.testmaster.model.Question;
 import com.testmaster.model.TestResult;
 import com.testmaster.model.UserTest;
-import com.testmaster.service.InOutService;
-import com.testmaster.service.LocalizationService;
+import com.testmaster.service.InOut;
 import com.testmaster.service.QuestionConverter;
 import com.testmaster.service.TestExecutionService;
 import lombok.AllArgsConstructor;
@@ -16,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TestExecutionServiceImpl implements TestExecutionService {
 
-    private final InOutService inOutService;
+    private final InOut inOut;
 
     private final QuestionConverter questionConverter;
-
-    private final LocalizationService localizationService;
 
     @Override
     public TestResult executeTest(UserTest selectedTest) {
@@ -29,13 +26,13 @@ public class TestExecutionServiceImpl implements TestExecutionService {
 
         for (int i = 0; i < questions.size(); i++) {
             Question question = questions.get(i);
-            inOutService.printMessage((i + 1) + ". "
+            inOut.printMessage((i + 1) + ". "
                     + questionConverter.convert(question));
 
-            int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
-                    localizationService.getMessage("ask.user.answer.message"),
-                    localizationService.getMessage("answer.error.message", question.getOptions().size()));
-            inOutService.printMessageInterval();
+            int answer = inOut.readIntByIntervalAndCodeMessage(1, question.getOptions().size(),
+                    "ask.user.answer.message",
+                    "answer.error.message", question.getOptions().size());
+            inOut.printMessageInterval();
             testResult.submitAnswer(question, answer, testResult);
         }
 

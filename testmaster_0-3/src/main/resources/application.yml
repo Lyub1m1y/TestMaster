@@ -1,7 +1,7 @@
 app:
   resourcesPath: tests
   directoryPath: tests
-  locale: ru
+  locale: en
 
 spring:
   messages:

@@ -14,7 +14,7 @@ public class TestResultConverterImpl implements TestResultConverter {
 
     @Override
     public String convert(TestResult testResult) {
-        return String.format(localizationService.getMessage("test.result.message"),
+        return localizationService.getMessage("test.result.message",
                 testResult.getUser().getName(), testResult.getNumberOfCorrectAnswer(),
                 testResult.getNumberOfQuestions());
     }

@@ -34,7 +34,7 @@ public class TestExecutionServiceImpl implements TestExecutionService {
 
             int answer = inOutService.readIntByInterval(1, question.getOptions().size(),
                     localizationService.getMessage("ask.user.answer.message"),
-                    String.format(localizationService.getMessage("answer.error.message"), question.getOptions().size()));
+                    localizationService.getMessage("answer.error.message", question.getOptions().size()));
             inOutService.printMessageInterval();
             testResult.submitAnswer(question, answer, testResult);
         }

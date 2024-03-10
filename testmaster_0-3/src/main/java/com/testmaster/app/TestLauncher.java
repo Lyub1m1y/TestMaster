@@ -38,7 +38,7 @@ public class TestLauncher {
 
         List<String> availableTests = testService.getAvailableTests();
         if (availableTests.isEmpty()) {
-            inOutService.printMessage(localizationService.getMessage("NO_AVAILABLE_TESTS_ERROR_MESSAGE"));
+            inOutService.printMessage(localizationService.getMessage("no.available.tests.error.message"));
             return;
         }
 
@@ -46,7 +46,7 @@ public class TestLauncher {
         inOutService.printMessageInterval();
         UserTest selectedTest = selectTest();
         if (isNull(selectedTest)) {
-            inOutService.printMessage(localizationService.getMessage("TEST_NOT_FOUND_ERROR_MESSAGE"));
+            inOutService.printMessage(localizationService.getMessage("test.not.found.error.message"));
             return;
         }
 
@@ -56,12 +56,12 @@ public class TestLauncher {
     }
 
     private void displayAvailableTests(List<String> availableTests) {
-        inOutService.printMessage(localizationService.getMessage("AVAILABLE_TESTS_MESSAGE"));
+        inOutService.printMessage(localizationService.getMessage("available.tests.message"));
         availableTests.forEach(inOutService::printMessage);
     }
 
     private UserTest selectTest() {
-        inOutService.printMessage(localizationService.getMessage("SELECT_TEST_MESSAGE"));
+        inOutService.printMessage(localizationService.getMessage("select.test.message"));
         String testName = inOutService.readLine();
         return testService.getTestByName(testName);
     }

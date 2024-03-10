@@ -3,7 +3,6 @@ package com.testmaster.repository.impl.csv.impl;
 import com.testmaster.config.DirectoryPathProvider;
 import com.testmaster.exception.TestRetrieveException;
 import com.testmaster.repository.impl.csv.CsvFileProvider;
-import com.testmaster.service.LocalizationService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -25,22 +25,17 @@ import static java.util.Objects.isNull;
 @Component
 public class CsvFileProviderFromDirectory implements CsvFileProvider {
 
-    private final String directoryPath;
-
-    private final LocalizationService localizationService;
+    private final File directory;
 
     public CsvFileProviderFromDirectory(@Value("${user.dir}") String userDir,
-                                        DirectoryPathProvider directoryPathProvider,
-                                        LocalizationService localizationService) {
-        this.directoryPath = userDir + "/" + directoryPathProvider.getDirectoryPath();
-        this.localizationService = localizationService;
+                                        DirectoryPathProvider directoryPathProvider) {
+        this.directory = Paths.get(userDir, directoryPathProvider.getDirectoryPath()).toFile();
     }
 
     @Override
     public Map<String, InputStream> getFiles() {
         try {
-            File folder = new File(directoryPath);
-            File[] files = folder.listFiles();
+            File[] files = directory.listFiles();
 
             if (isNull(files)) {
                 throw new NullPointerException("Files is null");
@@ -57,8 +52,7 @@ public class CsvFileProviderFromDirectory implements CsvFileProvider {
                     }));
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
-            throw new TestRetrieveException(String.format(
-                    localizationService.getMessage("TEST_RETRIEVE_ERROR_MESSAGE"), "directory", directoryPath));
+            throw new TestRetrieveException("directory", directory.getPath());
         }
     }
 }

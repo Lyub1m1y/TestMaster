@@ -1,5 +1,8 @@
-package com.testmaster.service;
+package com.testmaster.service.impl;
 
+import com.testmaster.service.InOut;
+import com.testmaster.service.InOutService;
+import com.testmaster.service.LocalizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

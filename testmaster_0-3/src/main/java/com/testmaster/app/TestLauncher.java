@@ -58,8 +58,7 @@ public class TestLauncher {
     }
 
     private UserTest selectTest() {
-        inOut.printMessageByCodeMessage("select.test.message");
-        String testName = inOut.readLine();
+        String testName = inOut.readLineWithMessage("select.test.message");
         return testService.getTestByName(testName);
     }
 }

@@ -16,6 +16,12 @@ public class InOutFacade implements InOut {
     }
 
     @Override
+    public String readLineWithMessage(String codeMessage) {
+        printMessageByCodeMessage(codeMessage);
+        return inOutService.readLine();
+    }
+
+    @Override
     public void printMessage(String message) {
         inOutService.printMessage(message);
     }

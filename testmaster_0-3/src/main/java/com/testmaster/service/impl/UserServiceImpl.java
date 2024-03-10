@@ -15,10 +15,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User initUser() {
-        inOut.printMessageByCodeMessage("ask.name.message");
-        String name = inOut.readLine();
-        inOut.printMessageByCodeMessage("ask.surname.message");
-        String surname = inOut.readLine();
+        String name = inOut.readLineWithMessage("ask.name.message");
+        String surname = inOut.readLineWithMessage("ask.surname.message");
 
         return new User(name, surname);
     }

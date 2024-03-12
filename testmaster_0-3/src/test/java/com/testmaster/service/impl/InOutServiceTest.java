@@ -1,6 +1,7 @@
-package com.testmaster.service.impl.io.system;
+package com.testmaster.service.impl;
 
 import com.testmaster.service.InOutService;
+import com.testmaster.service.impl.io.system.SystemInOutService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

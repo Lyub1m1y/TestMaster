@@ -2,12 +2,12 @@ package com.testmaster.service.impl;
 
 import com.testmaster.model.UserTest;
 import com.testmaster.repository.UserTestRepository;
+import com.testmaster.service.TestService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,18 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = {TestServiceImpl.class})
 class TestServiceImplTest {
 
-    @Mock
+    @MockBean
     private UserTestRepository userTestRepositoryMock;
 
-    @InjectMocks
-    private TestServiceImpl testService;
+    @Autowired
+    private TestService testService;
 
-    @DisplayName("getAvailableTests should return available tests")
     @Test
+    @DisplayName("getAvailableTests should return available tests")
     void getAvailableTestsShouldReturnAvailableTests() {
         List<String> testNames = Arrays.asList("Test1", "Test2");
         when(userTestRepositoryMock.getTestNames()).thenReturn(testNames);
@@ -38,8 +37,8 @@ class TestServiceImplTest {
         verify(userTestRepositoryMock).getTestNames();
     }
 
-    @DisplayName("getTestByName should return test by valid name")
     @Test
+    @DisplayName("getTestByName should return test by valid name")
     void getTestByNameShouldReturnTestByValidName() {
         String testName = "Test1";
         UserTest userTest = new UserTest(testName, List.of());

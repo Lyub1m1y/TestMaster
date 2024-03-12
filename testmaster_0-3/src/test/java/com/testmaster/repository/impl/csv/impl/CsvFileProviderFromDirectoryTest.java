@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @SpringBootTest(classes = {LocalizationServiceImpl.class, CsvFileProviderFromDirectory.class})
 class CsvFileProviderFromDirectoryTest {
 
-  @Autowired
-  private CsvFileProviderFromDirectory csvFileProvider;
+    @Autowired
+    private CsvFileProviderFromDirectory csvFileProvider;
 
-  @DisplayName("Should return non empty list files from directory")
-  @Test
-  void shouldReturnNonEmptyListFiles() {
-    assertFalse(csvFileProvider.getFiles().isEmpty());
-  }
+    @Test
+    @DisplayName("Should return non empty list files from directory")
+    void shouldReturnNonEmptyListFiles() {
+        assertFalse(csvFileProvider.getFiles().isEmpty());
+    }
 }

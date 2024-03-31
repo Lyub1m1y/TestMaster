@@ -1,0 +1,10 @@
+app:
+  resourcesPath: tests
+  directoryPath: tests
+  locale: en
+
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
